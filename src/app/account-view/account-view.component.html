@@ -1,0 +1,30 @@
+<form fxLayout="column" fxLayoutAlign="center start">
+    <md-card>
+        <md-card-title>Add a crypto currency account</md-card-title>
+        <md-card-content fxLayout="column">
+            <span>Enter a short name, and the <i>public</i> address of your account.</span>
+
+            <md-input-container> 
+                <input mdInput placeholder="Name" [(ngModel)]="account.name" name="accountName"/>
+            </md-input-container>
+            <md-input-container> 
+                <input mdInput placeholder="Address" [(ngModel)]="account.address" name="accountAddress"/>
+            </md-input-container>
+            <md-select placeholder="Currency" [(ngModel)]="account.currency" name="accountCurrency">
+                <md-option *ngFor="let currency of currencies" [value]="currency">
+                {{currency.code}} {{currency.name}}
+                </md-option>
+            </md-select>
+            <md-select placeholder="Color" [(ngModel)]="account.color" name="accountColor">
+                <md-option *ngFor="let color of colors" [value]="color">
+                 <button md-mini-fab [style.background]="color.hexValue"></button>
+                {{color.name}}
+                </md-option>
+            </md-select>
+            <div fxLayout="row" fxLayoutAlign="start end">
+                <button md-raised-button (click)="save();" color="primary">Save</button>
+                <button md-raised-button (click)="cancel();">Cancel</button>
+            </div>
+        </md-card-content>
+    </md-card>
+</form>

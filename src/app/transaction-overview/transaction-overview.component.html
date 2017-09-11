@@ -1,0 +1,55 @@
+<button md-raised-button (click)="tagBuyIn();" [disabled]="selection.selected.length !== 1" class="mtb-5">
+  <md-icon>flight_land</md-icon>
+  Buy-in
+</button>
+<button md-raised-button (click)="tagBuyOut();" [disabled]="selection.selected.length !== 1" class="mtb-5">
+    <md-icon>flight_takeoff</md-icon>
+    Buy-out
+  </button>
+<md-table #table [dataSource]="dataSource">
+  <!-- Checkbox Column -->
+  <ng-container mdColumnDef="select">
+    <md-header-cell *mdHeaderCellDef>
+      <md-checkbox (change)="$event ? masterToggle() : null"
+                    [checked]="isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()">
+      </md-checkbox>
+    </md-header-cell>
+    <md-cell *mdCellDef="let row">
+      <md-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row.id) : null"
+                    [checked]="selection.isSelected(row.id)">
+      </md-checkbox>
+    </md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="account">
+      <md-header-cell *mdHeaderCellDef> Account </md-header-cell>
+      <md-cell *mdCellDef="let row"> {{row.account.name}} </md-cell>
+    </ng-container>
+
+  <ng-container mdColumnDef="date">
+    <md-header-cell *mdHeaderCellDef> Date </md-header-cell>
+    <md-cell *mdCellDef="let row"> {{row.date | date:'mediumDate'}} </md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="amount">
+    <md-header-cell *mdHeaderCellDef> Amount </md-header-cell>
+    <md-cell *mdCellDef="let row"> {{row.amount}} </md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="tag">
+      <md-header-cell *mdHeaderCellDef> Tag </md-header-cell>
+      <md-cell *mdCellDef="let row"> <div *ngIf="row.tagType !== ''">{{row.tagType}} = {{row.tagAmount}} </div> </md-cell>
+    </ng-container>
+
+  <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+  <md-row *mdRowDef="let row; columns: displayedColumns;"
+          [class.example-selected-row]="selection.isSelected(row.id)"
+          (click)="selection.toggle(row.id)"></md-row>
+</md-table>
+
+<button md-button (click)="delete();" *ngIf="account !== null" class="mtb-5" color="warn">
+    <md-icon>delete</md-icon>
+    Delete account
+</button>  
