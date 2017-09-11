@@ -24,12 +24,6 @@ export class TransactionsService {
     return this.data.filter(t => t.account === account);
   }
 
-  addTransaction(i: number, account: Account) {
-    const copiedData = this.data.slice();
-    copiedData.push(this.createTransaction(i, account));
-    this.dataChange.next(copiedData);
-  }
-
   loadTransactions(account: Account){
     account.loading = true;
     const baseUrl  = Backend.getUrl();
@@ -58,16 +52,5 @@ export class TransactionsService {
   removeTransactions(account: Account){
     const copiedData = this.data.slice().filter(f => f.account !== account);
     this.dataChange.next(copiedData);
-  }
-
-  private createTransaction(i:number, account: Account) : Transaction{
-    let transaction = new Transaction();
-
-    transaction.amount = Math.random()*1000 * (Math.random() > 0.5 ? 1 : -1);
-    transaction.id = i.toString();
-    transaction.currency = account.currency.code;
-    transaction.account = account;
-
-    return transaction;
   }
 }
