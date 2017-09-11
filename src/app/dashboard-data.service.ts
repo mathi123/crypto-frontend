@@ -32,8 +32,8 @@ export class DashboardDataService {
     console.log('recalculate');
     const fromDate = configuration.startDate.getTime();
     const toDate = configuration.endDate.getTime();
-
-    const url = `${Backend.Url}/coins/${account.currency.code.toLowerCase()}/price?fromDate=${fromDate}&toDate=${toDate}`;
+    const baseUrl  = Backend.getUrl();
+    const url = `${baseUrl}/coins/${account.currency.code.toLowerCase()}/price?fromDate=${fromDate}&toDate=${toDate}`;
     
     this.httpClient.get<Price[]>(url)
       .subscribe(result => {

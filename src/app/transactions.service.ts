@@ -32,8 +32,8 @@ export class TransactionsService {
 
   loadTransactions(account: Account){
     account.loading = true;
-    
-    const url = `${Backend.Url}/coins/${account.currency.code.toLowerCase()}/transactions/${account.address}`;
+    const baseUrl  = Backend.getUrl();
+    const url = `${baseUrl}/coins/${account.currency.code.toLowerCase()}/transactions/${account.address}`;
 
     this.httpClient.get<TransactionInterface[]>(url)
       .subscribe(result => {
