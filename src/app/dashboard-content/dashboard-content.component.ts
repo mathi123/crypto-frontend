@@ -12,7 +12,8 @@ export class DashboardContentComponent implements OnInit {
   //@ViewChild('myChart')
   //chart: ElementRef;
   hasConfiguration: boolean = false;
-
+  static chart: any;
+  
   constructor(private dashboardDataService: DashboardDataService) { }
 
   ngOnInit() {
@@ -60,8 +61,13 @@ export class DashboardContentComponent implements OnInit {
 
     console.log(labels);
 
+    if(DashboardContentComponent.chart !== null && DashboardContentComponent.chart !== undefined){
+      DashboardContentComponent.chart.destroy();
+    }
+
     var ctx = (<HTMLCanvasElement> document.getElementById("myChart")).getContext('2d');
-    var myChart = new Chart(ctx, {
+
+    DashboardContentComponent.chart = new Chart(ctx, {
         type: 'line',
         labels: labels,
         data: {

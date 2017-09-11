@@ -49,6 +49,7 @@ export class TransactionsService {
 
           copiedData.push(transaction);
         });
+
         this.dataChange.next(copiedData);
         account.loading = false;
       });

@@ -18,8 +18,7 @@ export class DashboardConfigurationComponent implements OnInit {
   constructor(private dashboardDataService: DashboardDataService) { }
 
   ngOnInit() {
-    this.configuration = new ReportConfiguration();
-    this.configuration.endDate = new Date(Date.now());
+    this.configuration = this.dashboardDataService.configurationChange.value;
   }
 
   recalculate(){

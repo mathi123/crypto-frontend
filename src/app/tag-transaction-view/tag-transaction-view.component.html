@@ -2,15 +2,15 @@
     <md-card>
       <md-card-title>Tag your transaction</md-card-title>
       <md-card-content fxLayout="column">
-          <md-select placeholder="Tag" [(ngModel)]="tag" name="tag">
+          <md-select fxLayoutGap="10px" placeholder="Tag" [(ngModel)]="tag" name="tag">
               <md-option *ngFor="let tag of tags" [value]="tag">
                 {{tag}}
               </md-option>
             </md-select>
-          <md-input-container> 
+          <md-input-container fxLayoutGap="10px"> 
               <input type="number" mdInput placeholder="Amount" [(ngModel)]="amount" name="amount"/>
           </md-input-container>
-          <div fxLayout="row" fxLayoutAlign="start start">
+          <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start start">
             <button md-raised-button (click)="save();" color="primary">Save</button>
             <button md-raised-button (click)="cancel();">Cancel</button>
           </div>

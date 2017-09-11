@@ -144,7 +144,7 @@ export class ExampleDataSource extends DataSource<any> {
   connect(): Observable<Transaction[]> {
     console.log('connect called');
 
-    return this.transactionsService.dataChange.map(f => f.filter(t => this.account === null || t.account === this.account));
+    return this.transactionsService.dataChange.map(f => f.filter(t => this.account === null || t.account === this.account).sort((A,B) => A.date.getTime() - B.date.getTime()));
   }
 
   disconnect() {}

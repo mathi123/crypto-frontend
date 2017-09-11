@@ -30,6 +30,9 @@ export class TagTransactionViewComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       let id = params['id'];
       let accountName = params['account'];
+
+      console.log(accountName);
+
       let account = this.accountService.getAccount(accountName);
       this.transaction = this.transactionsService.getTransaction(account, id);
     });
