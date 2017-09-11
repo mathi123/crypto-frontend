@@ -12,7 +12,7 @@ import { TransactionsService } from "../transactions.service";
 export class AccountOverviewComponent implements OnInit {
   public accounts: Account[] = [];
   
-  constructor(private accountService: AccountService, private routeService: Router, private buildDashboardService: BuildDashboardService) { }
+  constructor(public accountService: AccountService, public routeService: Router, public buildDashboardService: BuildDashboardService) { }
 
   ngOnInit() {
     this.accounts = this.accountService.getAccounts();
