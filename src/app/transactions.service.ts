@@ -27,7 +27,7 @@ export class TransactionsService {
   loadTransactions(account: Account){
     account.loading = true;
     const baseUrl  = Backend.getUrl();
-    const url = `${baseUrl}/coins/${account.currency.code.toLowerCase()}/transactions/${account.address}`;
+    const url = `${baseUrl}/coin/${account.currency.code.toLowerCase()}/${account.address}`;
 
     this.httpClient.get<TransactionInterface[]>(url)
       .subscribe(result => {
@@ -38,7 +38,7 @@ export class TransactionsService {
           transaction.account = account;
           transaction.currency = account.currency.code;
           transaction.id = r.id;
-          transaction.date = new Date(r.time * 1000);
+          transaction.date = new Date(r.time);
           transaction.amount = r.value;
 
           copiedData.push(transaction);

@@ -28,6 +28,7 @@ import { DashboardConfigurationComponent } from './dashboard-configuration/dashb
 import { DashboardSummaryComponent } from './dashboard-summary/dashboard-summary.component';
 import { DashboardContentComponent } from './dashboard-content/dashboard-content.component';
 import { DashboardDataService } from "./dashboard-data.service";
+import { TestDataComponent } from './test-data/test-data.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DashboardDataService } from "./dashboard-data.service";
     AccountListComponent,
     DashboardConfigurationComponent,
     DashboardSummaryComponent,
-    DashboardContentComponent
+    DashboardContentComponent,
+    TestDataComponent
   ],
   imports: [
     BrowserModule,

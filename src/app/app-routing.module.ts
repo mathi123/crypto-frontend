@@ -5,6 +5,7 @@ import { AccountOverviewComponent } from "./account-overview/account-overview.co
 import { AccountViewComponent } from "./account-view/account-view.component";
 import { TagTransactionViewComponent } from "./tag-transaction-view/tag-transaction-view.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { TestDataComponent } from './test-data/test-data.component';
 
 const routes: Routes = [
   
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent
+  },
+  {
+    path: 'test',
+    component: TestDataComponent
   },
   {
     path: '',

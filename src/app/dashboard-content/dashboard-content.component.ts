@@ -11,7 +11,9 @@ import { ReportConfiguration } from '../report-configuration';
 export class DashboardContentComponent implements OnInit {
   //@ViewChild('myChart')
   //chart: ElementRef;
-  hasConfiguration: boolean = false;
+  public hasConfiguration: boolean = false;
+  public isLoading: boolean = false;
+
   static chart: any;
   
   constructor(private dashboardDataService: DashboardDataService) { }
@@ -21,45 +23,38 @@ export class DashboardContentComponent implements OnInit {
     this.dashboardDataService.configurationChange.subscribe(this.configChanged);
   }
 
-  configChanged(configuration: ReportConfiguration){
-
+  configChanged(config: ReportConfiguration){
+    if(config.endDate === null ||config.endDate === undefined || config.startDate === null || config.startDate === undefined)
+    {
+      this.hasConfiguration = false;
+    }
+    else{
+      console.log("should start loading");
+      this.hasConfiguration = true;
+      this.isLoading = true;
+    }
   }
 
   getRefreshData(){
     return (d) => this.refreshData(d);
   }
 
-  refreshData(datasets: any[]){
-
+  refreshData(data: any){
+    console.log("should end loading");
+    let datasets = data.lines;
     console.log('new data');
-    console.log(datasets);
+    console.log(data);
 
     let config = this.dashboardDataService.configurationChange.value;
-    if(config.endDate === null ||config.endDate === undefined || config.startDate === null || config.startDate === undefined)
-    {
-      this.hasConfiguration = false;
-      return;
-    }
-    else{
-      this.hasConfiguration = true;
-    }
-
-    let maxReq = 50;
-    let totalDiffMs = config.startDate.getTime() - config.endDate.getTime();
-    let daysInDiff = totalDiffMs / (24 * 60 * 60 * 1000);
-    let requests = Math.min(maxReq, daysInDiff);
-    let step = Math.ceil(totalDiffMs / requests);
-
+    
     var labels = [];
     var results = [];
 
-    for(var i = 0;i<requests;i++)
+    for(var i = 0;i<data.dates.length;i++)
     {
-        let d = new Date(config.startDate.getTime() + i * step);
+        let d = new Date(data.dates[i]);
         labels.push(d);
     }
-
-    console.log(labels);
 
     if(DashboardContentComponent.chart !== null && DashboardContentComponent.chart !== undefined){
       DashboardContentComponent.chart.destroy();
@@ -74,7 +69,6 @@ export class DashboardContentComponent implements OnInit {
             datasets: datasets
         },
         options: {
-          scaleLabel: "<%=value%> EUR",
           scales: {
               xAxes: [{
                 type: 'time',
@@ -88,6 +82,6 @@ export class DashboardContentComponent implements OnInit {
       }
     });
 
-    //c.data.datasets = datasets;
+    this.isLoading = false;
   }
 }

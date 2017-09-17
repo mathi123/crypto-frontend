@@ -4,4 +4,10 @@
 }, {
     "code": "ETH",
     "name": "Ether"
+}, {
+    "code": "DOGE",
+    "name": "Dogecoin"
+}, {
+    "code": "LTC",
+    "name": "Litecoin"
 }]
