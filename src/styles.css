@@ -5,3 +5,11 @@
 md-icon.size-40 {
     font-size: 40px;
   }
+
+.positive{
+  color: #66bb6a;
+}
+
+.negative{
+  color: #ef5350;
+}

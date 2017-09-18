@@ -51,3 +51,11 @@
     overflow: auto;
     max-height: 500px;
   }
+
+  .positive{
+    color: #66bb6a;
+  }
+  
+  .negative{
+    color: #ef5350;
+  }

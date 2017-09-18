@@ -1,20 +1,30 @@
-<md-card>
-  <md-card-title>Report Configuration</md-card-title>
-  <md-card-content>
-      <form class="container" fxLayout="column">
-          <md-form-field>
-            <input mdInput [mdDatepicker]="startDatePicker" [(ngModel)]="configuration.startDate"
-               placeholder="Start day..." name="startDate">
-            <md-datepicker-toggle mdSuffix [for]="startDatePicker"></md-datepicker-toggle>
-            <md-datepicker #startDatePicker></md-datepicker>
-          </md-form-field>
-          <md-form-field fxLayoutGap="10px">
-            <input mdInput [mdDatepicker]="endDatePicker" [(ngModel)]="configuration.endDate"
-                placeholder="End day..." name="endDate">
-            <md-datepicker-toggle mdSuffix [for]="endDatePicker"></md-datepicker-toggle>
-            <md-datepicker #endDatePicker md-max-date="maxDate"></md-datepicker>
-          </md-form-field>
-          <button fxLayoutGap="10px" md-raised-button (click)="recalculate();" color="primary">Recalculate</button>
-        </form>
-  </md-card-content>
-</md-card>
+<div fxLayout="row" fxFill class="container" fxLayoutGap="10px">
+    <md-card>
+      <md-card-title>Report Configuration</md-card-title>
+      <md-card-content>
+          <form class="container" fxLayout="column">
+              <md-form-field>
+                <input mdInput [mdDatepicker]="startDatePicker" [(ngModel)]="configuration.startDate"
+                    placeholder="Start day..." name="startDate">
+                <md-datepicker-toggle mdSuffix [for]="startDatePicker"></md-datepicker-toggle>
+                <md-datepicker #startDatePicker></md-datepicker>
+              </md-form-field>
+              <md-form-field fxLayoutGap="10px">
+                <input mdInput [mdDatepicker]="endDatePicker" [(ngModel)]="configuration.endDate"
+                    placeholder="End day..." name="endDate">
+                <md-datepicker-toggle mdSuffix [for]="endDatePicker"></md-datepicker-toggle>
+                <md-datepicker #endDatePicker md-max-date="maxDate"></md-datepicker>
+              </md-form-field>
+              <button fxLayoutGap="10px" md-raised-button (click)="recalculate();" color="primary">Recalculate</button>
+            </form>
+      </md-card-content>
+    </md-card>
+    <md-card fxLayoutGap="10px" *ngIf="hasError" class="error">
+      <md-card-title>Hmmmmm, thats not right...</md-card-title>
+      <md-card-content><p>An error has occurred while loading price data. Please report this problem with the feedback window on the right!</p>
+      <p>You can try calculating again..</p></md-card-content>
+      <md-card-actions>
+          <button md-button (click)="closeError();" color="primary">Ok</button>
+      </md-card-actions>
+    </md-card>
+</div>

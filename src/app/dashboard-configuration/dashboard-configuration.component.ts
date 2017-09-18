@@ -15,6 +15,8 @@ export class DashboardConfigurationComponent implements OnInit {
   configuration: ReportConfiguration;
   maxDate = new Date(Date.now());
 
+  public hasError: boolean = false;
+
   constructor(private dashboardDataService: DashboardDataService) { }
 
   ngOnInit() {
@@ -22,6 +24,11 @@ export class DashboardConfigurationComponent implements OnInit {
   }
 
   recalculate(){
-    this.dashboardDataService.recalculate(this.configuration);
+    this.hasError = false;
+    this.dashboardDataService.recalculate(this.configuration, (error) => this.hasError = true);
+  }
+
+  closeError(){
+    this.hasError = false;
   }
 }

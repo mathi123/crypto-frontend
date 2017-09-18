@@ -6,6 +6,9 @@ import { ReportConfiguration } from "./report-configuration";
 import { Backend } from "./backend";
 import { HttpClient } from "@angular/common/http";
 import { AccountService } from "./account.service";
+import { ReportSummary } from './report-summary';
+import { TagTypes } from './tag-types';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class DashboardDataService {
@@ -14,9 +17,11 @@ export class DashboardDataService {
   dataChange: BehaviorSubject<any> = new BehaviorSubject<any>({ lines: [], dates: []});
   get data(): any { return this.dataChange.value; }
 
+  reportSummary: BehaviorSubject<ReportSummary> = new BehaviorSubject<ReportSummary>(new ReportSummary());
+  
   constructor(private transactionsService: TransactionsService, private httpClient: HttpClient, private accountService: AccountService) { }
    
-  recalculate(configuration: ReportConfiguration){
+  recalculate(configuration: ReportConfiguration, onError: (any) => void){
     this.configurationChange.next(configuration);
     
     console.log('recalculating');
@@ -49,7 +54,10 @@ export class DashboardDataService {
             borderColor: line.borderColor
           });
         }
-        let total = this.recalculateTotal(data, totals);
+
+        let summary = new ReportSummary();
+
+        let total = this.recalculateTotal(data, totals, configuration, summary);
         copiedData.push(total);
         colors.push({
           borderColor: "#FF4081"
@@ -58,9 +66,23 @@ export class DashboardDataService {
         this.data.lines = copiedData;
         this.data.dates = data.dates;
         this.data.colors = colors;
+       
+        summary.buyIn = this.transactionsService.data
+          .filter(t => t.date >= configuration.startDate && t.date <= configuration.endDate)
+          .filter(t => t.tagType === TagTypes.BuyIn)
+          .map(t => t.tagAmount)
+          .reduce((x,y) => x + y, 0);
+        
+        summary.buyOut = this.transactionsService.data
+          .filter(t => t.date >= configuration.startDate && t.date <= configuration.endDate)
+          .filter(t => t.tagType === TagTypes.BuyOut)
+          .map(t => t.tagAmount)
+          .reduce((x,y) => x + y, 0);
+        summary.recalculateTotal();
 
+        this.reportSummary.next(summary);
         this.dataChange.next(this.data);
-      });    
+      }, onError);    
   }
 
   recalculateLine(account: Account, data: GetPricesResult, totals:any):any{
@@ -98,7 +120,7 @@ export class DashboardDataService {
     return result;
   }
 
-  recalculateTotal(data: GetPricesResult, totals: any):any{
+  recalculateTotal(data: GetPricesResult, totals: any, configuration: ReportConfiguration, summary: ReportSummary):any{
     let result = {
       label: 'Total',
       data: [],
@@ -107,13 +129,18 @@ export class DashboardDataService {
    
     for(var i = 0; i < data.dates.length;i++){
       let date = new Date(data.dates[i]);
-      
       let total = totals[date.getTime()];
 
       result.data.push({
         x: date,
         y: total
       });
+
+      if(date.getTime() - configuration.startDate.getTime() === 0){
+        summary.startValue = total;
+      }else if(date.getTime() - configuration.endDate.getTime() === 0){
+        summary.endValue = total;
+      }
     }
 
     return result;

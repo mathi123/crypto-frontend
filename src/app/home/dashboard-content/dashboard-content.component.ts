@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, ApplicationRef, OnDestroy } f
 import { DashboardDataService } from "../dashboard-data.service";
 import { Chart } from "chart.js";
 import { ReportConfiguration } from '../report-configuration';
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -34,19 +35,17 @@ export class DashboardContentComponent implements OnInit, OnDestroy {
 
   private dataSubscription: Subscription;
   private configSubscription: Subscription;
-
+  
   constructor(private dashboardDataService: DashboardDataService) { }
 
   ngOnInit() {
     this.dataSubscription = this.dashboardDataService.dataChange.subscribe((d) => this.refreshData(d));
     this.configSubscription = this.dashboardDataService.configurationChange.subscribe((c) => this.configChanged(c));
-    this.isLoading = false;
   }
 
   ngOnDestroy(){
     this.dataSubscription.unsubscribe();
     this.configSubscription.unsubscribe();
-    this.isLoading = false;
   }
 
   configChanged(config: ReportConfiguration){
@@ -75,8 +74,7 @@ export class DashboardContentComponent implements OnInit, OnDestroy {
     this.lineChartLabels = labels;
     this.lineChartData = datasets;
     this.lineChartColors = data.colors;
-
-    console.log("i should stop loading now");
+    console.log(this.lineChartColors);
     this.isLoading = false;
   }
 }

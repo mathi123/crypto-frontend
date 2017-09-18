@@ -1,11 +1,10 @@
-<div fxFill fxLayout="column" fxFill class="container" *ngIf="accountsAvailable">
-  <div class="container" fxLayout="row">
-    <app-dashboard-configuration></app-dashboard-configuration>
-    <app-dashboard-summary></app-dashboard-summary>
-  </div>
-  <div class="container" fxFill fxLayout="row" fxLayoutGap="10px">
-      <!-- <app-account-list fxFlex="20%"></app-account-list> -->
-      <app-dashboard-content fxFill fxFlex="90%"></app-dashboard-content>
+<div fxLayout="column" fxLayoutAlign="space-evenly start" *ngIf="accountsAvailable">
+  <app-dashboard-configuration></app-dashboard-configuration>
+  <app-dashboard-summary class="marginTop"></app-dashboard-summary>
+  <div class="marginTop fullWidth">
+      <div class="container" fxFill fxLayout="row">
+          <app-dashboard-content fxFill fxFlex="90%"></app-dashboard-content>
+      </div>
   </div>
 </div>
 <md-card *ngIf="!accountsAvailable">

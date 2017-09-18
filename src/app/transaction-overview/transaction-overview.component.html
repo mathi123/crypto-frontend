@@ -35,7 +35,7 @@
 
   <ng-container mdColumnDef="amount">
     <md-header-cell *mdHeaderCellDef> Amount </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.amount}} </md-cell>
+    <md-cell *mdCellDef="let row" [class.positive]="row.amount > 0" [class.negative]="row.amount < 0"><span *ngIf="row.amount > 0">+</span>{{row.amount}} </md-cell>
   </ng-container>
 
   <ng-container mdColumnDef="tag">
