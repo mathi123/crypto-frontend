@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, ApplicationRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DashboardDataService } from "../dashboard-data.service";
 import { Chart } from "chart.js";
 import { ReportConfiguration } from '../report-configuration';
