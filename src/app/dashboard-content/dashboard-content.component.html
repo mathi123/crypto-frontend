@@ -3,7 +3,7 @@
     <md-card-subtitle *ngIf="!hasConfiguration">Choose a date to get started!</md-card-subtitle>
     <md-card-content *ngIf="hasConfiguration"> 
         <md-progress-spinner *ngIf="hasConfiguration && isLoading" mode="indeterminate">Loading</md-progress-spinner>       
-        <canvas baseChart *ngIf="!isLoading" legend="true"
+        <canvas baseChart *ngIf="hasConfiguration && !isLoading && lineChartData.length > 0" legend="true"
         [datasets]="lineChartData"
         [labels]="lineChartLabels"
         [colors]="lineChartColors"
