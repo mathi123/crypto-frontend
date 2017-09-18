@@ -30,6 +30,7 @@ import { DashboardContentComponent } from './dashboard-content/dashboard-content
 import { DashboardDataService } from "./dashboard-data.service";
 import { TestDataComponent } from './test-data/test-data.component';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     DashboardConfigurationComponent,
     DashboardSummaryComponent,
     DashboardContentComponent,
-    TestDataComponent
+    TestDataComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

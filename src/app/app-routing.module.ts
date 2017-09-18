@@ -6,6 +6,7 @@ import { AccountViewComponent } from "./account-view/account-view.component";
 import { TagTransactionViewComponent } from "./tag-transaction-view/tag-transaction-view.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { TestDataComponent } from './test-data/test-data.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'test',
     component: TestDataComponent
+  },
+  {
+    path: 'about',
+    component: AboutComponent
   },
   {
     path: '',
