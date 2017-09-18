@@ -40,44 +40,75 @@ export class DashboardDataService {
       .subscribe(data => {
         console.log(data);    
         const copiedData = [];
+        const colors = [];
+        let totals = {};
         for(let account of this.accountService.data){
-          let line = this.recalculateLine(account, data);
-    
+          let line = this.recalculateLine(account, data, totals);
           copiedData.push(line);
+          colors.push({
+            borderColor: line.borderColor
+          });
         }
+        let total = this.recalculateTotal(data, totals);
+        copiedData.push(total);
+        colors.push({
+          borderColor: "#FF4081"
+        });
+
         this.data.lines = copiedData;
         this.data.dates = data.dates;
+        this.data.colors = colors;
 
         this.dataChange.next(this.data);
       });    
   }
 
-  recalculateLine(account: Account, data: GetPricesResult):any{
-    console.table(data);
-
+  recalculateLine(account: Account, data: GetPricesResult, totals:any):any{
     let transactions = this.transactionsService.getTransactions(account);
-    console.table(transactions);
 
     let result = {
       label: account.name,
       data: [],
       borderColor: account.color.hexValue,
     };
-
     
     let prices = data.prices.filter(p => p.currency === account.currency.code)[0].prices.sort((a, b) => a.ts - b.ts);
 
     for(var i = 0; i < prices.length;i++){
-      var date = new Date(prices[i].ts);
+      let date = new Date(prices[i].ts);
+      let price = prices[i].price;
+      let before = transactions.filter(t => t.date <= date);
+      let amount = before.map(t => t.amount).reduce((prev, curr) => prev + curr, 0);
 
-      var price = prices[i].price;
+      let total = price * amount;
 
-      var before = transactions.filter(t => t.date <= date);
-      //console.log("transactions before " + date);
-      //console.table(before);
-      var amount = before.map(t => t.amount).reduce((prev, curr) => prev + curr, 0);
+      let ts = date.getTime();
+      if(totals[ts] === undefined){
+        totals[ts] = total;
+      }else{
+        totals[ts] = totals[ts] + total;
+      }
 
-      var total = price * amount;
+      result.data.push({
+        x: date,
+        y: total
+      });
+    }
+
+    return result;
+  }
+
+  recalculateTotal(data: GetPricesResult, totals: any):any{
+    let result = {
+      label: 'Total',
+      data: [],
+      borderColor: "#FF4081",
+    };
+   
+    for(var i = 0; i < data.dates.length;i++){
+      let date = new Date(data.dates[i]);
+      
+      let total = totals[date.getTime()];
 
       result.data.push({
         x: date,
@@ -88,6 +119,7 @@ export class DashboardDataService {
     return result;
   }
 }
+
 
 interface GetPricesResult{
   prices: PriceResult[];

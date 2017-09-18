@@ -29,6 +29,7 @@ import { DashboardSummaryComponent } from './dashboard-summary/dashboard-summary
 import { DashboardContentComponent } from './dashboard-content/dashboard-content.component';
 import { DashboardDataService } from "./dashboard-data.service";
 import { TestDataComponent } from './test-data/test-data.component';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { TestDataComponent } from './test-data/test-data.component';
     BrowserAnimationsModule,
     MdTableModule,
     FlexLayoutModule,
-    MdNativeDateModule
+    MdNativeDateModule,
+    ChartsModule
   ],
   entryComponents: [ConfirmDialogComponent],
   providers: [BuildDashboardService, AccountService, CryptoCurrenciesService, TransactionsService, DashboardDataService],

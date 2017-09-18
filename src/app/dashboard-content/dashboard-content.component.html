@@ -1,8 +1,14 @@
 <md-card fxFill>
-    <md-card-title>Report</md-card-title>
-    <md-card-content *ngIf="!hasConfiguration">Choose a date to get started!</md-card-content>
-    <md-card-content>
-        <md-progress-spinner *ngIf="isLoading" mode="indeterminate">Loading</md-progress-spinner>
-        <canvas id='myChart' [hidden]="!hasConfiguration || isLoading"></canvas>
+    <md-card-title>Report </md-card-title>
+    <md-card-subtitle *ngIf="!hasConfiguration">Choose a date to get started!</md-card-subtitle>
+    <md-card-content *ngIf="hasConfiguration"> 
+        <md-progress-spinner *ngIf="hasConfiguration && isLoading" mode="indeterminate">Loading</md-progress-spinner>       
+        <canvas baseChart *ngIf="!isLoading" legend="true"
+        [datasets]="lineChartData"
+        [labels]="lineChartLabels"
+        [colors]="lineChartColors"
+        [options]="lineChartOptions"
+        [chartType]="lineChartType"></canvas>
     </md-card-content>
 </md-card>
+
