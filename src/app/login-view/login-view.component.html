@@ -1,0 +1,17 @@
+<form fxLayout="column" fxLayoutAlign="center start">
+    <md-card>
+        <md-card-title>Login</md-card-title>
+        <md-card-content class="container" fxLayout="column">
+            <md-input-container fxLayoutGap="10px"> 
+                <input mdInput placeholder="Email" [(ngModel)]="credentials.email" name="email"/>
+            </md-input-container>
+            <md-input-container fxLayoutGap="10px"> 
+                <input mdInput placeholder="Password" type="password" [(ngModel)]="credentials.password" name="password"/>
+            </md-input-container>
+            <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end">
+                <button md-raised-button (click)="login();" color="primary">Login</button>
+                <button md-raised-button (click)="cancel();">Cancel</button>
+            </div>
+        </md-card-content>
+    </md-card>
+</form>

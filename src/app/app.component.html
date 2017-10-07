@@ -1,12 +1,43 @@
-<md-toolbar>
-  <span>Crypto Portfolio<sub class="versionIndicator"><i>alpha</i></sub></span>
-  <span class="fill-space"></span>
-  <button md-button routerLink="/accounts" routerLinkActive="active">
-    <md-icon>list</md-icon>Accounts</button>
-  <button md-button routerLink="/dashboard" routerLinkActive="active">
-    <md-icon>show_chart</md-icon>Dashboard</button>
-  <button md-button routerLink="/about" routerLinkActive="active">
-    <md-icon>info_outline</md-icon>About</button>
-</md-toolbar>
+<md-sidenav-container fxFlexFill>
+  <md-sidenav mode="over" #sideNavMenu>
+      <span>Menu</span>
+      <button md-button (click)="closeMenu()">
+        <md-icon>close</md-icon>
+      </button>    
+      
+      <md-nav-list>
+        <ng-container *ngFor="let menuItem of menuItems">
+            <md-list-item 
+            *ngIf="!((menuItem.requiresLogin && !loggedIn) || (menuItem.hideAfterLogin && loggedIn))">
+              <md-icon mdListIcon>{{menuItem.icon}}</md-icon>
+              <a mdLine (click)="navigateTo(menuItem)">{{ menuItem.name }}</a>
+            </md-list-item>
+        </ng-container>
+      </md-nav-list>
+  </md-sidenav>
+  <div fxLayout="column"> 
+      <md-toolbar>
+        <button md-icon-button (click)="toggleMenu()" *ngIf="media.isActive('xs')">
+          <md-icon>menu</md-icon>
+        </button>   
 
-<router-outlet></router-outlet>
+        <span fxFlex>Crypto Portfolio<sub class="versionIndicator"><i>alpha</i></sub></span>  
+        
+        <span class="fill-space"></span>
+
+        <div *ngIf="!media.isActive('xs')">
+          <ng-container *ngFor="let menuItem of menuItems" >
+              <button md-button (click)="navigateTo(menuItem)"
+                  *ngIf="!((menuItem.requiresLogin && !loggedIn) || (menuItem.hideAfterLogin && loggedIn))"
+                  routerLinkActive="active">
+                <md-icon>{{ menuItem.icon }}</md-icon>{{ menuItem.name }}
+              </button>
+          </ng-container>
+        </div>
+      </md-toolbar>
+    
+      <div fxFlex>
+          <router-outlet></router-outlet>
+      </div>
+    </div>
+</md-sidenav-container>

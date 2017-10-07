@@ -31,6 +31,13 @@ import { DashboardDataService } from "./dashboard-data.service";
 import { TestDataComponent } from './test-data/test-data.component';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AboutComponent } from './about/about.component';
+import { RegisterViewComponent } from './register-view/register-view.component';
+import { ConfigurationService } from './server-api/configuration.service';
+import { CurrencyService } from './server-api/currency.service';
+import { UserService } from './server-api/user.service';
+import { LoginViewComponent } from './login-view/login-view.component';
+import { TokenService } from './server-api/token-service';
+import { MenuService } from './server-api/menu.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +54,9 @@ import { AboutComponent } from './about/about.component';
     DashboardSummaryComponent,
     DashboardContentComponent,
     TestDataComponent,
-    AboutComponent
+    AboutComponent,
+    RegisterViewComponent,
+    LoginViewComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +72,8 @@ import { AboutComponent } from './about/about.component';
     ChartsModule
   ],
   entryComponents: [ConfirmDialogComponent],
-  providers: [BuildDashboardService, AccountService, CryptoCurrenciesService, TransactionsService, DashboardDataService],
+  providers: [BuildDashboardService, AccountService, CryptoCurrenciesService, TransactionsService, DashboardDataService, ConfigurationService, CurrencyService,
+    UserService, TokenService, MenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,6 +7,8 @@ import { TagTransactionViewComponent } from "./tag-transaction-view/tag-transact
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { TestDataComponent } from './test-data/test-data.component';
 import { AboutComponent } from './about/about.component';
+import { RegisterViewComponent } from './register-view/register-view.component';
+import { LoginViewComponent } from './login-view/login-view.component';
 
 const routes: Routes = [
   
@@ -33,6 +35,14 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent
+  },
+  {
+    path:'register',
+    component: RegisterViewComponent
+  },
+  {
+    path: 'login',
+    component: LoginViewComponent
   },
   {
     path: '',

@@ -13,3 +13,9 @@ md-icon.size-40 {
 .negative{
   color: #ef5350;
 }
+
+html, body {
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+}
