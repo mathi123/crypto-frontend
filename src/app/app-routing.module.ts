@@ -45,6 +45,10 @@ const routes: Routes = [
     component: LoginViewComponent
   },
   {
+    path: 'home',
+    component: HomeComponent
+  },
+  {
     path: '',
     component: HomeComponent
   }

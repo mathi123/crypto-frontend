@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Account } from '../account';
-import { Currency } from "../currency";
-import { CryptoCurrenciesService } from "../crypto-currencies.service";
+import { Account } from '../models/account';
+import { Coin } from "../models/coin";
+import { CoinService } from "../server-api/coin.service";
 import { Router } from "@angular/router";
 import { Location } from '@angular/common';
-import { AccountService } from "../account.service";
-import { Color } from '../color';
+import { AccountService } from "../server-api/account.service";
+import { Color } from '../models/color';
+import { AccountCacheService } from '../cache/account-cache.service';
+import { CoinCacheService } from '../cache/coin-cache.service';
 
 @Component({
   selector: 'app-account-view',
@@ -14,19 +16,19 @@ import { Color } from '../color';
 })
 export class AccountViewComponent implements OnInit {
   public account: Account;
-  public currencies: Currency[] = [];
+  public coins: Coin[] = [];
   public colors: Color[] = [];
 
-  constructor(private cryptoCurrencies: CryptoCurrenciesService, private router: Router,
-    private location: Location, private accountService: AccountService) { }
+  constructor(private router: Router, private location: Location, 
+    private accountCache: AccountCacheService, private coinCacheService: CoinCacheService) { }
 
   ngOnInit() {
     this.account = new Account();
     this.colors = Color.getDefaults();
-    this.account.color = this.colors[this.accountService.data.length % this.colors.length];
-    this.account.showInReporting = true;
-    this.cryptoCurrencies.getCurrencies()
-      .subscribe(list => this.currencies = list);
+    this.account.color = this.colors[0].hexValue;
+    
+    this.coinCacheService.getCoins()
+      .subscribe(list => this.coins = list);
   }
 
   public cancel(){
@@ -38,8 +40,13 @@ export class AccountViewComponent implements OnInit {
   public save(){
     console.debug('save');
 
-    this.accountService.addAccount(this.account);
+    this.accountCache.addAccount(this.account)
+    .subscribe((account) => {
+      this.location.back();
+      }, (err) => this.errorFeedback(err));
+  }
 
-    this.location.back();
+  errorFeedback(err){
+    console.error(err);
   }
 }

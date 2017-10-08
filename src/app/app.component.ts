@@ -1,6 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { ConfigurationService } from './server-api/configuration.service';
-import { MenuService } from './server-api/menu.service';
 import { MdDrawer } from '@angular/material';
 import { MenuItem } from './models/menu-item';
 import { Router } from '@angular/router';
@@ -25,7 +24,7 @@ export class AppComponent implements OnInit{
   @ViewChild('sideNavMenu') 
   public drawer: MdDrawer;
 
-  constructor(public media:ObservableMedia, private configurationService: ConfigurationService, private menuService: MenuService, private router: Router){
+  constructor(public media:ObservableMedia, private configurationService: ConfigurationService, private router: Router){
     media.asObservable()
     .subscribe((change:MediaChange) => {
       console.log(change ? `'${change.mqAlias}' = (${change.mediaQuery})` : "")

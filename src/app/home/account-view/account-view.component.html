@@ -1,19 +1,20 @@
 <form fxLayout="column" fxLayoutAlign="center start">
     <md-card>
-        <md-card-title>Add an account</md-card-title>
+        <md-card-title>Add a crypto currency account</md-card-title>
         <md-card-content class="container" fxLayout="column">
             <span>Enter a short name, and the <i>public</i> address of your account.</span>
-            <md-select fxLayoutGap="10px" placeholder="Coin" [(ngModel)]="account.coinId" name="accountCoin">
-                    <md-option *ngFor="let coin of coins" [value]="coin.id">
-                    {{coin.code}} {{coin.name}}
-                    </md-option>
-                </md-select>
+
             <md-input-container fxLayoutGap="10px"> 
-                <input mdInput placeholder="Description" [(ngModel)]="account.description" name="accountDescription"/>
+                <input mdInput placeholder="Name" [(ngModel)]="account.name" name="accountName"/>
             </md-input-container>
             <md-input-container fxLayoutGap="10px"> 
                 <input mdInput placeholder="Address" [(ngModel)]="account.address" name="accountAddress"/>
             </md-input-container>
+            <md-select fxLayoutGap="10px" placeholder="Currency" [(ngModel)]="account.currency" name="accountCurrency">
+                <md-option *ngFor="let currency of currencies" [value]="currency">
+                {{currency.code}} {{currency.name}}
+                </md-option>
+            </md-select>
             <md-select fxLayoutGap="10px" placeholder="Color" [(ngModel)]="account.color" name="accountColor">
                 <md-option *ngFor="let color of colors" [value]="color">
                  <button md-mini-fab [style.background]="color.hexValue"></button>

@@ -1,29 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { BuildDashboardService } from "../build-dashboard.service";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from "@angular/router";
-import { AccountService } from "../account.service";
-import { TransactionsService } from "../transactions.service";
+import { AccountCacheService } from '../cache/account-cache.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-account-overview',
   templateUrl: './account-overview.component.html',
   styleUrls: ['./account-overview.component.css']
 })
-export class AccountOverviewComponent implements OnInit {
-  public accounts: Account[] = [];
+export class AccountOverviewComponent implements OnInit, OnDestroy {
+  private accounts: Account[] = [];
+  private accountsSubscription: Subscription;
   
-  constructor(public accountService: AccountService, public routeService: Router, public buildDashboardService: BuildDashboardService) { }
+  constructor(private accountCacheService: AccountCacheService, private routeService: Router) { }
 
   ngOnInit() {
-    this.accounts = this.accountService.getAccounts();
-    this.accountService.dataChange.subscribe(accounts => {
-      this.accounts = accounts;
-    });
+    this.accountsSubscription = this.accountCacheService
+      .getAccounts()
+      .subscribe(acc => this.accountsChanged(acc));
+  }
+
+  ngOnDestroy(){
+    this.accountsSubscription.unsubscribe();
+  }
+
+  accountsChanged(accounts: Account[]){
+    this.accounts = accounts;
   }
 
   addAccount(){
-    console.log('add account');
-
     this.routeService.navigate(['account', 0]);
   }
 }

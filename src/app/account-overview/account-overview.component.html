@@ -5,20 +5,7 @@
     <md-card-subtitle>Click 'Add account' to add your first crypto account.</md-card-subtitle>
   </md-card-header>
 </md-card>
-<md-card *ngIf="accounts.length > 0 && !buildDashboardService.hasTags">
-    <md-card-header>
-      <div md-card-avatar><md-icon class="size-40">info_outline</md-icon> </div>
-      <md-card-title>Step 2</md-card-title>
-      <md-card-subtitle>Select a transaction and tag them with your original Buy-In.</md-card-subtitle>
-    </md-card-header>
-</md-card>
-<md-card *ngIf="accounts.length > 0 && buildDashboardService.hasTags && !buildDashboardService.hasViewdDashboard">
-    <md-card-header>
-      <div md-card-avatar><md-icon class="size-40">info_outline</md-icon> </div>
-      <md-card-title>Step 3</md-card-title>
-      <md-card-subtitle>You can now view your dashboard!</md-card-subtitle>
-    </md-card-header>
-</md-card>
+
 <button md-raised-button (click)="addAccount();" color="primary" fxLayoutGap="10px">
   <md-icon>create</md-icon> Add account
 </button>
@@ -26,11 +13,11 @@
   <md-tab label="All accounts">
     <app-transaction-overview></app-transaction-overview>
   </md-tab>
-  <md-tab *ngFor="let account of accounts" label="{{account.name}}">
-      <md-card *ngIf="account.loading">
+  <md-tab *ngFor="let account of accounts" label="{{account.description}}">
+      <!-- <md-card *ngIf="account.loading">
           <md-card-title>Loading...</md-card-title>
           <md-card-content>Your transactions are loading from the blockchain...</md-card-content>
-      </md-card>
+      </md-card> -->
       <app-transaction-overview [account]="account"></app-transaction-overview>
   </md-tab>
 </md-tab-group>

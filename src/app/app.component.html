@@ -1,11 +1,7 @@
 <md-sidenav-container fxFlexFill>
-  <md-sidenav mode="over" #sideNavMenu>
-      <span>Menu</span>
-      <button md-button (click)="closeMenu()">
-        <md-icon>close</md-icon>
-      </button>    
-      
+  <md-sidenav mode="over" #sideNavMenu>     
       <md-nav-list>
+        <span mdHeader>Menu</span>
         <ng-container *ngFor="let menuItem of menuItems">
             <md-list-item 
             *ngIf="!((menuItem.requiresLogin && !loggedIn) || (menuItem.hideAfterLogin && loggedIn))">

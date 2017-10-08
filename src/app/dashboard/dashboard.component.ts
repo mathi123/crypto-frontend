@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from "../account.service";
 import { BuildDashboardService } from "../build-dashboard.service";
+import { AccountCacheService } from '../cache/account-cache.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,14 +10,16 @@ import { BuildDashboardService } from "../build-dashboard.service";
 export class DashboardComponent implements OnInit {
   accountsAvailable: boolean = false;
 
-  constructor(private accountService: AccountService, private buildDashboardService: BuildDashboardService) { }
+  constructor(private accountCacheService: AccountCacheService, private buildDashboardService: BuildDashboardService) { }
 
   ngOnInit() {
-    this.accountsAvailable = this.accountService.data.length > 0;
-    this.accountService.dataChange.subscribe(acc => {
+    this.accountsAvailable = this.accountCacheService.Accounts.value.length > 0;
+
+    this.accountCacheService.Accounts.subscribe(acc => {
       this.accountsAvailable = acc.length > 0;
     });
-    if(this.accountService.data.length > 0){
+    
+    if(this.accountsAvailable){
       this.buildDashboardService.dashboardViewed();
     }
   }

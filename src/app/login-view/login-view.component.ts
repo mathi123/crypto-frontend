@@ -25,12 +25,12 @@ export class LoginViewComponent implements OnInit {
   }
   
   public login(){
-    console.debug('logging in');
-    this.tokenService.login(this.credentials)
-      .subscribe(() => {
-        console.log("logged in")
-      }, () => this.showFailedFeedback())
-    //this.location.back();
+      console.debug('logging in');
+      this.tokenService.login(this.credentials)
+        .subscribe(() => {
+          console.log("logged in");
+          this.router.navigateByUrl("/home");
+        }, () => this.showFailedFeedback())   ;   
   }
   private showFailedFeedback(): any {
     console.error("Could not login");
