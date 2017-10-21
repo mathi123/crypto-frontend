@@ -45,6 +45,9 @@ import { AuthGuard } from './auth-guard';
 import { SocketManagerService } from './server-socket/socket-manager.service';
 import { LogoutViewComponent } from './logout-view/logout-view.component';
 import { Logger } from './logger';
+import { CoinOverviewComponent } from './coin-overview/coin-overview.component';
+import { CoinViewComponent } from './coin-view/coin-view.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +67,10 @@ import { Logger } from './logger';
     AboutComponent,
     RegisterViewComponent,
     LoginViewComponent,
-    LogoutViewComponent
+    LogoutViewComponent,
+    CoinOverviewComponent,
+    CoinViewComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,

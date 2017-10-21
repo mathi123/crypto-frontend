@@ -11,6 +11,9 @@ import { RegisterViewComponent } from './register-view/register-view.component';
 import { LoginViewComponent } from './login-view/login-view.component';
 import { AuthGuard } from './auth-guard';
 import { LogoutViewComponent } from './logout-view/logout-view.component';
+import { CoinOverviewComponent } from './coin-overview/coin-overview.component';
+import { CoinViewComponent } from './coin-view/coin-view.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   
@@ -57,6 +60,21 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'coins',
+    component: CoinOverviewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'coin/:id',
+    component: CoinViewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin',
+    component: AdminDashboardComponent,
     canActivate: [AuthGuard],
   },
   {

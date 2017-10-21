@@ -18,6 +18,7 @@ export class AppComponent implements OnInit{
     new MenuItem("Login", "/login", false, true, "account_circle"),
     new MenuItem("Accounts", "/accounts", true, false, "list"),
     new MenuItem("Dashboard", "/dashboard", true, false, "show_chart"),
+    new MenuItem("Admin", "/admin", true, false, "build"),
     new MenuItem("About", "/about", false, false,"info_outline"),
     new MenuItem('Logout', "/logout", true, false, "power_settings_new")
   ];

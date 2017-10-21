@@ -1,0 +1,42 @@
+<title>Crypto currencies</title>
+
+<button md-raised-button (click)="add();" color="primary" fxLayoutGap="10px">
+  <md-icon>create</md-icon> Add coin
+</button>
+<md-table #table [dataSource]="dataSource">   
+
+  <ng-container mdColumnDef="code">
+    <md-header-cell *mdHeaderCellDef> Code </md-header-cell>
+    <md-cell *mdCellDef="let row"> {{row.code}} </md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="description">
+    <md-header-cell *mdHeaderCellDef> Description </md-header-cell>
+    <md-cell *mdCellDef="let row"> {{row.description}} </md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="isActive">
+    <md-header-cell *mdHeaderCellDef> Is Active </md-header-cell>
+    <md-cell *mdCellDef="let row">
+        <md-checkbox [(ngModel)]="row.isActive" disabled></md-checkbox>
+    </md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="coinType">
+    <md-header-cell *mdHeaderCellDef> Coin Type </md-header-cell>
+    <md-cell *mdCellDef="let row"> {{row.coinType}} </md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="decimals">
+    <md-header-cell *mdHeaderCellDef> Decimals </md-header-cell>
+    <md-cell *mdCellDef="let row"> {{row.decimals}} </md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="baseAddress">
+    <md-header-cell *mdHeaderCellDef> Base address </md-header-cell>
+    <md-cell *mdCellDef="let row"> {{row.baseAddress}} </md-cell>
+  </ng-container>
+
+  <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+  <md-row *mdRowDef="let row; columns: displayedColumns;" (click)="rowClicked(row);"></md-row>
+</md-table>

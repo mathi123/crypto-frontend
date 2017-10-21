@@ -9,6 +9,7 @@ import { AccountCacheService } from '../cache/account-cache.service';
 import { CoinCacheService } from '../cache/coin-cache.service';
 import { TransactionType } from '../models/transaction-type';
 import { Subscription } from 'rxjs/Subscription';
+import { CoinType } from '../models/coin-type';
 
 @Component({
   selector: 'app-account-view',
