@@ -8,7 +8,7 @@ import { ReportConfiguration } from '../models/report-configuration';
   styleUrls: ['./dashboard-configuration.component.css']
 })
 export class DashboardConfigurationComponent implements OnInit {
-  configuration: ReportConfiguration;
+  configuration: ReportConfiguration = new ReportConfiguration();
   maxDate = new Date(Date.now());
 
   public hasError: boolean = false;

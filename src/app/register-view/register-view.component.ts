@@ -1,46 +1,82 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Currency } from "../models/currency";
-import { CryptoCurrenciesService } from "../crypto-currencies.service";
 import { Router } from "@angular/router";
 import { Location } from '@angular/common';
-import { AccountService } from "../account.service";
-import { Color } from '../color';
+import { Color } from '../models/color';
 import { User } from '../models/user';
 import { CurrencyService } from '../server-api/currency.service';
 import { UserService } from '../server-api/user.service';
+import { CurrencyCacheService } from '../cache/currency-cache.service';
+import { Subscription } from 'rxjs/Subscription';
+import { Logger } from '../logger';
 
 @Component({
   selector: 'app-register-view',
   templateUrl: './register-view.component.html',
   styleUrls: ['./register-view.component.css']
 })
-export class RegisterViewComponent implements OnInit {
+export class RegisterViewComponent implements OnInit, OnDestroy {
   public user: User = new User();
   public currencies: Currency[] = [];
 
-  constructor(private router: Router, private location: Location, private currencyService: CurrencyService,
-    private userService: UserService) { }
+  private currencySubscription: Subscription;
+  private isValidating: boolean = false;
+  private isLoggingIn: boolean = false;
+  private showErrorMessage: boolean = false;
+
+  constructor(private router: Router, private location: Location, private currencyCacheService: CurrencyCacheService,
+    private userService: UserService, private logger: Logger) { }
 
   ngOnInit() {
-    this.currencyService.read()
-      .subscribe(currencies => this.currencies = currencies);
+    this.currencySubscription = this.currencyCacheService.getCurrencies()
+      .subscribe(currencies => this.currencies = currencies,
+                 err => this.fatalError(err));
+  }
+
+  ngOnDestroy(){
+    this.currencySubscription.unsubscribe();
   }
 
   public cancel(){
-    console.debug('cancel user creation');
-    this.user = new User();
+    this.logger.verbose("cancel register new user.");
+    this.resetData();
     this.location.back();
   }
   
   public save(){
-    console.log("saving user.")
-    console.log(JSON.stringify(this.user));
+    this.logger.verbose("saving user.", this.user)
+    this.showErrorMessage = false;
+    this.isValidating = true;
+    
 
     this.userService.create(this.user)
-      .subscribe(() => console.log("success"), 
-      () => this.showFailedFeedback());  
+      .subscribe(() => this.userSaveSuccess(), 
+                (err) => this.userSaveFailed(err));
+  }
 
-    //this.location.back();
+  private isValid():Boolean{
+    return this.user.password === this.user.repeatPassword;
+  }
+
+  private userSaveSuccess(){
+    this.logger.verbose("success");
+  }
+
+  private userSaveFailed(err:Error){
+    this.logger.error("login failed", err);
+    this.showErrorMessage = true;
+    this.isLoggingIn = false;
+  }
+
+  private resetData(){
+    this.user = new User();
+    this.isLoggingIn = false;
+    this.isValidating = false;
+    this.showErrorMessage = false;
+  }
+
+  private fatalError(err){
+    this.logger.error(err);
   }
 
   private showFailedFeedback(): any {

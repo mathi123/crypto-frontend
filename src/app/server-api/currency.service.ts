@@ -10,7 +10,7 @@ export class CurrencyService {
   constructor(private httpClient: HttpClient, private config: ConfigurationService) { }
 
   read(): Observable<Currency[]> {
-    return this.httpClient.get<Currency[]>(`${this.config.getBaseUrl()}/currency`);
+    return this.httpClient.get<Currency[]>(`${this.config.getApiUrl()}/currency`);
   }
 /*
   remove(id: number): Promise<boolean> {

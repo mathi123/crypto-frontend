@@ -17,6 +17,12 @@ export class AccountCacheService implements hasCache{
 
     constructor(private accountService: AccountService) { }  
 
+    /// return cache observable
+    public getCache(): CacheSubject<Account[]>{
+        return this.cache;
+    }
+
+    /// return cache observable, start getting items
     public getAccounts():BehaviorSubject<Account[]>{
         if(!this.cache.isInitialized){
             this.reloadCache();
@@ -37,12 +43,35 @@ export class AccountCacheService implements hasCache{
         this.cache.isInitialized = false;
     }
 
-    public addAccount(account: Account) : Observable<Account>{
-        return this.accountService.create(account)
-            .flatMap((id) => this.readAndAdd(id));
+    public getById(id: string):Observable<Account>{
+        if(this.cache.isInitialized){
+            let result = this.cache.value.filter(a => a.id === id)[0];
+            return Observable.from(Observable.of(result));
+        }else{
+            return this.readFromServerAndStoreInCache(id);
+        }
     }
 
-    private readAndAdd(id: string) : Observable<Account>{
+    public update(account: Account) : Observable<boolean>{
+        return this.accountService.update(account)
+            .map(a => true);
+    }
+
+    public addAccount(account: Account) : Observable<Account>{
+        return this.accountService.create(account)
+            .flatMap((id) => this.readFromServerAndStoreInCache(id));
+    }
+
+    public delete(account:Account) : Observable<boolean>{
+        return this.accountService.delete(account.id)
+        .do(() => {
+            let clone = this.cache.value;
+            clone.splice(clone.indexOf(account), 1)
+            this.cache.next(clone);
+        }).map(r => true);
+    }
+
+    private readFromServerAndStoreInCache(id: string) : Observable<Account>{
         return this.accountService.readById(id)
             .do(
                 account => this.addAccountToCache(account),

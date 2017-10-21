@@ -23,32 +23,30 @@
     </md-cell>
   </ng-container>
 
-  <ng-container mdColumnDef="account">
-      <md-header-cell *mdHeaderCellDef> Account </md-header-cell>
-      <md-cell *mdCellDef="let row"> {{row.account.name}} </md-cell>
-    </ng-container>
-
   <ng-container mdColumnDef="date">
     <md-header-cell *mdHeaderCellDef> Date </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.date | date:'mediumDate'}} </md-cell>
+    <md-cell *mdCellDef="let row"> {{row.ts | date:'mediumDate'}} </md-cell>
   </ng-container>
 
   <ng-container mdColumnDef="amount">
     <md-header-cell *mdHeaderCellDef> Amount </md-header-cell>
     <md-cell *mdCellDef="let row" [class.positive]="row.amount > 0" [class.negative]="row.amount < 0"><span *ngIf="row.amount > 0">+</span>{{row.amount}} </md-cell>
   </ng-container>
-
+<!-- 
   <ng-container mdColumnDef="tag">
       <md-header-cell *mdHeaderCellDef> Tag </md-header-cell>
       <md-cell *mdCellDef="let row"> <div *ngIf="row.tagType !== ''">{{row.tagType}} = {{row.tagAmount}} </div> </md-cell>
-    </ng-container>
+    </ng-container> -->
 
   <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
   <md-row *mdRowDef="let row; columns: displayedColumns;"
           [class.example-selected-row]="selection.isSelected(row.id)"
           (click)="selection.toggle(row.id)"></md-row>
 </md-table>
-
+<button md-button (click)="edit();" *ngIf="account !== null" class="mtb-5" color="primary">
+    <md-icon>edit</md-icon>
+    Edit account
+</button>  
 <button md-button (click)="delete();" *ngIf="account !== null" class="mtb-5" color="warn">
     <md-icon>delete</md-icon>
     Delete account

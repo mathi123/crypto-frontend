@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { Location } from '@angular/common';
 import { Credentials } from '../models/credentials';
 import { TokenService } from '../server-api/token-service';
+import { SocketManagerService } from '../server-socket/socket-manager.service';
 
 @Component({
   selector: 'app-login-view',
@@ -12,7 +13,8 @@ import { TokenService } from '../server-api/token-service';
 export class LoginViewComponent implements OnInit {
   credentials: Credentials = new Credentials();
 
-  constructor(private router: Router, private location: Location, private tokenService: TokenService) { }
+  constructor(private router: Router, private location: Location, 
+    private tokenService: TokenService) { }
 
   ngOnInit() {
   }
@@ -29,7 +31,7 @@ export class LoginViewComponent implements OnInit {
       this.tokenService.login(this.credentials)
         .subscribe(() => {
           console.log("logged in");
-          this.router.navigateByUrl("/home");
+          //this.router.navigateByUrl("/home");
         }, () => this.showFailedFeedback())   ;   
   }
   private showFailedFeedback(): any {

@@ -1,4 +1,4 @@
-export class Account{
+export class Account {
     id: string;
     description: string;
     coinId: string;
@@ -6,5 +6,5 @@ export class Account{
     color: string;
     address: string;
     note: string;
-    transactionType: string = 'auto';
+    transactionType: string;
 }

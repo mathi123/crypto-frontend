@@ -10,9 +10,9 @@
   <md-icon>create</md-icon> Add account
 </button>
 <md-tab-group *ngIf="accounts.length > 0">
-  <md-tab label="All accounts">
+  <!-- <md-tab label="All accounts">
     <app-transaction-overview></app-transaction-overview>
-  </md-tab>
+  </md-tab> -->
   <md-tab *ngFor="let account of accounts" label="{{account.description}}">
       <!-- <md-card *ngIf="account.loading">
           <md-card-title>Loading...</md-card-title>

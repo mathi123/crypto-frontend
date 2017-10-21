@@ -10,7 +10,7 @@ import 'rxjs/add/operator/do';
 export class ConfigurationService {
   private _baseUrl = 'http://localhost:3000';
   private _headers: HttpHeaders = new HttpHeaders();
-  private _token: string;
+  private token: string;
     
   public TOKENHEADER = 'Authorization';
 
@@ -21,21 +21,35 @@ export class ConfigurationService {
     this._headers.append('Content-Type', 'application/json');
   }
 
-  public getBaseUrl(): string {
+  public getBaseUrl(){
+    return this._baseUrl;
+  }
+
+  public getApiUrl(): string {
     return `${this._baseUrl}/api`;
   }
 
+  public logOut(){
+    this.token = null;
+    this._headers = new HttpHeaders();
+    this.LoggedInSubject.next(false);
+  }
+
   public setToken(token: string) {
-    this._token = token;
+    this.token = token;
     this.addTokenToHeaders();   
 
     this.loadContext();
     this.LoggedInSubject.next(true);
   }
 
+  public getBearerToken(){
+    return this.token.substr('Bearer '.length);
+  }
+
   private loadContext(){
     console.log("loading context");
-    this.httpClient.get<Context>(`${this.getBaseUrl()}/context`, this.getHttpOptions())
+    this.httpClient.get<Context>(`${this.getApiUrl()}/context`, this.getHttpOptions())
       .subscribe(c => this.UserContext.next(c));
   }
 
@@ -43,9 +57,9 @@ export class ConfigurationService {
     if (this._headers.has(this.TOKENHEADER)) {
       this._headers = this._headers.delete(this.TOKENHEADER);
     }
-    this._headers = this._headers.set(this.TOKENHEADER, this._token);
+    this._headers = this._headers.set(this.TOKENHEADER, this.token);
     console.log(this._headers);
-    console.log(this._token);
+    console.log(this.token);
   }
 
   public getHeaders(){

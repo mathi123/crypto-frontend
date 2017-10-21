@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Account } from '../models/account';
 import { Coin } from "../models/coin";
-import { CoinService } from "../server-api/coin.service";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common';
 import { AccountService } from "../server-api/account.service";
 import { Color } from '../models/color';
 import { AccountCacheService } from '../cache/account-cache.service';
 import { CoinCacheService } from '../cache/coin-cache.service';
+import { TransactionType } from '../models/transaction-type';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-account-view',
@@ -15,18 +16,33 @@ import { CoinCacheService } from '../cache/coin-cache.service';
   styleUrls: ['./account-view.component.css']
 })
 export class AccountViewComponent implements OnInit {
-  public account: Account;
+  public account: Account = new Account();
   public coins: Coin[] = [];
   public colors: Color[] = [];
+  public transactionTypes = [
+    new TransactionType("auto", "Load automatically")
+  ];
 
-  constructor(private router: Router, private location: Location, 
+  private routeParamsSubscription: Subscription;
+
+  constructor(private router: Router, private location: Location, private route: ActivatedRoute,
     private accountCache: AccountCacheService, private coinCacheService: CoinCacheService) { }
 
   ngOnInit() {
-    this.account = new Account();
     this.colors = Color.getDefaults();
-    this.account.color = this.colors[0].hexValue;
-    
+
+    this.routeParamsSubscription = this.route.params.subscribe(params => {
+      let id = params['id'];
+
+      if(id === undefined || id === null || id === '0'){
+        this.account = new Account();
+        this.account.color = this.colors[0].hexValue;
+      }else{
+        this.accountCache.getById(id)
+          .subscribe(acc => this.account = acc);
+      }
+    });
+
     this.coinCacheService.getCoins()
       .subscribe(list => this.coins = list);
   }
@@ -40,10 +56,17 @@ export class AccountViewComponent implements OnInit {
   public save(){
     console.debug('save');
 
-    this.accountCache.addAccount(this.account)
-    .subscribe((account) => {
-      this.location.back();
-      }, (err) => this.errorFeedback(err));
+    if(this.account.id === null || this.account.id === undefined){
+      this.accountCache.addAccount(this.account)
+        .subscribe((account) => {
+          this.location.back();
+          }, (err) => this.errorFeedback(err));
+    }else{
+      this.accountCache.update(this.account)
+        .subscribe(() => {
+        this.location.back();
+        }, (err) => this.errorFeedback(err));
+    }
   }
 
   errorFeedback(err){

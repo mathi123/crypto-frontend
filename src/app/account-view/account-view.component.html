@@ -1,29 +1,32 @@
-<form fxLayout="column" fxLayoutAlign="center start">
-    <md-card>
-        <md-card-title>Add an account</md-card-title>
-        <md-card-content class="container" fxLayout="column">
+<md-card>
+    <md-card-title>Add an account</md-card-title>
+    <md-card-content>
+        <form fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
             <span>Enter a short name, and the <i>public</i> address of your account.</span>
-            <md-select fxLayoutGap="10px" placeholder="Coin" [(ngModel)]="account.coinId" name="accountCoin">
-                    <md-option *ngFor="let coin of coins" [value]="coin.id">
-                    {{coin.code}} {{coin.name}}
-                    </md-option>
-                </md-select>
-            <md-input-container fxLayoutGap="10px"> 
+            <md-select placeholder="Coin" [(ngModel)]="account.coinId" name="accountCoin">
+                <md-option *ngFor="let coin of coins" [value]="coin.id">
+                {{coin.code}} {{coin.name}}
+                </md-option>
+            </md-select>
+            <md-input-container> 
                 <input mdInput placeholder="Description" [(ngModel)]="account.description" name="accountDescription"/>
             </md-input-container>
-            <md-input-container fxLayoutGap="10px"> 
+            <md-input-container> 
                 <input mdInput placeholder="Address" [(ngModel)]="account.address" name="accountAddress"/>
             </md-input-container>
-            <md-select fxLayoutGap="10px" placeholder="Color" [(ngModel)]="account.color" name="accountColor">
-                <md-option *ngFor="let color of colors" [value]="color">
-                 <button md-mini-fab [style.background]="color.hexValue"></button>
+            <md-select placeholder="Color" [(ngModel)]="account.color" name="accountColor">
+                <md-option *ngFor="let color of colors" [value]="color.hexValue">
+                    <button md-mini-fab [style.background]="color.hexValue"></button>
                 {{color.name}}
                 </md-option>
+            </md-select>
+            <md-select placeholder="Load transactions" [(ngModel)]="account.transactionType" name="accountTransactionType">
+                <md-option *ngFor="let transactionType of transactionTypes" [value]="transactionType.code">{{transactionType.description}}</md-option>
             </md-select>
             <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end">
                 <button md-raised-button (click)="save();" color="primary">Save</button>
                 <button md-raised-button (click)="cancel();">Cancel</button>
             </div>
-        </md-card-content>
-    </md-card>
-</form>
+        </form>
+    </md-card-content>
+</md-card>

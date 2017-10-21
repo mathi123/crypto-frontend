@@ -1,28 +1,28 @@
-<form fxLayout="column" fxLayoutAlign="center start">
-    <md-card>
-        <md-card-title>Register a new account</md-card-title>
-        <md-card-content class="container" fxLayout="column">
-            <md-input-container fxLayoutGap="10px"> 
+<md-card>
+    <md-card-title>Register a new account</md-card-title>
+    <md-card-content class="container" fxLayout="column">
+        <form fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
+            <md-input-container> 
                 <input mdInput placeholder="Your name" [(ngModel)]="user.name" name="userName"/>
             </md-input-container>
-            <md-input-container fxLayoutGap="10px"> 
+            <md-input-container> 
                 <input mdInput placeholder="Email" [(ngModel)]="user.email" name="userEmail"/>
             </md-input-container>
-            <md-input-container fxLayoutGap="10px"> 
+            <md-input-container> 
                 <input mdInput type="password" placeholder="Password" [(ngModel)]="user.password" name="userPassword"/>
             </md-input-container>
-            <md-input-container fxLayoutGap="10px"> 
+            <md-input-container> 
                 <input mdInput type="password" placeholder="Repeat Password" [(ngModel)]="user.repeatPassword" name="userRepeatPassword"/>
             </md-input-container>
-            <md-select fxLayoutGap="10px" placeholder="Home currency" [(ngModel)]="user.currencyId" name="userCurrency">
+            <md-select placeholder="Home currency" [(ngModel)]="user.currencyId" name="userCurrency">
                 <md-option *ngFor="let currency of currencies" [value]="currency.id">
                 {{currency.code}} {{currency.name}}
                 </md-option>
             </md-select>
-            <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end">
+            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start end">
                 <button md-raised-button (click)="save();" color="primary">Save</button>
                 <button md-raised-button (click)="cancel();">Cancel</button>
             </div>
-        </md-card-content>
-    </md-card>
-</form>
+        </form>
+    </md-card-content>
+</md-card>

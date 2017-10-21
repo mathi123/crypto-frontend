@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
-import { TagTypes } from "../tag-types";
-import { Transaction } from "../transaction";
-import { TransactionsService } from "../transactions.service";
-import { BuildDashboardService } from "../build-dashboard.service";
-import { AccountService } from '../account.service';
+import { Tag } from '../models/tag';
+import { AccountCacheService } from '../cache/account-cache.service';
+import { TagCacheService } from '../cache/tag-cache-service';
+import { Subscription } from 'rxjs/Subscription';
+import { Transaction } from '../models/transaction';
 
 @Component({
   selector: 'app-tag-transaction-view',
@@ -13,48 +13,55 @@ import { AccountService } from '../account.service';
   styleUrls: ['./tag-transaction-view.component.css']
 })
 export class TagTransactionViewComponent implements OnInit {
-  transaction: Transaction;
+  private transaction: Transaction;
+  private tag:Tag;
+  private tags: Tag[] = [];
+  private amount: 0;
+  private predefinedTag: string = null;
 
-  tag:string = '';
-  amount: 0;
+  private routeParamsSubscription: any;
+  private tagSubscription: Subscription;
+  private queryParamsSubscription: any;
 
-  private sub: any;
-  private queryParamsSub: any;
-
-  tags = [ TagTypes.BuyIn, TagTypes.BuyOut, TagTypes.SwapIn, TagTypes.SwapOut];
-
-  constructor(private routeService: Router, private location: Location, private route: ActivatedRoute, private transactionsService: TransactionsService,
-    private buildDashboardService: BuildDashboardService, private accountService: AccountService) { }
+  constructor(private routeService: Router, private location: Location, private route: ActivatedRoute,
+    private accountCacheService: AccountCacheService, private tagCacheService: TagCacheService) { }
   
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-      let id = params['id'];
-      let accountName = params['account'];
+    this.routeParamsSubscription = this.route.params.subscribe(params => {
+      let transactionId = params['id'];
 
-      console.log(accountName);
-
-      let account = this.accountService.getAccount(accountName);
-      this.transaction = this.transactionsService.getTransaction(account, id);
+      //let account = this.accountCacheService.getById(accountId);
+      // this.transaction = this.transactionsService.getTransaction(account, transactionId);
     });
 
-    this.queryParamsSub = this.route.queryParams.subscribe(params=> {
+    this.queryParamsSubscription = this.route.queryParams.subscribe(params=> {
       let predefinedTag = params['tag'];
 
       if(predefinedTag !== undefined){
-        this.tag = predefinedTag;
+        this.predefinedTag = predefinedTag;
       }
     });
+
+    this.tagSubscription = this.tagCacheService.getTags()
+      .subscribe(tags => this.reloadTags(tags));
+  }
+
+  reloadTags(tags: Tag[]){
+    this.tags = tags;
+    if(this.predefinedTag !== null){
+      this.tag = this.tags.filter(t => t.code === this.predefinedTag)[0];
+    }
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
-    this.queryParamsSub.unsubscribe();
+    this.tagSubscription.unsubscribe();
+    this.queryParamsSubscription.unsubscribe();
+    this.routeParamsSubscription.unsubscribe();
   }
 
   save(){
-    this.transaction.tagAmount = this.amount;
-    this.transaction.tagType = this.tag;
-    this.buildDashboardService.tagCreated();
+    // this.transaction.tagAmount = this.amount;
+    // this.transaction.tagType = this.tag;
     this.location.back();
   }
 

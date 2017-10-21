@@ -34,17 +34,17 @@ export class DashboardContentComponent implements OnInit, OnDestroy {
   private dataSubscription: Subscription;
   private configSubscription: Subscription;
 
-  constructor(private dashboardDataService: DashboardDataService) { }
+  constructor(/*private dashboardDataService: DashboardDataService*/) { }
 
   ngOnInit() {
-    this.dataSubscription = this.dashboardDataService.dataChange.subscribe((d) => this.refreshData(d));
-    this.configSubscription = this.dashboardDataService.configurationChange.subscribe((c) => this.configChanged(c));
+    //this.dataSubscription = this.dashboardDataService.dataChange.subscribe((d) => this.refreshData(d));
+    //this.configSubscription = this.dashboardDataService.configurationChange.subscribe((c) => this.configChanged(c));
     this.isLoading = false;
   }
 
   ngOnDestroy(){
-    this.dataSubscription.unsubscribe();
-    this.configSubscription.unsubscribe();
+    //this.dataSubscription.unsubscribe();
+    //this.configSubscription.unsubscribe();
     this.isLoading = false;
   }
 
@@ -60,7 +60,7 @@ export class DashboardContentComponent implements OnInit, OnDestroy {
   }
 
   refreshData(data: any){
-    let datasets = data.lines;
+    /*let datasets = data.lines;
     let config = this.dashboardDataService.configurationChange.value;
 
     var labels = [];
@@ -76,6 +76,6 @@ export class DashboardContentComponent implements OnInit, OnDestroy {
     this.lineChartColors = data.colors;
 
     console.log("i should stop loading now");
-    this.isLoading = false;
+    this.isLoading = false;*/
   }
 }

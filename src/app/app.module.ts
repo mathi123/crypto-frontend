@@ -11,7 +11,6 @@ import { MaterialModule, MdTableModule, MdNativeDateModule, } from '@angular/mat
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HomeComponent } from './home/home.component';
-import { BuildDashboardService } from "./build-dashboard.service";
 import { AccountOverviewComponent } from './account-overview/account-overview.component';
 import { AccountViewComponent } from './account-view/account-view.component';
 import { HttpClientModule } from "@angular/common/http";
@@ -34,8 +33,18 @@ import { UserService } from './server-api/user.service';
 import { LoginViewComponent } from './login-view/login-view.component';
 import { TokenService } from './server-api/token-service';
 import { TagService } from './server-api/tag.service';
+import { AccountService } from './server-api/account.service';
+import { AccountCacheService } from './cache/account-cache.service';
+import { CoinCacheService } from './cache/coin-cache.service';
+import { TransactionService } from './server-api/transaction.service';
+import { TransactionCacheService } from './cache/transaction-cache.service';
+import { TagCacheService } from './cache/tag-cache-service';
+import { CurrencyCacheService } from './cache/currency-cache.service';
 import { CoinService } from './server-api/coin.service';
-import { AccountService as AccountService2 } from './server-api/account.service';
+import { AuthGuard } from './auth-guard';
+import { SocketManagerService } from './server-socket/socket-manager.service';
+import { LogoutViewComponent } from './logout-view/logout-view.component';
+import { Logger } from './logger';
 
 @NgModule({
   declarations: [
@@ -54,7 +63,8 @@ import { AccountService as AccountService2 } from './server-api/account.service'
     TestDataComponent,
     AboutComponent,
     RegisterViewComponent,
-    LoginViewComponent
+    LoginViewComponent,
+    LogoutViewComponent
   ],
   imports: [
     BrowserModule,
@@ -70,8 +80,10 @@ import { AccountService as AccountService2 } from './server-api/account.service'
     ChartsModule
   ],
   entryComponents: [ConfirmDialogComponent],
-  providers: [BuildDashboardService, ConfigurationService, CurrencyService,
-    UserService, TokenService, TagService, CoinService, AccountService2],
+  providers: [ConfigurationService, CurrencyService, CurrencyCacheService, AuthGuard,
+    UserService, TokenService, TagService, TagCacheService, AccountService,
+     AccountCacheService, CoinCacheService, CoinService, TransactionService, 
+     TransactionCacheService, SocketManagerService, Logger],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

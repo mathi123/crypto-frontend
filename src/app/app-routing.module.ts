@@ -9,24 +9,30 @@ import { TestDataComponent } from './test-data/test-data.component';
 import { AboutComponent } from './about/about.component';
 import { RegisterViewComponent } from './register-view/register-view.component';
 import { LoginViewComponent } from './login-view/login-view.component';
+import { AuthGuard } from './auth-guard';
+import { LogoutViewComponent } from './logout-view/logout-view.component';
 
 const routes: Routes = [
   
   {
     path: 'accounts',
-    component: AccountOverviewComponent
+    component: AccountOverviewComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'account/:id',
-    component: AccountViewComponent
+    component: AccountViewComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'transaction/:account/:id/tag',
-    component: TagTransactionViewComponent
+    component: TagTransactionViewComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'test',
@@ -45,8 +51,13 @@ const routes: Routes = [
     component: LoginViewComponent
   },
   {
+    path: 'logout',
+    component: LogoutViewComponent
+  },
+  {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: '',

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { BuildDashboardService } from "../build-dashboard.service";
 
 @Component({
   selector: 'app-home',
@@ -9,10 +8,9 @@ import { BuildDashboardService } from "../build-dashboard.service";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private buildDashboardService:BuildDashboardService, private router:Router) { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
-    this.buildDashboardService.startFlow();
   }
 
   nextStep(){

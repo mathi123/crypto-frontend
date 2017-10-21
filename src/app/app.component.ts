@@ -19,6 +19,7 @@ export class AppComponent implements OnInit{
     new MenuItem("Accounts", "/accounts", true, false, "list"),
     new MenuItem("Dashboard", "/dashboard", true, false, "show_chart"),
     new MenuItem("About", "/about", false, false,"info_outline"),
+    new MenuItem('Logout', "/logout", true, false, "power_settings_new")
   ];
 
   @ViewChild('sideNavMenu') 

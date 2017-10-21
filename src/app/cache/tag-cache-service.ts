@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
-import { Coin } from '../models/coin';
+import { TagService } from '../server-api/tag.service';
 
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/from';
@@ -10,15 +10,15 @@ import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { hasCache } from './hasCache.interface';
 import { CacheSubject } from './cache-subject';
-import { CoinService } from '../server-api/coin.service';
+import { Tag } from '../models/tag';
 
 @Injectable()
-export class CoinCacheService implements hasCache {
-    private cache: CacheSubject<Coin[]> = new CacheSubject<Coin[]>([]);
+export class TagCacheService implements hasCache {
+    private cache: CacheSubject<Tag[]> = new CacheSubject<Tag[]>([]);
 
-    constructor(private coinService: CoinService) { }
+    constructor(private tagService: TagService) { }
 
-    getCoins():BehaviorSubject<Coin[]>{
+    getTags():BehaviorSubject<Tag[]>{
         if(!this.cache.isInitialized){
             this.reloadCache();
         }
@@ -28,8 +28,8 @@ export class CoinCacheService implements hasCache {
 
     reloadCache() {
         this.cache.isInitialized = true;
-        this.coinService.read()
-            .subscribe(coins => this.cache.next(coins),
+        this.tagService.read()
+            .subscribe(tags => this.cache.next(tags),
                 (err) => this.handleError(err));
 
     }

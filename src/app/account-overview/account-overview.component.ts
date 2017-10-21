@@ -29,6 +29,6 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
   }
 
   addAccount(){
-    this.routeService.navigate(['account', 0]);
+    this.routeService.navigate(['account', '0']);
   }
 }
