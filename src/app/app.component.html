@@ -1,20 +1,20 @@
-<md-sidenav-container fxFlexFill>
-  <md-sidenav mode="over" #sideNavMenu>     
-      <md-nav-list>
+<mat-sidenav-container fxFlexFill>
+  <mat-sidenav mode="over" #sideNavMenu>     
+      <mat-nav-list>
         <span mdHeader>Menu</span>
         <ng-container *ngFor="let menuItem of menuItems">
-            <md-list-item 
+            <mat-list-item 
             *ngIf="!((menuItem.requiresLogin && !loggedIn) || (menuItem.hideAfterLogin && loggedIn))">
-              <md-icon mdListIcon>{{menuItem.icon}}</md-icon>
-              <a mdLine (click)="navigateTo(menuItem)">{{ menuItem.name }}</a>
-            </md-list-item>
+              <mat-icon matListIcon>{{menuItem.icon}}</mat-icon>
+              <a matLine (click)="navigateTo(menuItem)">{{ menuItem.name }}</a>
+            </mat-list-item>
         </ng-container>
-      </md-nav-list>
-  </md-sidenav>
+      </mat-nav-list>
+  </mat-sidenav>
   <div fxLayout="column"> 
-      <md-toolbar>
-        <button md-icon-button (click)="toggleMenu()" *ngIf="media.isActive('xs')">
-          <md-icon>menu</md-icon>
+      <mat-toolbar>
+        <button mat-icon-button (click)="toggleMenu()" *ngIf="media.isActive('xs')">
+          <mat-icon>menu</mat-icon>
         </button>   
 
         <span fxFlex>Crypto Portfolio<sub class="versionIndicator"><i>alpha</i></sub></span>  
@@ -23,17 +23,17 @@
 
         <div *ngIf="!media.isActive('xs')">
           <ng-container *ngFor="let menuItem of menuItems" >
-              <button md-button (click)="navigateTo(menuItem)"
+              <button mat-button (click)="navigateTo(menuItem)"
                   *ngIf="!((menuItem.requiresLogin && !loggedIn) || (menuItem.hideAfterLogin && loggedIn))"
                   routerLinkActive="active">
-                <md-icon>{{ menuItem.icon }}</md-icon>{{ menuItem.name }}
+                <mat-icon>{{ menuItem.icon }}</mat-icon>{{ menuItem.name }}
               </button>
           </ng-container>
         </div>
-      </md-toolbar>
+      </mat-toolbar>
     
       <div fxFlex>
           <router-outlet></router-outlet>
       </div>
     </div>
-</md-sidenav-container>
+</mat-sidenav-container>

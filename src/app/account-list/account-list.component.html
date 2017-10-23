@@ -1,8 +1,8 @@
 <div>
-  <md-list>
-    <h3 md-subheader>Accounts in report:</h3>
-    <md-list-item *ngFor="let account of accounts">
-      <md-checkbox ([ngModel])="account.showInReporting">{{account.name}}</md-checkbox>
-    </md-list-item>
-  </md-list>
+  <mat-list>
+    <h3 matSubheader>Accounts in report:</h3>
+    <mat-list-item *ngFor="let account of accounts">
+      <mat-checkbox ([ngModel])="account.showInReporting">{{account.name}}</mat-checkbox>
+    </mat-list-item>
+  </mat-list>
 </div>

@@ -1,53 +1,53 @@
-<button md-raised-button (click)="tagBuyIn();" [disabled]="selection.selected.length !== 1" class="mtb-5">
-  <md-icon>flight_land</md-icon>
+<button mat-raised-button (click)="tagBuyIn();" [disabled]="selection.selected.length !== 1" class="mtb-5">
+  <mat-icon>flight_land</mat-icon>
   Buy-in
 </button>
-<button md-raised-button (click)="tagBuyOut();" [disabled]="selection.selected.length !== 1" class="mtb-5">
-    <md-icon>flight_takeoff</md-icon>
+<button mat-raised-button (click)="tagBuyOut();" [disabled]="selection.selected.length !== 1" class="mtb-5">
+    <mat-icon>flight_takeoff</mat-icon>
     Buy-out
   </button>
-<md-table #table [dataSource]="dataSource">
+<mat-table #table [dataSource]="dataSource">
   <!-- Checkbox Column -->
-  <ng-container mdColumnDef="select">
-    <md-header-cell *mdHeaderCellDef>
-      <md-checkbox (change)="$event ? masterToggle() : null"
+  <ng-container matColumnDef="select">
+    <mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? masterToggle() : null"
                     [checked]="isAllSelected()"
                     [indeterminate]="selection.hasValue() && !isAllSelected()">
-      </md-checkbox>
-    </md-header-cell>
-    <md-cell *mdCellDef="let row">
-      <md-checkbox (click)="$event.stopPropagation()"
+      </mat-checkbox>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
                     (change)="$event ? selection.toggle(row.id) : null"
                     [checked]="selection.isSelected(row.id)">
-      </md-checkbox>
-    </md-cell>
+      </mat-checkbox>
+    </mat-cell>
   </ng-container>
 
-  <ng-container mdColumnDef="date">
-    <md-header-cell *mdHeaderCellDef> Date </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.ts | date:'mediumDate'}} </md-cell>
+  <ng-container matColumnDef="date">
+    <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.ts | date:'mediumDate'}} </mat-cell>
   </ng-container>
 
-  <ng-container mdColumnDef="amount">
-    <md-header-cell *mdHeaderCellDef> Amount </md-header-cell>
-    <md-cell *mdCellDef="let row" [class.positive]="row.amount > 0" [class.negative]="row.amount < 0"><span *ngIf="row.amount > 0">+</span>{{row.amount}} </md-cell>
+  <ng-container matColumnDef="amount">
+    <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+    <mat-cell *matCellDef="let row" [class.positive]="row.amount > 0" [class.negative]="row.amount < 0"><span *ngIf="row.amount > 0">+</span>{{row.amount}} </mat-cell>
   </ng-container>
 <!-- 
-  <ng-container mdColumnDef="tag">
-      <md-header-cell *mdHeaderCellDef> Tag </md-header-cell>
-      <md-cell *mdCellDef="let row"> <div *ngIf="row.tagType !== ''">{{row.tagType}} = {{row.tagAmount}} </div> </md-cell>
+  <ng-container matColumnDef="tag">
+      <mat-header-cell *matHeaderCellDef> Tag </mat-header-cell>
+      <mat-cell *matCellDef="let row"> <div *ngIf="row.tagType !== ''">{{row.tagType}} = {{row.tagAmount}} </div> </mat-cell>
     </ng-container> -->
 
-  <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-  <md-row *mdRowDef="let row; columns: displayedColumns;"
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"
           [class.example-selected-row]="selection.isSelected(row.id)"
-          (click)="selection.toggle(row.id)"></md-row>
-</md-table>
-<button md-button (click)="edit();" *ngIf="account !== null" class="mtb-5" color="primary">
-    <md-icon>edit</md-icon>
+          (click)="selection.toggle(row.id)"></mat-row>
+</mat-table>
+<button mat-button (click)="edit();" *ngIf="account !== null" class="mtb-5" color="primary">
+    <mat-icon>edit</mat-icon>
     Edit account
 </button>  
-<button md-button (click)="delete();" *ngIf="account !== null" class="mtb-5" color="warn">
-    <md-icon>delete</md-icon>
+<button mat-button (click)="delete();" *ngIf="account !== null" class="mtb-5" color="warn">
+    <mat-icon>delete</mat-icon>
     Delete account
 </button>  

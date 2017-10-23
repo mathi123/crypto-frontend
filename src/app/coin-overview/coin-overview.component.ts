@@ -8,7 +8,7 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
-import { MdSort, MdDialog } from '@angular/material';
+import { MatSort, MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -20,10 +20,10 @@ export class CoinOverviewComponent implements OnInit {
   private displayedColumns = ['code', 'description', 'isActive', 'coinType', 'state', 'decimals', 'firstBlockSynchronized', 'lastBlockSynchronized'];
   private enableSyncButton = true;
 
-  @ViewChild(MdSort) sort: MdSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   private dataSource: CoinDataSource | null;
-  constructor(private coinService: CoinService,  private dialogService: MdDialog,
+  constructor(private coinService: CoinService,  private dialogService: MatDialog,
     private logger: Logger, private router: Router) { }
 
   ngOnInit() {
@@ -72,7 +72,7 @@ export class CoinOverviewComponent implements OnInit {
 export class CoinDataSource extends DataSource<any> {
   private list: Coin[] = null;
 
-  constructor(private coins: Observable<Coin[]>, private sort: MdSort) {
+  constructor(private coins: Observable<Coin[]>, private sort: MatSort) {
     super();
   }
 
@@ -81,7 +81,7 @@ export class CoinDataSource extends DataSource<any> {
     console.log('connect called');
     const streams = [
       this.coins,
-      this.sort.mdSortChange
+      this.sort.sortChange
     ];
 
     return Observable.merge(...streams)

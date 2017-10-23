@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import {MD_DIALOG_DATA} from '@angular/material';
+import {MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -13,7 +13,7 @@ export class ConfirmDialogComponent implements OnInit {
   @Input()
   public title: string = 'Please confirm.';
 
-  constructor(@Inject(MD_DIALOG_DATA) private data: any) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data: any) { }
 
   ngOnInit() {
     if(this.data !== null && this.data !== undefined){

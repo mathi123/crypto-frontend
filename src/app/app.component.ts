@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { ConfigurationService } from './server-api/configuration.service';
-import { MdDrawer } from '@angular/material';
+import { MatDrawer } from '@angular/material';
 import { MenuItem } from './models/menu-item';
 import { Router } from '@angular/router';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit{
   ];
 
   @ViewChild('sideNavMenu') 
-  public drawer: MdDrawer;
+  public drawer: MatDrawer;
 
   constructor(public media:ObservableMedia, private configurationService: ConfigurationService, private router: Router){
     media.asObservable()

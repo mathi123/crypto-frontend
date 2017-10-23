@@ -1,28 +1,28 @@
 <div fxLayout="row" fxFill class="container" fxLayoutGap="10px">
-    <md-card fxLayoutGap="10px">
-        <md-card-title>Summary</md-card-title>
-        <md-card-subtitle>For the chosen period</md-card-subtitle>
-        <md-card-content>
+    <mat-card fxLayoutGap="10px">
+        <mat-card-title>Summary</mat-card-title>
+        <mat-card-subtitle>For the chosen period</mat-card-subtitle>
+        <mat-card-content>
             <h1 [class.positive]="summary.total > 0" [class.negative]="summary.total < 0">{{summary.total | number : '1.2-2'}}</h1>
-        </md-card-content>
-    </md-card>
-    <md-card fxLayoutGap="10px">
-        <md-card-title>Value @ start</md-card-title>
-        <md-card-content>
+        </mat-card-content>
+    </mat-card>
+    <mat-card fxLayoutGap="10px">
+        <mat-card-title>Value @ start</mat-card-title>
+        <mat-card-content>
             <h2 [class.positive]="summary.startValue > 0" [class.negative]="summary.startValue < 0">{{summary.startValue | number : '1.2-2'}}</h2>
-        </md-card-content>
-    </md-card>
-    <md-card fxLayoutGap="10px">
-        <md-card-title>Buy in/out</md-card-title>
-        <md-card-content>
+        </mat-card-content>
+    </mat-card>
+    <mat-card fxLayoutGap="10px">
+        <mat-card-title>Buy in/out</mat-card-title>
+        <mat-card-content>
             <h3 class="negative">Buy in {{summary.buyIn | number : '1.2-2'}}</h3>
             <h3 class="positive">Buy out {{summary.buyOut | number : '1.2-2'}}</h3>
-        </md-card-content>
-    </md-card>
-    <md-card fxLayoutGap="10px">
-        <md-card-title>Value @ end</md-card-title>
-        <md-card-content>
+        </mat-card-content>
+    </mat-card>
+    <mat-card fxLayoutGap="10px">
+        <mat-card-title>Value @ end</mat-card-title>
+        <mat-card-content>
             <h2 [class.positive]="summary.endValue > 0" [class.negative]="summary.endValue < 0">{{summary.endValue | number : '1.2-2'}}</h2>
-        </md-card-content>
-    </md-card>
+        </mat-card-content>
+    </mat-card>
 </div>

@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 
 import { HttpModule } from '@angular/http';
-import { MaterialModule, MdTableModule, MdNativeDateModule, } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HomeComponent } from './home/home.component';
@@ -48,6 +47,7 @@ import { Logger } from './logger';
 import { CoinOverviewComponent } from './coin-overview/coin-overview.component';
 import { CoinViewComponent } from './coin-view/coin-view.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { MaterialModule } from "./material.module";
 
 @NgModule({
   declarations: [
@@ -78,12 +78,11 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
     HttpModule,
     HttpClientModule,
     AppRoutingModule,
-    MaterialModule,
+    //MaterialModule,
     BrowserAnimationsModule,
-    MdTableModule,
     FlexLayoutModule,
-    MdNativeDateModule,
-    ChartsModule
+    ChartsModule,
+    MaterialModule
   ],
   entryComponents: [ConfirmDialogComponent],
   providers: [ConfigurationService, CurrencyService, CurrencyCacheService, AuthGuard,

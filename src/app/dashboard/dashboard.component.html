@@ -7,13 +7,13 @@
       </div>
   </div>
 </div>
-<md-card *ngIf="!accountsAvailable">
-  <md-card-title>Woops!</md-card-title>
-  <md-card-content fxLayout="column" class="container" fxLayoutAlign="start start">
+<mat-card *ngIf="!accountsAvailable">
+  <mat-card-title>Woops!</mat-card-title>
+  <mat-card-content fxLayout="column" class="container" fxLayoutAlign="start start">
     <span>Please add some crypto <i>accounts</i> before you view your dashboard!</span>
-    <button md-button class="mtb-5" color="primary" routerLink="/accounts">
-        <md-icon>add</md-icon>
+    <button mat-button class="mtb-5" color="primary" routerLink="/accounts">
+        <mat-icon>add</mat-icon>
         Add accounts
     </button>  
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>

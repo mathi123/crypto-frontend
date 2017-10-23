@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CoinService } from '../server-api/coin.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Coin } from '../models/coin';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Logger } from '../logger';
 import { Location } from "@angular/common";
@@ -24,7 +24,7 @@ export class CoinViewComponent implements OnInit {
   private routeParamsSubscription: Subscription;
   
   constructor(private router: Router, private location: Location, private route: ActivatedRoute,
-    private coinService: CoinService, private dialogService: MdDialog, private logger: Logger) { }
+    private coinService: CoinService, private dialogService: MatDialog, private logger: Logger) { }
       
   ngOnInit() {
     this.routeParamsSubscription = this.route.params.subscribe(params => {

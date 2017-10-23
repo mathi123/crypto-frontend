@@ -1,43 +1,43 @@
-<md-card>
-    <md-card-title>Coin
-        <button md-icon-button [mdMenuTriggerFor]="menu"
+<mat-card>
+    <mat-card-title>Coin
+        <button mat-icon-button [matMenuTriggerFor]="menu"
           *ngIf="coin.id !== null && coin.id !== undefined">
-            <md-icon>more_vert</md-icon>
+            <mat-icon>more_vert</mat-icon>
           </button>
-          <md-menu #menu="mdMenu">
-            <button md-menu-item>
-              <md-icon>play_circle_outline</md-icon>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>play_circle_outline</mat-icon>
               <span>Load all transactions</span>
             </button>
-            <button md-menu-item (click)="deleteCoin();">
-              <md-icon>delete</md-icon>
+            <button mat-menu-item (click)="deleteCoin();">
+              <mat-icon>delete</mat-icon>
               <span>Delete</span>
             </button>
-          </md-menu>
-    </md-card-title>
-    <md-card-content>        
+          </mat-menu>
+    </mat-card-title>
+    <mat-card-content>        
         <form fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
-            <md-input-container> 
-                <input mdInput placeholder="Code" [(ngModel)]="coin.code" name="code"/>
-            </md-input-container>  
-            <md-input-container> 
-                <input mdInput placeholder="Description" [(ngModel)]="coin.description" name="description"/>
-            </md-input-container>
-            <md-select placeholder="Coin type" [(ngModel)]="coin.coinType" name="coinType">
-                <md-option *ngFor="let coinType of coinTypes" [value]="coinType.code">{{coinType.description}}</md-option>
-            </md-select>
-            <md-input-container *ngIf="coin.coinType == 'erc20contract'"> 
-                <input mdInput placeholder="Base address" [(ngModel)]="coin.baseAddress" name="baseAddress"/>
-            </md-input-container>
-            <md-input-container> 
-                <input mdInput placeholder="Decimals" [(ngModel)]="coin.decimals" 
+            <mat-form-field> 
+                <input matInput placeholder="Code" [(ngModel)]="coin.code" name="code"/>
+            </mat-form-field>  
+            <mat-form-field> 
+                <input matInput placeholder="Description" [(ngModel)]="coin.description" name="description"/>
+            </mat-form-field>
+            <mat-select placeholder="Coin type" [(ngModel)]="coin.coinType" name="coinType">
+                <mat-option *ngFor="let coinType of coinTypes" [value]="coinType.code">{{coinType.description}}</mat-option>
+            </mat-select>
+            <mat-form-field *ngIf="coin.coinType == 'erc20contract'"> 
+                <input matInput placeholder="Base address" [(ngModel)]="coin.baseAddress" name="baseAddress"/>
+            </mat-form-field>
+            <mat-form-field> 
+                <input matInput placeholder="Decimals" [(ngModel)]="coin.decimals" 
                        type="number" step="1" name="decimals"/>
-            </md-input-container>
-            <md-checkbox [(ngModel)]="coin.isActive" name="isActive">active</md-checkbox>
+            </mat-form-field>
+            <mat-checkbox [(ngModel)]="coin.isActive" name="isActive">active</mat-checkbox>
             <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end"> 
-                <button md-raised-button (click)="save();" color="primary">Save</button>
-                <button md-raised-button (click)="cancel();">Cancel</button>
+                <button mat-raised-button (click)="save();" color="primary">Save</button>
+                <button mat-raised-button (click)="cancel();">Cancel</button>
             </div>
         </form>
-    </md-card-content>
-</md-card>
+    </mat-card-content>
+</mat-card>

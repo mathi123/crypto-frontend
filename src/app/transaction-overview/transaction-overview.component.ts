@@ -7,7 +7,8 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
-import { SelectionModel, MdDialog } from "@angular/material";
+import { MatDialog } from "@angular/material";
+import { SelectionModel } from "@angular/cdk/collections";
 import { Router } from "@angular/router";
 import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
 import { TransactionCacheService } from '../cache/transaction-cache.service';
@@ -28,7 +29,7 @@ export class TransactionOverviewComponent implements OnInit {
   private dataSource: ExampleDataSource | null;
   private selection = new SelectionModel<string>(true, []);
 
-  constructor(private router: Router, private transactionCacheService: TransactionCacheService, private dialogService: MdDialog,
+  constructor(private router: Router, private transactionCacheService: TransactionCacheService, private dialogService: MatDialog,
     private accountCacheService: AccountCacheService) { }
 
   ngOnInit() {

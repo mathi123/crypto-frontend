@@ -1,67 +1,67 @@
 <h2>Coins
-  <button md-icon-button [mdMenuTriggerFor]="menu">
-      <md-icon>more_vert</md-icon>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
     </button>
-    <md-menu #menu="mdMenu">
-      <button md-menu-item (click)="syncErc20();" [disabled]="!enableSyncButton">
-        <md-icon>play_circle_outline</md-icon>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="syncErc20();" [disabled]="!enableSyncButton">
+        <mat-icon>play_circle_outline</mat-icon>
         <span>Sync ERC20 with bittrex</span>
       </button>
-    </md-menu>
+    </mat-menu>
   </h2>
 
-<button md-raised-button (click)="add();" color="primary" fxLayoutGap="10px">
-  <md-icon>create</md-icon> Add coin
+<button mat-raised-button (click)="add();" color="primary" fxLayoutGap="10px">
+  <mat-icon>create</mat-icon> Add coin
 </button>
-<md-table #table [dataSource]="dataSource" mdSort>   
+<mat-table #table [dataSource]="dataSource" matSort>   
 
-  <ng-container mdColumnDef="code">
-    <md-header-cell *mdHeaderCellDef md-sort-header> Code </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.code}} </md-cell>
+  <ng-container matColumnDef="code">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Code </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.code}} </mat-cell>
   </ng-container>
 
-  <ng-container mdColumnDef="description">
-    <md-header-cell *mdHeaderCellDef md-sort-header> Description </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.description}} </md-cell>
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
   </ng-container>
 
-  <ng-container mdColumnDef="isActive">
-    <md-header-cell *mdHeaderCellDef md-sort-header> Is Active </md-header-cell>
-    <md-cell *mdCellDef="let row">
-        <md-checkbox [(ngModel)]="row.isActive" disabled></md-checkbox>
-    </md-cell>
+  <ng-container matColumnDef="isActive">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Is Active </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+        <mat-checkbox [(ngModel)]="row.isActive" disabled></mat-checkbox>
+    </mat-cell>
   </ng-container>
 
-  <ng-container mdColumnDef="coinType">
-    <md-header-cell *mdHeaderCellDef md-sort-header> Coin Type </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.coinType}} </md-cell>
+  <ng-container matColumnDef="coinType">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Coin Type </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.coinType}} </mat-cell>
   </ng-container>
 
-  <ng-container mdColumnDef="state">
-    <md-header-cell *mdHeaderCellDef md-sort-header> State </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.state}} </md-cell>
+  <ng-container matColumnDef="state">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> State </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.state}} </mat-cell>
   </ng-container>
 
-  <ng-container mdColumnDef="decimals">
-    <md-header-cell *mdHeaderCellDef md-sort-header> Decimals </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.decimals}} </md-cell>
+  <ng-container matColumnDef="decimals">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Decimals </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.decimals}} </mat-cell>
   </ng-container>
 
-  <ng-container mdColumnDef="baseAddress">
-    <md-header-cell *mdHeaderCellDef md-sort-header> Base address </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.baseAddress}} </md-cell>
+  <ng-container matColumnDef="baseAddress">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Base address </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.baseAddress}} </mat-cell>
   </ng-container>
 
-  <ng-container mdColumnDef="firstBlockSynchronized">
-    <md-header-cell *mdHeaderCellDef md-sort-header> First block </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.firstBlockSynchronized}} </md-cell>
+  <ng-container matColumnDef="firstBlockSynchronized">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> First block </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.firstBlockSynchronized}} </mat-cell>
   </ng-container>
 
-  <ng-container mdColumnDef="lastBlockSynchronized">
-    <md-header-cell *mdHeaderCellDef md-sort-header> Last block </md-header-cell>
-    <md-cell *mdCellDef="let row"> {{row.lastBlockSynchronized}} </md-cell>
+  <ng-container matColumnDef="lastBlockSynchronized">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Last block </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.lastBlockSynchronized}} </mat-cell>
   </ng-container>
 
-  <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
-  <md-row *mdRowDef="let row; columns: displayedColumns;" (click)="rowClicked(row);"></md-row>
-</md-table>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="rowClicked(row);"></mat-row>
+</mat-table>

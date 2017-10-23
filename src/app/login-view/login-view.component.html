@@ -1,17 +1,17 @@
-<md-card>
-    <md-card-title>Login</md-card-title>
-    <md-card-content>
+<mat-card>
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-content>
         <form fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
-            <md-input-container> 
-                <input mdInput placeholder="Email" [(ngModel)]="credentials.email" name="email"/>
-            </md-input-container>
-            <md-input-container> 
-                <input mdInput placeholder="Password" type="password" [(ngModel)]="credentials.password" name="password"/>
-            </md-input-container>
+            <mat-form-field> 
+                <input matInput placeholder="Email" [(ngModel)]="credentials.email" name="email"/>
+            </mat-form-field>
+            <mat-form-field> 
+                <input matInput placeholder="Password" type="password" [(ngModel)]="credentials.password" name="password"/>
+            </mat-form-field>
             <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end">
-                <button md-raised-button (click)="login();" color="primary">Login</button>
-                <button md-raised-button (click)="cancel();">Cancel</button>
+                <button mat-raised-button (click)="login();" color="primary">Login</button>
+                <button mat-raised-button (click)="cancel();">Cancel</button>
             </div>
         </form>
-    </md-card-content>
-</md-card>
+    </mat-card-content>
+</mat-card>

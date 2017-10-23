@@ -1,23 +1,23 @@
-<md-card *ngIf="accounts.length === 0">
-  <md-card-header>
-    <div md-card-avatar><md-icon class="size-40">info_outline</md-icon> </div>
-    <md-card-title>Step 1</md-card-title>
-    <md-card-subtitle>Click 'Add account' to add your first crypto account.</md-card-subtitle>
-  </md-card-header>
-</md-card>
+<mat-card *ngIf="accounts.length === 0">
+  <mat-card-header>
+    <div mat-card-avatar><mat-icon class="size-40">info_outline</mat-icon> </div>
+    <mat-card-title>Step 1</mat-card-title>
+    <mat-card-subtitle>Click 'Add account' to add your first crypto account.</mat-card-subtitle>
+  </mat-card-header>
+</mat-card>
 
-<button md-raised-button (click)="addAccount();" color="primary" fxLayoutGap="10px">
-  <md-icon>create</md-icon> Add account
+<button mat-raised-button (click)="addAccount();" color="primary" fxLayoutGap="10px">
+  <mat-icon>create</mat-icon> Add account
 </button>
-<md-tab-group *ngIf="accounts.length > 0">
-  <!-- <md-tab label="All accounts">
+<mat-tab-group *ngIf="accounts.length > 0">
+  <!-- <mat-tab label="All accounts">
     <app-transaction-overview></app-transaction-overview>
-  </md-tab> -->
-  <md-tab *ngFor="let account of accounts" label="{{account.description}}">
-      <!-- <md-card *ngIf="account.loading">
-          <md-card-title>Loading...</md-card-title>
-          <md-card-content>Your transactions are loading from the blockchain...</md-card-content>
-      </md-card> -->
+  </mat-tab> -->
+  <mat-tab *ngFor="let account of accounts" label="{{account.description}}">
+      <!-- <mat-card *ngIf="account.loading">
+          <mat-card-title>Loading...</mat-card-title>
+          <mat-card-content>Your transactions are loading from the blockchain...</mat-card-content>
+      </mat-card> -->
       <app-transaction-overview [account]="account"></app-transaction-overview>
-  </md-tab>
-</md-tab-group>
+  </mat-tab>
+</mat-tab-group>

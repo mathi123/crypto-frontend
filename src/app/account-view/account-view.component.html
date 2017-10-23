@@ -1,32 +1,32 @@
-<md-card>
-    <md-card-title>Add an account</md-card-title>
-    <md-card-content>
+<mat-card>
+    <mat-card-title>Add an account</mat-card-title>
+    <mat-card-content>
         <form fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
             <span>Enter a short name, and the <i>public</i> address of your account.</span>
-            <md-select placeholder="Coin" [(ngModel)]="account.coinId" name="accountCoin">
-                <md-option *ngFor="let coin of coins" [value]="coin.id">
+            <mat-select placeholder="Coin" [(ngModel)]="account.coinId" name="accountCoin">
+                <mat-option *ngFor="let coin of coins" [value]="coin.id">
                 {{coin.code}} {{coin.name}}
-                </md-option>
-            </md-select>
-            <md-input-container> 
-                <input mdInput placeholder="Description" [(ngModel)]="account.description" name="accountDescription"/>
-            </md-input-container>
-            <md-input-container> 
-                <input mdInput placeholder="Address" [(ngModel)]="account.address" name="accountAddress"/>
-            </md-input-container>
-            <md-select placeholder="Color" [(ngModel)]="account.color" name="accountColor">
-                <md-option *ngFor="let color of colors" [value]="color.hexValue">
-                    <button md-mini-fab [style.background]="color.hexValue"></button>
+                </mat-option>
+            </mat-select>
+            <mat-form-field> 
+                <input matInput placeholder="Description" [(ngModel)]="account.description" name="accountDescription"/>
+            </mat-form-field>
+            <mat-form-field> 
+                <input matInput placeholder="Address" [(ngModel)]="account.address" name="accountAddress"/>
+            </mat-form-field>
+            <mat-select placeholder="Color" [(ngModel)]="account.color" name="accountColor">
+                <mat-option *ngFor="let color of colors" [value]="color.hexValue">
+                    <button mat-mini-fab [style.background]="color.hexValue"></button>
                 {{color.name}}
-                </md-option>
-            </md-select>
-            <md-select placeholder="Load transactions" [(ngModel)]="account.transactionType" name="accountTransactionType">
-                <md-option *ngFor="let transactionType of transactionTypes" [value]="transactionType.code">{{transactionType.description}}</md-option>
-            </md-select>
+                </mat-option>
+            </mat-select>
+            <mat-select placeholder="Load transactions" [(ngModel)]="account.transactionType" name="accountTransactionType">
+                <mat-option *ngFor="let transactionType of transactionTypes" [value]="transactionType.code">{{transactionType.description}}</mat-option>
+            </mat-select>
             <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end">
-                <button md-raised-button (click)="save();" color="primary">Save</button>
-                <button md-raised-button (click)="cancel();">Cancel</button>
+                <button mat-raised-button (click)="save();" color="primary">Save</button>
+                <button mat-raised-button (click)="cancel();">Cancel</button>
             </div>
         </form>
-    </md-card-content>
-</md-card>
+    </mat-card-content>
+</mat-card>

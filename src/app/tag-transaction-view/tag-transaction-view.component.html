@@ -1,19 +1,19 @@
 <form fxLayout="column" fxLayoutAlign="center start">
-    <md-card>
-      <md-card-title>Tag your transaction</md-card-title>
-      <md-card-content fxLayout="column">
-          <md-select fxLayoutGap="10px" placeholder="Tag" [(ngModel)]="tag" name="tag">
-              <md-option *ngFor="let tag of tags" [value]="tag">
+    <mat-card>
+      <mat-card-title>Tag your transaction</mat-card-title>
+      <mat-card-content fxLayout="column">
+          <mat-select fxLayoutGap="10px" placeholder="Tag" [(ngModel)]="tag" name="tag">
+              <mat-option *ngFor="let tag of tags" [value]="tag">
                 {{tag}}
-              </md-option>
-            </md-select>
-          <md-input-container fxLayoutGap="10px"> 
-              <input type="number" mdInput placeholder="Amount" [(ngModel)]="amount" name="amount"/>
-          </md-input-container>
+              </mat-option>
+            </mat-select>
+          <mat-form-field fxLayoutGap="10px"> 
+              <input type="number" matInput placeholder="Amount" [(ngModel)]="amount" name="amount"/>
+          </mat-form-field>
           <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start start">
-            <button md-raised-button (click)="save();" color="primary">Save</button>
-            <button md-raised-button (click)="cancel();">Cancel</button>
+            <button mat-raised-button (click)="save();" color="primary">Save</button>
+            <button mat-raised-button (click)="cancel();">Cancel</button>
           </div>
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
 </form>

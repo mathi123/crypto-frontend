@@ -1,28 +1,28 @@
-<md-card>
-    <md-card-title>Register a new account</md-card-title>
-    <md-card-content class="container" fxLayout="column">
+<mat-card>
+    <mat-card-title>Register a new account</mat-card-title>
+    <mat-card-content class="container" fxLayout="column">
         <form fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
-            <md-input-container> 
-                <input mdInput placeholder="Your name" [(ngModel)]="user.name" name="userName"/>
-            </md-input-container>
-            <md-input-container> 
-                <input mdInput placeholder="Email" [(ngModel)]="user.email" name="userEmail"/>
-            </md-input-container>
-            <md-input-container> 
-                <input mdInput type="password" placeholder="Password" [(ngModel)]="user.password" name="userPassword"/>
-            </md-input-container>
-            <md-input-container> 
-                <input mdInput type="password" placeholder="Repeat Password" [(ngModel)]="user.repeatPassword" name="userRepeatPassword"/>
-            </md-input-container>
-            <md-select placeholder="Home currency" [(ngModel)]="user.currencyId" name="userCurrency">
-                <md-option *ngFor="let currency of currencies" [value]="currency.id">
+            <mat-form-field> 
+                <input matInput placeholder="Your name" [(ngModel)]="user.name" name="userName"/>
+            </mat-form-field>
+            <mat-form-field> 
+                <input matInput placeholder="Email" [(ngModel)]="user.email" name="userEmail"/>
+            </mat-form-field>
+            <mat-form-field> 
+                <input matInput type="password" placeholder="Password" [(ngModel)]="user.password" name="userPassword"/>
+            </mat-form-field>
+            <mat-form-field> 
+                <input matInput type="password" placeholder="Repeat Password" [(ngModel)]="user.repeatPassword" name="userRepeatPassword"/>
+            </mat-form-field>
+            <mat-select placeholder="Home currency" [(ngModel)]="user.currencyId" name="userCurrency">
+                <mat-option *ngFor="let currency of currencies" [value]="currency.id">
                 {{currency.code}} {{currency.name}}
-                </md-option>
-            </md-select>
+                </mat-option>
+            </mat-select>
             <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start end">
-                <button md-raised-button (click)="save();" color="primary">Save</button>
-                <button md-raised-button (click)="cancel();">Cancel</button>
+                <button mat-raised-button (click)="save();" color="primary">Save</button>
+                <button mat-raised-button (click)="cancel();">Cancel</button>
             </div>
         </form>
-    </md-card-content>
-</md-card>
+    </mat-card-content>
+</mat-card>
