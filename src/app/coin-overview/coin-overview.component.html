@@ -1,40 +1,65 @@
-<title>Crypto currencies</title>
+<h2>Coins
+  <button md-icon-button [mdMenuTriggerFor]="menu">
+      <md-icon>more_vert</md-icon>
+    </button>
+    <md-menu #menu="mdMenu">
+      <button md-menu-item (click)="syncErc20();" [disabled]="!enableSyncButton">
+        <md-icon>play_circle_outline</md-icon>
+        <span>Sync ERC20 with bittrex</span>
+      </button>
+    </md-menu>
+  </h2>
 
 <button md-raised-button (click)="add();" color="primary" fxLayoutGap="10px">
   <md-icon>create</md-icon> Add coin
 </button>
-<md-table #table [dataSource]="dataSource">   
+<md-table #table [dataSource]="dataSource" mdSort>   
 
   <ng-container mdColumnDef="code">
-    <md-header-cell *mdHeaderCellDef> Code </md-header-cell>
+    <md-header-cell *mdHeaderCellDef md-sort-header> Code </md-header-cell>
     <md-cell *mdCellDef="let row"> {{row.code}} </md-cell>
   </ng-container>
 
   <ng-container mdColumnDef="description">
-    <md-header-cell *mdHeaderCellDef> Description </md-header-cell>
+    <md-header-cell *mdHeaderCellDef md-sort-header> Description </md-header-cell>
     <md-cell *mdCellDef="let row"> {{row.description}} </md-cell>
   </ng-container>
 
   <ng-container mdColumnDef="isActive">
-    <md-header-cell *mdHeaderCellDef> Is Active </md-header-cell>
+    <md-header-cell *mdHeaderCellDef md-sort-header> Is Active </md-header-cell>
     <md-cell *mdCellDef="let row">
         <md-checkbox [(ngModel)]="row.isActive" disabled></md-checkbox>
     </md-cell>
   </ng-container>
 
   <ng-container mdColumnDef="coinType">
-    <md-header-cell *mdHeaderCellDef> Coin Type </md-header-cell>
+    <md-header-cell *mdHeaderCellDef md-sort-header> Coin Type </md-header-cell>
     <md-cell *mdCellDef="let row"> {{row.coinType}} </md-cell>
   </ng-container>
 
+  <ng-container mdColumnDef="state">
+    <md-header-cell *mdHeaderCellDef md-sort-header> State </md-header-cell>
+    <md-cell *mdCellDef="let row"> {{row.state}} </md-cell>
+  </ng-container>
+
   <ng-container mdColumnDef="decimals">
-    <md-header-cell *mdHeaderCellDef> Decimals </md-header-cell>
+    <md-header-cell *mdHeaderCellDef md-sort-header> Decimals </md-header-cell>
     <md-cell *mdCellDef="let row"> {{row.decimals}} </md-cell>
   </ng-container>
 
   <ng-container mdColumnDef="baseAddress">
-    <md-header-cell *mdHeaderCellDef> Base address </md-header-cell>
+    <md-header-cell *mdHeaderCellDef md-sort-header> Base address </md-header-cell>
     <md-cell *mdCellDef="let row"> {{row.baseAddress}} </md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="firstBlockSynchronized">
+    <md-header-cell *mdHeaderCellDef md-sort-header> First block </md-header-cell>
+    <md-cell *mdCellDef="let row"> {{row.firstBlockSynchronized}} </md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="lastBlockSynchronized">
+    <md-header-cell *mdHeaderCellDef md-sort-header> Last block </md-header-cell>
+    <md-cell *mdCellDef="let row"> {{row.lastBlockSynchronized}} </md-cell>
   </ng-container>
 
   <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>

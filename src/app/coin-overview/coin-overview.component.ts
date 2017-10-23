@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoinService } from '../server-api/coin.service';
 import { Logger } from '../logger';
 import { Coin } from '../models/coin';
@@ -8,6 +8,8 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
+import { MdSort, MdDialog } from '@angular/material';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-coin-overview',
@@ -15,10 +17,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./coin-overview.component.css']
 })
 export class CoinOverviewComponent implements OnInit {
-  private displayedColumns = ['code', 'description', 'isActive', 'coinType', 'decimals'];
+  private displayedColumns = ['code', 'description', 'isActive', 'coinType', 'state', 'decimals', 'firstBlockSynchronized', 'lastBlockSynchronized'];
+  private enableSyncButton = true;
+
+  @ViewChild(MdSort) sort: MdSort;
 
   private dataSource: CoinDataSource | null;
-  constructor(private coinService: CoinService, private logger: Logger, private router: Router) { }
+  constructor(private coinService: CoinService,  private dialogService: MdDialog,
+    private logger: Logger, private router: Router) { }
 
   ngOnInit() {
     this.logger.verbose('loading coins');
@@ -33,27 +39,63 @@ export class CoinOverviewComponent implements OnInit {
 
   private reloadCoins(coins: Coin[]){
     this.logger.verbose('coins loaded from server, updating data source');
-    this.dataSource = new CoinDataSource(coins);
+    this.dataSource = new CoinDataSource(Observable.from(Observable.of(coins)), this.sort);
   }
 
   private rowClicked(coin: Coin){
     this.logger.verbose('row clicked');
     this.router.navigate(['coin', coin.id]);
   }
+
+  private syncErc20(){
+    this.logger.verbose("syncing erc20 coins");
+    
+    let options = {
+      data: {
+        title: "Confirm",
+        message: "Are you sure you want to run synchronization with Bittrex erc20 coins? This process will automatically update the coin list."
+      }
+    };
+    let dialogRef = this.dialogService.open(ConfirmDialogComponent, options);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === true){ 
+        this.enableSyncButton = false;
+        this.coinService.importErc20()
+          .subscribe(() => this.logger.info("sync started"), (err) => this.logger.error("sync start failed", err));
+      }
+    });
+  }
 }
 
 
 export class CoinDataSource extends DataSource<any> {
-  constructor(private coins: Coin[]) {
+  private list: Coin[] = null;
+
+  constructor(private coins: Observable<Coin[]>, private sort: MdSort) {
     super();
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<Coin[]> {
     console.log('connect called');
+    const streams = [
+      this.coins,
+      this.sort.mdSortChange
+    ];
 
-    return Observable.from(Observable.of(this.coins));
+    return Observable.merge(...streams)
+          .map((data:Coin[]) => this.returnData(data));
   }
 
   disconnect() {}
+
+  private returnData(data:Coin[]):Coin[]{
+    if(this.list === null)
+      this.list = data;
+
+    let sortColumn = this.sort.active || 'description';
+
+    return this.list.sort((a,b) => ((a[sortColumn] < b[sortColumn]) ? 1 : -1) * (this.sort.direction == 'asc' ? 1 : -1));
+  }
 }

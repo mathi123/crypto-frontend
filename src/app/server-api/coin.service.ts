@@ -30,4 +30,8 @@ export class CoinService {
   create(coin: Coin){
     return this.httpClient.post(`${this.config.getApiUrl()}/coin`, coin, this.config.getHttpOptions());
   }
+
+  importErc20(){
+    return this.httpClient.post(`${this.config.getApiUrl()}/coin/import-erc20`, {}, this.config.getHttpOptions());
+  }
 }
