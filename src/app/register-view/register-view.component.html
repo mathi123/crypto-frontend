@@ -3,37 +3,47 @@
     <mat-card-content class="container" fxLayout="column">
         <form [formGroup]="registerForm" #form="ngForm" (ngSubmit)="onSubmit(form)"
               fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
-            <mat-form-field> 
+            <mat-form-field>
                 <input matInput type="text" formControlName="name"
                        placeholder="Your name" required/>
                 <mat-error *ngIf="registerForm.controls['name'].hasError('required')">Name is required.</mat-error>
             </mat-form-field>
-            <mat-form-field> 
+            <mat-form-field>
                 <input matInput type="email" formControlName="email"
                        placeholder="Email" required/>
-                    <mat-error *ngIf="registerForm.controls['email'].hasError('required')">Email is required.</mat-error>
-                    <mat-error *ngIf="registerForm.controls['email'].hasError('pattern')">Email is invalid.</mat-error>
+                <mat-error *ngIf="registerForm.controls['email'].hasError('required')">Email is required.</mat-error>
+                <mat-error *ngIf="registerForm.controls['email'].hasError('pattern')">Email is invalid.</mat-error>
             </mat-form-field>
-            <mat-form-field> 
+            <mat-form-field>
                 <input matInput type="password" formControlName="password"
                        placeholder="Password" required/>
-                <mat-error *ngIf="registerForm.controls['password'].hasError('required')">Password is required.</mat-error>
-                <mat-error *ngIf="registerForm.controls['password'].hasError('minlength')">Password must have at least 4 characters.</mat-error>
+                <mat-error *ngIf="registerForm.controls['password'].hasError('required')">Password is required.
+                </mat-error>
+                <mat-error *ngIf="registerForm.controls['password'].hasError('minlength')">Password must have at least 4
+                    characters.
+                </mat-error>
             </mat-form-field>
-            <mat-form-field> 
+            <mat-form-field>
                 <input matInput type="password" formControlName="repeatPassword"
                        placeholder="Repeat Password" required/>
-                <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('required')">Password is required.</mat-error>
-                <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('minlength')">Password must have at least 4 characters.</mat-error>
-                <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('mismatch')">Password is required.</mat-error>
+                <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('required')">Password is required.
+                </mat-error>
+                <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('minlength')">Password must have at
+                    least 4 characters.
+                </mat-error>
+                <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('matchPassword')">Password must be
+                    equal.
+                </mat-error>
             </mat-form-field>
-            <mat-select placeholder="Home currency"  name="userCurrency">
+            <mat-select placeholder="Home currency" name="userCurrency">
                 <mat-option *ngFor="let currency of currencies" [value]="currency.id">
-                {{currency.code}} {{currency.name}}
+                    {{currency.code}} {{currency.name}}
                 </mat-option>
             </mat-select>
             <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start end">
-                <button mat-raised-button type="submit" color="primary">Save</button>
+                <button mat-raised-button type="submit" color="primary"
+                        [disabled]="!registerForm.valid">Save
+                </button>
                 <button mat-raised-button (click)="cancel();">Cancel</button>
             </div>
         </form>

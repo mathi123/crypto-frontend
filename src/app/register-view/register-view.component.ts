@@ -7,7 +7,8 @@ import {UserService} from '../server-api/user.service';
 import {CurrencyCacheService} from '../cache/currency-cache.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Logger} from '../logger';
-import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {PasswordValidation} from './password-validation';
 
 const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -49,18 +50,9 @@ export class RegisterViewComponent implements OnInit, OnDestroy {
             name: new FormControl('', [Validators.required]),
             email: new FormControl('', [Validators.required,
                 Validators.pattern(EMAIL_REGEX)]),
-            password: new FormControl('', [Validators.required, Validators.minLength(5)]),
-            repeatPassword: new FormControl('', [Validators.required, Validators.minLength(5)])
-        }, this.passwordMatchValidator);
-    }
-
-    passwordMatchValidator(g: FormControl) {
-        if (g.get('password').value === g.get('repeatPassword').value) {
-            console.log('values equals');
-        }
-
-        return g.get('password').value === g.get('repeatPassword').value
-            ? null : {'mismatch': true};
+            password: new FormControl('', [Validators.required, Validators.minLength(4)]),
+            repeatPassword: new FormControl('', [Validators.required, Validators.minLength(4)])
+        }, PasswordValidation.MatchPassword);
     }
 
     cancel() {
