@@ -17,29 +17,38 @@
             <mat-form-field>
                 <input matInput type="password" formControlName="password"
                        placeholder="Password" required/>
-                <mat-error *ngIf="registerForm.controls['password'].hasError('required')">Password is required.
+                <mat-error *ngIf="registerForm.controls['password'].hasError('required')">
+                    Password is required.
                 </mat-error>
-                <mat-error *ngIf="registerForm.controls['password'].hasError('minlength')">Password must have at least 4
-                    characters.
+                <mat-error *ngIf="registerForm.controls['password'].hasError('minlength')">
+                    Password must have at least 4characters.
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <input matInput type="password" formControlName="repeatPassword"
                        placeholder="Repeat Password" required/>
-                <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('required')">Password is required.
+                <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('required')">
+                    Password is required.
                 </mat-error>
-                <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('minlength')">Password must have at
-                    least 4 characters.
+                <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('minlength')">
+                    Password must have atleast 4 characters.
                 </mat-error>
-                <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('matchPassword')">Password must be
-                    equal.
+                <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('matchPassword')">
+                    Password must beequal.
                 </mat-error>
             </mat-form-field>
-            <mat-select placeholder="Home currency" name="userCurrency">
-                <mat-option *ngFor="let currency of currencies" [value]="currency.id">
-                    {{currency.code}} {{currency.name}}
-                </mat-option>
-            </mat-select>
+
+            <mat-form-field>
+                <mat-select placeholder="Home currency" formControlName="currencyId" required>
+                    <mat-option *ngFor="let currency of currencies" [value]="currency.id">
+                        {{currency.code}} {{currency.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="registerForm.controls['currencyId'].hasError('required')">
+                    Home currency is required.
+                </mat-error>
+            </mat-form-field>
+
             <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start end">
                 <button mat-raised-button type="submit" color="primary"
                         [disabled]="!registerForm.valid">Save

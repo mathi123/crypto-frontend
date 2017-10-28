@@ -51,7 +51,8 @@ export class RegisterViewComponent implements OnInit, OnDestroy {
             email: new FormControl('', [Validators.required,
                 Validators.pattern(EMAIL_REGEX)]),
             password: new FormControl('', [Validators.required, Validators.minLength(4)]),
-            repeatPassword: new FormControl('', [Validators.required, Validators.minLength(4)])
+            repeatPassword: new FormControl('', [Validators.required, Validators.minLength(4)]),
+            currencyId: new FormControl('', Validators.required)
         }, PasswordValidation.MatchPassword);
     }
 
@@ -62,15 +63,12 @@ export class RegisterViewComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(form: NgForm) {
+        console.log(form.value);
         this.user = form.value;
         this.logger.verbose('saving user.', this.user);
         this.userService.create(this.user)
             .subscribe(() => this.userSaveSuccess(),
                 (err) => this.userSaveFailed(err));
-    }
-
-    private isValid(): Boolean {
-        return this.user.password === this.user.repeatPassword;
     }
 
     private userSaveSuccess() {
@@ -92,9 +90,5 @@ export class RegisterViewComponent implements OnInit, OnDestroy {
 
     private fatalError(err) {
         this.logger.error(err);
-    }
-
-    private showFailedFeedback(): any {
-        console.error('Could not create user.');
     }
 }
