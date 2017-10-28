@@ -14,6 +14,10 @@ import { LogoutViewComponent } from './logout-view/logout-view.component';
 import { CoinOverviewComponent } from './coin-overview/coin-overview.component';
 import { CoinViewComponent } from './coin-view/coin-view.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { JobOverviewComponent } from './job-overview/job-overview.component';
+import { JobViewComponent } from './job-view/job-view.component';
+import { LogOverviewComponent } from './log-overview/log-overview.component';
+import { LogViewComponent } from './log-view/log-view.component';
 
 const routes: Routes = [
   
@@ -63,19 +67,41 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'coins',
-    component: CoinOverviewComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'coin/:id',
-    component: CoinViewComponent,
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'admin',
-    component: AdminDashboardComponent,
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        component: AdminDashboardComponent,
+      },
+      {
+        path: 'coins',
+        component: CoinOverviewComponent
+      },
+      {
+        path: 'coin/:id',
+        component: CoinViewComponent,
+      },
+      {
+        path: 'jobs',
+        component: JobOverviewComponent,
+      },
+      {
+        path: 'job/:id',
+        component: JobViewComponent,
+      },
+      {
+        path: 'logs',
+        component: LogOverviewComponent,
+      },
+      {
+        path: 'log/:id',
+        component: LogViewComponent,
+      },
+      {
+        path: 'coin/:id',
+        component: CoinViewComponent,
+      }]
   },
   {
     path: '',

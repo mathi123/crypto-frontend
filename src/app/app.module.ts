@@ -89,7 +89,6 @@ import {MaterialModule} from './material.module';
         HttpModule,
         HttpClientModule,
         AppRoutingModule,
-        //MaterialModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
         ChartsModule,

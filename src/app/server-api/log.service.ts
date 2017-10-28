@@ -12,16 +12,16 @@ export class LogService {
  
   constructor(private httpClient: HttpClient, private config: ConfigurationService) { }
 
-  read(offset: number, limit: number) : Observable<CountResult<Log>>{
-    let url = `${this.config.getApiUrl()}/log?offset=${offset}&limit=${limit}`;
+  public read(offset: number, limit: number, level: string) : Observable<CountResult<Log>>{
+    let url = `${this.config.getApiUrl()}/log?offset=${offset}&limit=${limit}&type=${level}`;
     let options = this.config.getHttpOptions() as any;
-    options.observe = 'request';
+    options.observe = 'response';
 
     return this.httpClient.get<Log[]>(url, options)
       .map((response: HttpResponse<Log[]>) => new CountResult<Log>(response.body, parseInt(response.headers.get('X-Total-Count'))));
   }
 
-  readById(id: string) : Observable<Log>{
+  public readById(id: string) : Observable<Log>{
     return this.httpClient.get<Log>(`${this.config.getApiUrl()}/log/${id}`, this.config.getHttpOptions());
   }
 }

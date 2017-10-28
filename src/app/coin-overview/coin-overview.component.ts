@@ -34,7 +34,7 @@ export class CoinOverviewComponent implements OnInit {
   }
 
   private add(){
-    this.router.navigate(['/coin', '0']);
+    this.router.navigate(['/admin/coin', '0']);
   }
 
   private reloadCoins(coins: Coin[]){
