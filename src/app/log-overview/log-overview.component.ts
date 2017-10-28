@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { LogService } from '../server-api/log.service';
 import { Log } from '../models/log';
 import { Observable } from 'rxjs/Observable';
@@ -17,20 +17,39 @@ export class LogOverviewComponent implements OnInit {
   private displayedColumns = ['createdAt', 'type', 'log'];
   private levels = ['verbose', 'info', 'warning', 'error'];
   private selectedLevel = 'verbose';
+  private _jobId: string = null;
 
   @ViewChild(MatSort) sort: MatSort;
+
+  @Input()
+  public autoReload: boolean = true;
+
+  @Input()
+  public showTitle: boolean = true;
+
+  @Input()
+  get jobId(): string{
+    return this._jobId;
+  }
+  set jobId(newVal: string){
+    this.logger.info('job id set');
+    this._jobId = newVal;
+    this.reload();
+  }
 
   private dataSource: CoinDataSource | null;
   constructor(private logService: LogService,
     private logger: Logger, private router: Router) { }
 
   ngOnInit() {
-    this.logger.verbose('loading logs');
-    this.reload();
+    if(this.autoReload){
+      this.logger.verbose('loading logs');    
+      this.reload();
+    }
   }
 
   private reload(){
-    this.logService.read(0, 25, this.selectedLevel)
+    this.logService.read(0, 25, this.selectedLevel, this.jobId)
       .subscribe(logs => this.reloadData(logs),
                err => this.handleError(err));
   }

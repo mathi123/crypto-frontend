@@ -1,3 +1,45 @@
-<p>
-  job-view works!
-</p>
+<mat-card>
+  <mat-card-title>
+    <span>Job Details</span>
+  </mat-card-title>
+  <mat-card-content>
+      <mat-tab-group>
+        <mat-tab label="Info">
+            <table>
+                <tr>
+                  <td>Name</td>
+                  <td>{{job.name}}</td>
+                </tr>
+                <tr>
+                  <td>date</td>
+                  <td>{{ job.createdAt | date}}</td>
+                </tr>
+                <tr>
+                  <td>Args</td>
+                  <td>{{ job.args}}</td>
+                </tr>
+                <tr>
+                  <td>state</td>
+                  <td>{{job.state}}</td>
+                </tr>
+                <tr>
+                  <td>Progress</td>
+                  <td>{{job.progress}}</td>
+                </tr>
+                <tr>
+                  <td>Start</td>
+                  <td>{{job.startTime}}</td>
+                </tr>
+                <tr>
+                  <td>End</td>
+                  <td>{{job.endTime}}</td>
+                </tr>
+              </table>
+        </mat-tab>
+        <mat-tab label="Logs">
+          <app-log-overview [jobId]="job.id" [autoReload]="false" [showTitle]="false"></app-log-overview>
+        </mat-tab>
+      </mat-tab-group>
+      
+  </mat-card-content>
+</mat-card>

@@ -1,3 +1,25 @@
-<p>
-  log-view works!
-</p>
+<mat-card>
+    <mat-card-title>
+      <span>Log Details</span>
+    </mat-card-title>
+    <mat-card-content>
+      <table>
+        <tr>
+          <td>type</td>
+          <td>{{log.type}}</td>
+        </tr>
+        <tr>
+          <td>date</td>
+          <td>{{ log.createdAt | date}}</td>
+        </tr>
+        <tr>
+          <td>log</td>
+          <td>{{ log.log}}</td>
+        </tr>
+        <tr>
+          <td>data</td>
+          <td>{{log.data}}</td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>

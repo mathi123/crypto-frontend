@@ -45,7 +45,7 @@ export class CoinOverviewComponent implements OnInit {
 
   private rowClicked(coin: Coin){
     this.logger.verbose('row clicked');
-    this.router.navigate(['coin', coin.id]);
+    this.router.navigate(['admin/coin', coin.id]);
   }
 
   private syncErc20(){

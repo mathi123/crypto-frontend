@@ -12,8 +12,13 @@ export class LogService {
  
   constructor(private httpClient: HttpClient, private config: ConfigurationService) { }
 
-  public read(offset: number, limit: number, level: string) : Observable<CountResult<Log>>{
+  public read(offset: number, limit: number, level: string, jobId: string = null) : Observable<CountResult<Log>>{
     let url = `${this.config.getApiUrl()}/log?offset=${offset}&limit=${limit}&type=${level}`;
+
+    if(jobId !== null && jobId !== undefined){
+      url += `&jobId=${jobId}`;
+    }
+
     let options = this.config.getHttpOptions() as any;
     options.observe = 'response';
 

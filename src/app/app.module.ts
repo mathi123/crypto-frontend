@@ -54,6 +54,7 @@ import {CoinOverviewComponent} from './coin-overview/coin-overview.component';
 import {CoinViewComponent} from './coin-view/coin-view.component';
 import {AdminDashboardComponent} from './admin-dashboard/admin-dashboard.component';
 import {MaterialModule} from './material.module';
+import { JobService } from './server-api/job.service';
 
 @NgModule({
     declarations: [
@@ -98,7 +99,7 @@ import {MaterialModule} from './material.module';
     providers: [ConfigurationService, CurrencyService, CurrencyCacheService, AuthGuard,
         UserService, TokenService, TagService, TagCacheService, AccountService,
         AccountCacheService, CoinCacheService, CoinService, TransactionService,
-        TransactionCacheService, SocketManagerService, Logger, LogService],
+        TransactionCacheService, SocketManagerService, Logger, LogService, JobService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
