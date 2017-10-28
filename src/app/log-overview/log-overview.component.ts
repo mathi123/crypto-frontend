@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { LogService } from '../server-api/log.service';
 import { Log } from '../models/log';
 import { Observable } from 'rxjs/Observable';
-import { MatSort } from '@angular/material';
+import { MatSort, PageEvent } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import { Logger } from '../logger';
@@ -38,6 +38,11 @@ export class LogOverviewComponent implements OnInit {
   }
 
   private dataSource: CoinDataSource | null;
+  // MdPaginator Inputs
+  length = 25;
+  pageSize = 10;
+  pageSizeOptions = [5, 10, 25, 100];
+  
   constructor(private logService: LogService,
     private logger: Logger, private router: Router) { }
 
@@ -50,11 +55,11 @@ export class LogOverviewComponent implements OnInit {
 
   private reload(){
     this.logService.read(0, 25, this.selectedLevel, this.jobId)
-      .subscribe(logs => this.reloadData(logs),
+      .subscribe(logs => this.refresh(logs),
                err => this.handleError(err));
   }
 
-  private reloadData(data: CountResult<Log>){
+  private refresh(data: CountResult<Log>){
     this.logger.verbose('logs loaded from server, updating data source');
     //this.logger.verbose(JSON.stringify(data.records));
     this.dataSource = new CoinDataSource(Observable.from(Observable.of(data.records)), this.sort);
@@ -67,6 +72,10 @@ export class LogOverviewComponent implements OnInit {
   private rowClicked(log: Log){
     this.logger.verbose('row clicked');
     this.router.navigate(['admin/log', log.id]);
+  }
+
+  private pageChanged(a){
+    // todo implement me
   }
 }
 

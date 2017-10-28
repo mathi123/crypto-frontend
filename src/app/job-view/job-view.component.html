@@ -12,7 +12,7 @@
                 </tr>
                 <tr>
                   <td>date</td>
-                  <td>{{ job.createdAt | date}}</td>
+                  <td>{{ job.createdAt | date:"yyyy/MM/dd hh:mm"}}</td>
                 </tr>
                 <tr>
                   <td>Args</td>
@@ -28,11 +28,11 @@
                 </tr>
                 <tr>
                   <td>Start</td>
-                  <td>{{job.startTime}}</td>
+                  <td>{{job.startTime | date:"yyyy/MM/dd hh:mm"}}</td>
                 </tr>
                 <tr>
                   <td>End</td>
-                  <td>{{job.endTime}}</td>
+                  <td>{{job.endTime | date:"yyyy/MM/dd hh:mm"}}</td>
                 </tr>
               </table>
         </mat-tab>
