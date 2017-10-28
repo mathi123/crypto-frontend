@@ -37,6 +37,11 @@
     <mat-cell *matCellDef="let row"> {{row.coinType}} </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="transactionCount">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Transactions </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.transactionCount}} </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="state">
     <mat-header-cell *matHeaderCellDef mat-sort-header> State </mat-header-cell>
     <mat-cell *matCellDef="let row"> {{row.state}} </mat-cell>

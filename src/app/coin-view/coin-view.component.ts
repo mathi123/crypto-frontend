@@ -20,6 +20,7 @@ export class CoinViewComponent implements OnInit {
     new CoinType("other", "Other"),
     new CoinType("erc20contract", "Ethereum Erc20 contract")
   ];
+  private enableSyncButton = true;
 
   private routeParamsSubscription: Subscription;
   
@@ -80,5 +81,26 @@ export class CoinViewComponent implements OnInit {
 
   private cancel(){
     this.location.back();
+  }
+
+  private importErc20Coin(){
+    this.logger.verbose("syncing erc20 coins");
+    
+    let options = {
+      data: {
+        title: "Confirm",
+        message: "Are you sure you want to import all transactions?"
+      }
+    };
+    let dialogRef = this.dialogService.open(ConfirmDialogComponent, options);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === true){ 
+        this.enableSyncButton = false;
+        this.coinService.importErc20Coin(this.coin)
+          .subscribe(() => this.logger.info("sync started"), 
+                     (err) => this.logger.error("sync start failed", err));
+      }
+    });
   }
 }

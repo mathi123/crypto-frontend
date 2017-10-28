@@ -17,7 +17,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrls: ['./coin-overview.component.css']
 })
 export class CoinOverviewComponent implements OnInit {
-  private displayedColumns = ['code', 'description', 'isActive', 'coinType', 'state', 'decimals', 'firstBlockSynchronized', 'lastBlockSynchronized'];
+  private displayedColumns = ['code', 'description', 'isActive', 'coinType', 'transactionCount', 'state', 'decimals', 'firstBlockSynchronized', 'lastBlockSynchronized'];
   private enableSyncButton = true;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -39,6 +39,7 @@ export class CoinOverviewComponent implements OnInit {
 
   private reloadCoins(coins: Coin[]){
     this.logger.verbose('coins loaded from server, updating data source');
+    this.logger.verbose(JSON.stringify(coins));
     this.dataSource = new CoinDataSource(Observable.from(Observable.of(coins)), this.sort);
   }
 
@@ -67,7 +68,6 @@ export class CoinOverviewComponent implements OnInit {
     });
   }
 }
-
 
 export class CoinDataSource extends DataSource<any> {
   private list: Coin[] = null;

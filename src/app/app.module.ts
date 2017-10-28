@@ -48,6 +48,11 @@ import { CoinOverviewComponent } from './coin-overview/coin-overview.component';
 import { CoinViewComponent } from './coin-view/coin-view.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { MaterialModule } from "./material.module";
+import { JobOverviewComponent } from './job-overview/job-overview.component';
+import { JobViewComponent } from './job-view/job-view.component';
+import { LogViewComponent } from './log-view/log-view.component';
+import { LogOverviewComponent } from './log-overview/log-overview.component';
+import { LogService } from './server-api/log.service';
 
 @NgModule({
   declarations: [
@@ -70,7 +75,11 @@ import { MaterialModule } from "./material.module";
     LogoutViewComponent,
     CoinOverviewComponent,
     CoinViewComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    JobOverviewComponent,
+    JobViewComponent,
+    LogViewComponent,
+    LogOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +97,7 @@ import { MaterialModule } from "./material.module";
   providers: [ConfigurationService, CurrencyService, CurrencyCacheService, AuthGuard,
     UserService, TokenService, TagService, TagCacheService, AccountService,
      AccountCacheService, CoinCacheService, CoinService, TransactionService, 
-     TransactionCacheService, SocketManagerService, Logger],
+     TransactionCacheService, SocketManagerService, Logger, LogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

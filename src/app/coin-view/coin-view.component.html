@@ -5,7 +5,7 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="importErc20Coin();" [disabled]="!enableSyncButton">
               <mat-icon>play_circle_outline</mat-icon>
               <span>Load all transactions</span>
             </button>
