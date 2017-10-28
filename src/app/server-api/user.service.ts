@@ -14,4 +14,12 @@ export class UserService {
     create(user: User): Observable<object> {
         return this.httpClient.post(`${this.config.getApiUrl()}/user`, user);
     }
+
+    read() {
+      return this.httpClient.get<User[]>(`${this.config.getApiUrl()}/user`, this.config.getHttpOptions());
+    }
+  
+    readById(id: string) {
+      return this.httpClient.get<User>(`${this.config.getApiUrl()}/user/${id}`, this.config.getHttpOptions());
+    }
 }

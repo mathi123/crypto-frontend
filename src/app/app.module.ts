@@ -55,6 +55,8 @@ import {CoinViewComponent} from './coin-view/coin-view.component';
 import {AdminDashboardComponent} from './admin-dashboard/admin-dashboard.component';
 import {MaterialModule} from './material.module';
 import { JobService } from './server-api/job.service';
+import { UserOverviewComponent } from './user-overview/user-overview.component';
+import { UserViewComponent } from './user-view/user-view.component';
 
 @NgModule({
     declarations: [
@@ -81,7 +83,9 @@ import { JobService } from './server-api/job.service';
         JobOverviewComponent,
         JobViewComponent,
         LogViewComponent,
-        LogOverviewComponent
+        LogOverviewComponent,
+        UserOverviewComponent,
+        UserViewComponent
     ],
     imports: [
         BrowserModule,

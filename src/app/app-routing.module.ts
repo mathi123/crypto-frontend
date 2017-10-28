@@ -18,6 +18,8 @@ import { JobOverviewComponent } from './job-overview/job-overview.component';
 import { JobViewComponent } from './job-view/job-view.component';
 import { LogOverviewComponent } from './log-overview/log-overview.component';
 import { LogViewComponent } from './log-view/log-view.component';
+import { UserOverviewComponent } from './user-overview/user-overview.component';
+import { UserViewComponent } from './user-view/user-view.component';
 
 const routes: Routes = [
   
@@ -101,6 +103,14 @@ const routes: Routes = [
       {
         path: 'coin/:id',
         component: CoinViewComponent,
+      },
+      {
+        path: 'users',
+        component: UserOverviewComponent,
+      },
+      {
+        path: 'user/:id',
+        component: UserViewComponent,
       }]
   },
   {
