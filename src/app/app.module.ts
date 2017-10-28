@@ -76,7 +76,11 @@ import {MaterialModule} from './material.module';
         LogoutViewComponent,
         CoinOverviewComponent,
         CoinViewComponent,
-        AdminDashboardComponent
+        AdminDashboardComponent,
+        JobOverviewComponent,
+        JobViewComponent,
+        LogViewComponent,
+        LogOverviewComponent
     ],
     imports: [
         BrowserModule,
@@ -95,7 +99,7 @@ import {MaterialModule} from './material.module';
     providers: [ConfigurationService, CurrencyService, CurrencyCacheService, AuthGuard,
         UserService, TokenService, TagService, TagCacheService, AccountService,
         AccountCacheService, CoinCacheService, CoinService, TransactionService,
-        TransactionCacheService, SocketManagerService, Logger],
+        TransactionCacheService, SocketManagerService, Logger, LogService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
