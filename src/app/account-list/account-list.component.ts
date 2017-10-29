@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./account-list.component.css']
 })
 export class AccountListComponent implements OnInit, OnDestroy {
-  private accounts: Account[] = [];
+  public accounts: Account[] = [];
   private accountsSubscription: Subscription;
 
   constructor(private accountCacheService: AccountCacheService) { }
@@ -17,14 +17,14 @@ export class AccountListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.accountsSubscription = this.accountCacheService
       .getAccounts()
-      .subscribe(acc => this.accountsChanged(acc));
+      .subscribe(acc => this.refresh(acc));
   }
 
   ngOnDestroy(){
     this.accountsSubscription.unsubscribe();
   }
 
-  accountsChanged(accounts: Account[]){
+  refresh(accounts: Account[]){
     this.accounts = accounts;
   }
 

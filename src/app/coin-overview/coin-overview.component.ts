@@ -17,27 +17,27 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrls: ['./coin-overview.component.css']
 })
 export class CoinOverviewComponent implements OnInit {
-  private displayedColumns = ['code', 'description', 'isActive', 'coinType', 'transactionCount', 'state', 'decimals', 'firstBlockSynchronized', 'lastBlockSynchronized'];
-  private enableSyncButton = true;
+  public displayedColumns = ['code', 'description', 'isActive', 'coinType', 'transactionCount', 'state', 'decimals', 'firstBlockSynchronized', 'lastBlockSynchronized'];
+  public enableSyncButton = true;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  private dataSource: CoinDataSource | null;
+  public dataSource: CoinDataSource | null;
   constructor(private coinService: CoinService,  private dialogService: MatDialog,
     private logger: Logger, private router: Router) { }
 
   ngOnInit() {
     this.logger.verbose('loading coins');
     this.coinService.read()
-      .subscribe(coins => this.reloadCoins(coins),
+      .subscribe(coins => this.refresh(coins),
                  err => console.error(err));
   }
 
-  private add(){
+  public add(){
     this.router.navigate(['/admin/coin', '0']);
   }
 
-  private reloadCoins(coins: Coin[]){
+  private refresh(coins: Coin[]){
     this.logger.verbose('coins loaded from server, updating data source');
     this.logger.verbose(JSON.stringify(coins));
     this.dataSource = new CoinDataSource(Observable.from(Observable.of(coins)), this.sort);
@@ -48,7 +48,7 @@ export class CoinOverviewComponent implements OnInit {
     this.router.navigate(['admin/coin', coin.id]);
   }
 
-  private syncErc20(){
+  public syncErc20(){
     this.logger.verbose("syncing erc20 coins");
     
     let options = {

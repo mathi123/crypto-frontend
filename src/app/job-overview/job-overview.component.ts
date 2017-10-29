@@ -14,12 +14,11 @@ import { DataSource } from '@angular/cdk/collections';
   styleUrls: ['./job-overview.component.css']
 })
 export class JobOverviewComponent implements OnInit {
-
-  private displayedColumns = ['createdAt', 'name', 'state'];
+  public displayedColumns = ['createdAt', 'name', 'state'];
 
   @ViewChild(MatSort) sort: MatSort;
 
-  private dataSource: CoinDataSource | null;
+  public dataSource: CoinDataSource | null;
   constructor(private jobService: JobService,
     private logger: Logger, private router: Router) { }
 
@@ -44,7 +43,7 @@ export class JobOverviewComponent implements OnInit {
     this.logger.error('could not load jobs', error);
   }
 
-  private rowClicked(job: Job){
+  public rowClicked(job: Job){
     this.logger.verbose('row clicked');
     this.router.navigate(['admin/job', job.id]);
   }

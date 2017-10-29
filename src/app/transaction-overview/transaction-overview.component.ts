@@ -24,10 +24,10 @@ export class TransactionOverviewComponent implements OnInit {
   @Input()
   public account: Account = null;
 
-  private transactions: BehaviorSubject<Transaction[]>;
-  private displayedColumns = [];
-  private dataSource: ExampleDataSource | null;
-  private selection = new SelectionModel<string>(true, []);
+  public transactions: BehaviorSubject<Transaction[]>;
+  public displayedColumns = [];
+  public dataSource: ExampleDataSource | null;
+  public selection = new SelectionModel<string>(true, []);
 
   constructor(private router: Router, private transactionCacheService: TransactionCacheService, private dialogService: MatDialog,
     private accountCacheService: AccountCacheService) { }

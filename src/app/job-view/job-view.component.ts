@@ -13,7 +13,7 @@ import { Location } from "@angular/common";
   styleUrls: ['./job-view.component.css']
 })
 export class JobViewComponent implements OnInit {
-  private job: Job = new Job();
+  public job: Job = new Job();
   private routeParamsSubscription: Subscription;
 
   constructor(private router: Router, private location: Location, private route: ActivatedRoute,

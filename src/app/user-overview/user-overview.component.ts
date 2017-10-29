@@ -13,12 +13,11 @@ import { DataSource } from '@angular/cdk/collections';
   styleUrls: ['./user-overview.component.css']
 })
 export class UserOverviewComponent implements OnInit {
-
-  private displayedColumns = ['createdAt', 'name', 'email', 'isAdmin'];
+  public displayedColumns = ['createdAt', 'name', 'email', 'isAdmin'];
 
   @ViewChild(MatSort) sort: MatSort;
 
-  private dataSource: UserDataSource | null;
+  public dataSource: UserDataSource | null;
   constructor(private userService: UserService,
     private logger: Logger, private router: Router) { }
 
@@ -43,7 +42,7 @@ export class UserOverviewComponent implements OnInit {
     this.logger.error('could not load jobs', error);
   }
 
-  private rowClicked(record: User){
+  public rowClicked(record: User){
     this.logger.verbose('row clicked');
     this.router.navigate(['admin/user', record.id]);
   }

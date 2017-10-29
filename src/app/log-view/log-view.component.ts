@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./log-view.component.css']
 })
 export class LogViewComponent implements OnInit {
-  private log: Log = new Log();
+  public log: Log = new Log();
   private routeParamsSubscription: Subscription;
 
   constructor(private router: Router, private location: Location, private route: ActivatedRoute,

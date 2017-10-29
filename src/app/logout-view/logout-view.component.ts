@@ -11,7 +11,7 @@ import { ConfigurationService } from '../server-api/configuration.service';
   templateUrl: './logout-view.component.html'
 })
 export class LogoutViewComponent implements OnInit {
-  credentials: Credentials = new Credentials();
+  public credentials: Credentials = new Credentials();
 
   constructor(private socketManager: SocketManagerService, private configService: ConfigurationService) { }
 

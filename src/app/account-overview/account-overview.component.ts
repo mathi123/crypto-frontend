@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./account-overview.component.css']
 })
 export class AccountOverviewComponent implements OnInit, OnDestroy {
-  private accounts: Account[] = [];
+  public accounts: Account[] = [];
   private accountsSubscription: Subscription;
   
   constructor(private accountCacheService: AccountCacheService, private routeService: Router) { }

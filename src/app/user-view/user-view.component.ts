@@ -12,7 +12,7 @@ import { UserService } from '../server-api/user.service';
   styleUrls: ['./user-view.component.css']
 })
 export class UserViewComponent implements OnInit {
-  private user: User = new User();
+  public user: User = new User();
   private routeParamsSubscription: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute,

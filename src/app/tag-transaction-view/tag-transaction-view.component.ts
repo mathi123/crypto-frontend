@@ -13,10 +13,10 @@ import { Transaction } from '../models/transaction';
   styleUrls: ['./tag-transaction-view.component.css']
 })
 export class TagTransactionViewComponent implements OnInit {
-  private transaction: Transaction;
-  private tag:Tag;
-  private tags: Tag[] = [];
-  private amount: 0;
+  public transaction: Transaction;
+  public tag:Tag;
+  public tags: Tag[] = [];
+  public amount: 0;
   private predefinedTag: string = null;
 
   private routeParamsSubscription: any;
@@ -59,13 +59,13 @@ export class TagTransactionViewComponent implements OnInit {
     this.routeParamsSubscription.unsubscribe();
   }
 
-  save(){
+  public save(){
     // this.transaction.tagAmount = this.amount;
     // this.transaction.tagType = this.tag;
     this.location.back();
   }
 
-  cancel(){
+  public cancel(){
     this.location.back();
   }
 }

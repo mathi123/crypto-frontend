@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  private accountsAvailable: boolean = false;
+  public accountsAvailable: boolean = false;
   private accountsSubscription: Subscription;
 
   constructor(private accountCacheService: AccountCacheService) { }

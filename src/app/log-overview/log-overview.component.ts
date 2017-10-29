@@ -14,9 +14,9 @@ import { CountResult } from '../models/count-result';
   styleUrls: ['./log-overview.component.css']
 })
 export class LogOverviewComponent implements OnInit {
-  private displayedColumns = ['createdAt', 'type', 'log'];
-  private levels = ['verbose', 'info', 'warning', 'error'];
-  private selectedLevel = 'verbose';
+  public displayedColumns = ['createdAt', 'type', 'log'];
+  public levels = ['verbose', 'info', 'warning', 'error'];
+  public selectedLevel = 'verbose';
   private _jobId: string = null;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -37,7 +37,9 @@ export class LogOverviewComponent implements OnInit {
     this.reload();
   }
 
-  private dataSource: CoinDataSource | null;
+  public dataSource: CoinDataSource | null;
+  
+  
   // MdPaginator Inputs
   length = 25;
   pageSize = 10;
@@ -53,7 +55,7 @@ export class LogOverviewComponent implements OnInit {
     }
   }
 
-  private reload(){
+  public reload(){
     this.logService.read(0, 25, this.selectedLevel, this.jobId)
       .subscribe(logs => this.refresh(logs),
                err => this.handleError(err));
@@ -69,12 +71,12 @@ export class LogOverviewComponent implements OnInit {
     this.logger.error('could not load logs', error);
   }
 
-  private rowClicked(log: Log){
+  public rowClicked(log: Log){
     this.logger.verbose('row clicked');
     this.router.navigate(['admin/log', log.id]);
   }
 
-  private pageChanged(a){
+  public pageChanged(a){
     // todo implement me
   }
 }

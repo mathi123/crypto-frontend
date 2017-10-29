@@ -3,4 +3,7 @@ export class Coin{
     code: string;
     description: string;
     transactionCount: number;
+    coinType: string;
+    decimals: number;
+    isActive: boolean;
 }

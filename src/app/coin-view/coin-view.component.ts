@@ -15,12 +15,12 @@ import { CoinType } from '../models/coin-type';
   styleUrls: ['./coin-view.component.css']
 })
 export class CoinViewComponent implements OnInit {
-  private coin: Coin = new Coin();
-  private coinTypes: CoinType[] = [
+  public coin: Coin = new Coin();
+  public coinTypes: CoinType[] = [
     new CoinType("other", "Other"),
     new CoinType("erc20contract", "Ethereum Erc20 contract")
   ];
-  private enableSyncButton = true;
+  public enableSyncButton = true;
 
   private routeParamsSubscription: Subscription;
   
@@ -35,16 +35,16 @@ export class CoinViewComponent implements OnInit {
         this.coin = new Coin();
       }else{
         this.coinService.readById(id)
-          .subscribe(coin => this.reloadCoin(coin));
+          .subscribe(coin => this.refresh(coin));
       }
     });
   }
 
-  private reloadCoin(coin: Coin){
+  private refresh(coin: Coin){
     this.coin = coin;
   }
 
-  private deleteCoin(){
+  public deleteCoin(){
     let options = {
       data: {
         title: "Confirm",
@@ -61,7 +61,7 @@ export class CoinViewComponent implements OnInit {
     });
   }
 
-  private save(){
+  public save(){
     if(this.coin.id === null || this.coin.id === undefined){
       this.coinService.create(this.coin)
         .subscribe((coin) => {
@@ -79,11 +79,11 @@ export class CoinViewComponent implements OnInit {
     this.logger.error('error in coin view', err);
   }
 
-  private cancel(){
+  public cancel(){
     this.location.back();
   }
 
-  private importErc20Coin(){
+  public importErc20Coin(){
     this.logger.verbose("syncing erc20 coins");
     
     let options = {
