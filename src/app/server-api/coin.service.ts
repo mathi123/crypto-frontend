@@ -27,8 +27,16 @@ export class CoinService {
     return this.httpClient.put(`${this.config.getApiUrl()}/coin/${coin.id}`, coin, this.config.getHttpOptions());
   }
 
+  updateImage(coinId: string, imageData: string){
+    return this.httpClient.put(`${this.config.getApiUrl()}/coin/${coinId}/image`, { data: imageData}, this.config.getHttpOptions());
+  }
+
   create(coin: Coin){
-    return this.httpClient.post(`${this.config.getApiUrl()}/coin`, coin, this.config.getHttpOptions());
+    return this.httpClient.post(`${this.config.getApiUrl()}/coin`, coin,  {
+      headers: this.config.getHeaders(),
+      observe: "response"
+    }).map(resp => resp.headers.get('Location'))
+      .map(url => url.substr(url.length - 36));
   }
 
   importErc20Coin(coin: Coin){

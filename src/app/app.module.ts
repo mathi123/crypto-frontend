@@ -57,6 +57,7 @@ import {MaterialModule} from './material.module';
 import { JobService } from './server-api/job.service';
 import { UserOverviewComponent } from './user-overview/user-overview.component';
 import { UserViewComponent } from './user-view/user-view.component';
+import { FileService } from './server-api/file.service';
 
 @NgModule({
     declarations: [
@@ -103,7 +104,8 @@ import { UserViewComponent } from './user-view/user-view.component';
     providers: [ConfigurationService, CurrencyService, CurrencyCacheService, AuthGuard,
         UserService, TokenService, TagService, TagCacheService, AccountService,
         AccountCacheService, CoinCacheService, CoinService, TransactionService,
-        TransactionCacheService, SocketManagerService, Logger, LogService, JobService],
+        TransactionCacheService, SocketManagerService, Logger, LogService, JobService,
+        FileService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

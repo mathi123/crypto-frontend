@@ -6,4 +6,5 @@ export class Coin{
     coinType: string;
     decimals: number;
     isActive: boolean;
+    fileId: string;
 }

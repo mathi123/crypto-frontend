@@ -1,20 +1,24 @@
 <mat-card>
-    <mat-card-title>Coin
-        <button mat-icon-button [matMenuTriggerFor]="menu"
-          *ngIf="coin.id !== null && coin.id !== undefined">
+    <mat-card-title-group>
+        <mat-card-title>Coin
+            <button mat-icon-button [matMenuTriggerFor]="menu"
+            *ngIf="coin.id !== null && coin.id !== undefined">
             <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
+            </button>
+            <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="importErc20Coin();" [disabled]="!enableSyncButton">
-              <mat-icon>play_circle_outline</mat-icon>
-              <span>Load all transactions</span>
+                <mat-icon>play_circle_outline</mat-icon>
+                <span>Load all transactions</span>
             </button>
             <button mat-menu-item (click)="deleteCoin();">
-              <mat-icon>delete</mat-icon>
-              <span>Delete</span>
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
             </button>
-          </mat-menu>
-    </mat-card-title>
+            </mat-menu>
+        </mat-card-title>
+        <img mat-card-sm-image *ngIf="imageData" [src]="imageData" />
+    </mat-card-title-group>
+
     <mat-card-content>        
         <form fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
             <mat-form-field> 
@@ -33,6 +37,9 @@
                 <input matInput placeholder="Decimals" [(ngModel)]="coin.decimals" 
                        type="number" step="1" name="decimals"/>
             </mat-form-field>
+            <div>
+                <input type="file" placeholder="Icon"  accept='image/*' (change)="fileChanged($event);" />
+            </div>
             <mat-checkbox [(ngModel)]="coin.isActive" name="isActive">active</mat-checkbox>
             <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end"> 
                 <button mat-raised-button (click)="save();" color="primary">Save</button>

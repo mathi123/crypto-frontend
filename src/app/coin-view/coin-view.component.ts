@@ -8,6 +8,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { Logger } from '../logger';
 import { Location } from "@angular/common";
 import { CoinType } from '../models/coin-type';
+import { FileService } from '../server-api/file.service';
 
 @Component({
   selector: 'app-coin-view',
@@ -20,12 +21,19 @@ export class CoinViewComponent implements OnInit {
     new CoinType("other", "Other"),
     new CoinType("erc20contract", "Ethereum Erc20 contract")
   ];
+  public imageData:string = null;
+  public imageInput:string = null;
   public enableSyncButton = true;
 
   private routeParamsSubscription: Subscription;
-  
+  private fileReader: FileReader = new FileReader();
+  private uploadFile: boolean = false;
+
   constructor(private router: Router, private location: Location, private route: ActivatedRoute,
-    private coinService: CoinService, private dialogService: MatDialog, private logger: Logger) { }
+    private coinService: CoinService, private dialogService: MatDialog, private logger: Logger,
+    private fileService: FileService) { 
+      this.fileReader.onload = () => this.fileReaderFinished();
+  }
       
   ngOnInit() {
     this.routeParamsSubscription = this.route.params.subscribe(params => {
@@ -35,13 +43,24 @@ export class CoinViewComponent implements OnInit {
         this.coin = new Coin();
       }else{
         this.coinService.readById(id)
-          .subscribe(coin => this.refresh(coin));
+          .subscribe(coin => this.refresh(coin),
+                     err => this.errorFeedback(err));
       }
     });
   }
 
   private refresh(coin: Coin){
     this.coin = coin;
+
+    if(coin.fileId !== null && coin.fileId !== undefined){
+      this.fileService.readById(coin.fileId)
+        .subscribe(image => this.refreshImage(image),
+                   err => this.errorFeedback(err));
+    }
+  }
+
+  private refreshImage(data: string){
+    this.imageData = data;
   }
 
   public deleteCoin(){
@@ -61,18 +80,47 @@ export class CoinViewComponent implements OnInit {
     });
   }
 
+  public fileChanged(event: any){
+    let input = event.srcElement;
+    let file = input.files[0] || null;
+
+    if(file === null){
+      this.imageData = "";
+    }else{
+      this.fileReader.readAsDataURL(file);
+    }
+  }
+
+  private fileReaderFinished(){
+    this.imageData = this.fileReader.result;
+    this.uploadFile = true;
+  }
+
   public save(){
+    this.logger.info(this.imageInput);
     if(this.coin.id === null || this.coin.id === undefined){
       this.coinService.create(this.coin)
-        .subscribe((coin) => {
-          this.location.back();
-          }, (err) => this.errorFeedback(err));
+        .subscribe(coinId => this.uploadImageAndGoBack(coinId), 
+                   err => this.errorFeedback(err));
     }else{
       this.coinService.update(this.coin)
-        .subscribe(() => {
-        this.location.back();
-        }, (err) => this.errorFeedback(err));
+        .subscribe(() => this.uploadImageAndGoBack(this.coin.id), 
+                   err => this.errorFeedback(err));
     }
+  }
+
+  private uploadImageAndGoBack(coinId: string){
+    if(this.uploadFile){
+      this.coinService.updateImage(coinId, this.imageData)
+        .subscribe(() => this.leave(),
+                   err => this.errorFeedback(err));
+    }else{
+      this.leave();
+    }
+  }
+
+  private leave(){
+    this.location.back();
   }
 
   private errorFeedback(err:Error){
