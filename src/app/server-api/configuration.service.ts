@@ -5,10 +5,11 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Context } from "../models/context";
 import { HttpClient } from "@angular/common/http";
 import 'rxjs/add/operator/do';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ConfigurationService {
-  private _baseUrl = 'http://localhost:3000';
+  private _baseUrl = environment.url;
   private _headers: HttpHeaders = new HttpHeaders();
   private token: string;
     
