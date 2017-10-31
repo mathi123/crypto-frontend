@@ -58,6 +58,7 @@ import { JobService } from './server-api/job.service';
 import { UserOverviewComponent } from './user-overview/user-overview.component';
 import { UserViewComponent } from './user-view/user-view.component';
 import { FileService } from './server-api/file.service';
+import { AdminService } from './server-api/admin.service';
 
 @NgModule({
     declarations: [
@@ -105,7 +106,7 @@ import { FileService } from './server-api/file.service';
         UserService, TokenService, TagService, TagCacheService, AccountService,
         AccountCacheService, CoinCacheService, CoinService, TransactionService,
         TransactionCacheService, SocketManagerService, Logger, LogService, JobService,
-        FileService],
+        FileService, AdminService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

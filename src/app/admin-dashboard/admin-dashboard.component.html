@@ -3,7 +3,13 @@
 </h1>
 <ul>
   <li><a routerLink="/admin/coins">Coins</a></li>
-  <li><a routerLink="/admin/jobs">Jobs</a></li>
-  <li><a routerLink="/admin/logs">Logs</a></li>
-  <li><a routerLink="/admin/users">Users</a></li>
+  <li><a routerLink="/admin/logs">Logs</a>({{statistics.log.count}} total)({{statistics.log.day}} past day)({{statistics.log.week}} past week)</li>
+  <li><a routerLink="/admin/jobs">Jobs</a>
+    <ul>
+      <li>done: ({{statistics.job.done.count}} total)({{statistics.job.done.day}} past day)({{statistics.job.done.week}} past week)</li>
+      <li>failed: ({{statistics.job.failed.count}} total)({{statistics.job.failed.day}} past day)({{statistics.job.failed.week}} past week)</li>
+    </ul>
+  </li>
+  <li><a routerLink="/admin/users">Users</a>({{statistics.user.count}} total)({{statistics.user.day}} past day)({{statistics.user.week}} past week)</li>
+  <li>Last ethereum block: {{statistics.ethereum.last}} ({{statistics.ethereum.day}} past day)({{statistics.ethereum.week}} past week)</li>
 </ul>
