@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {ConfigurationService} from './configuration.service';
 import {User} from '../models/user';
 import {Observable} from 'rxjs/Observable';
@@ -18,8 +18,13 @@ export class UserService {
     read() {
       return this.httpClient.get<User[]>(`${this.config.getApiUrl()}/user`, this.config.getHttpOptions());
     }
-  
+
     readById(id: string) {
       return this.httpClient.get<User>(`${this.config.getApiUrl()}/user/${id}`, this.config.getHttpOptions());
+    }
+
+    validateEmail(email: string): Observable<object> {
+        const httpParams = new HttpParams().set('email', email);
+        return this.httpClient.get(`${this.config.getApiUrl()}/user/validate`, {params: httpParams});
     }
 }

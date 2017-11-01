@@ -9,6 +9,9 @@ import {Subscription} from 'rxjs/Subscription';
 import {Logger} from '../logger';
 import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {PasswordValidation} from './password-validation';
+import * as HttpStatus from 'http-status-codes';
+import {Observable} from 'rxjs/Rx';
+import {HttpErrorResponse} from "@angular/common/http";
 
 const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -69,6 +72,21 @@ export class RegisterViewComponent implements OnInit, OnDestroy {
         this.userService.create(this.user)
             .subscribe(() => this.userSaveSuccess(),
                 (err) => this.userSaveFailed(err));
+    }
+
+    onBlur(form: NgForm) {
+        if (form.controls['email'].valid) {
+            this.userService.validateEmail(form.controls['email'].value)
+                .subscribe(() => {
+                        /*nothing expected.*/
+                    },
+                    (error: HttpErrorResponse) => {
+                        // TODO : how to remove error message in console ? ( zone.js )
+                        if (HttpStatus.CONFLICT === error.status) {
+                            form.controls['email'].setErrors({conflict: true});
+                        }
+                    });
+        }
     }
 
     private userSaveSuccess() {

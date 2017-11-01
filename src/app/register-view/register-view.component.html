@@ -10,9 +10,11 @@
             </mat-form-field>
             <mat-form-field>
                 <input matInput type="email" formControlName="email"
-                       placeholder="Email" required/>
+                       placeholder="Email" required
+                       (blur)="onBlur(registerForm)"/>
                 <mat-error *ngIf="registerForm.controls['email'].hasError('required')">Email is required.</mat-error>
                 <mat-error *ngIf="registerForm.controls['email'].hasError('pattern')">Email is invalid.</mat-error>
+                <mat-error *ngIf="registerForm.controls['email'].hasError('conflict')">Email is already registered.</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <input matInput type="password" formControlName="password"
@@ -21,7 +23,7 @@
                     Password is required.
                 </mat-error>
                 <mat-error *ngIf="registerForm.controls['password'].hasError('minlength')">
-                    Password must have at least 4characters.
+                    Password must have at least 4 characters.
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
@@ -31,10 +33,10 @@
                     Password is required.
                 </mat-error>
                 <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('minlength')">
-                    Password must have atleast 4 characters.
+                    Password must have at least 4 characters.
                 </mat-error>
                 <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('matchPassword')">
-                    Password must beequal.
+                    Password must be equal.
                 </mat-error>
             </mat-form-field>
 
