@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: 'http://api.cryptoshizzle.com',
+  url: 'http://35.184.29.35:3000',
 };
