@@ -1,17 +1,39 @@
 <mat-card>
-    <mat-card-title>Login</mat-card-title>
-    <mat-card-content>
-        <form fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
-            <mat-form-field> 
-                <input matInput placeholder="Email" [(ngModel)]="credentials.email" name="email"/>
+    <mat-card-title *ngIf="!loading" fxLayoutAlign="center center">Login</mat-card-title>
+    <mat-card-content class="container" fxLayout="column" fxLayoutAlign="center center">
+        <form *ngIf="!loading"
+              fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start"
+              [formGroup]="loginForm" #form="ngForm" (ngSubmit)="onSubmit(form)">
+            <mat-form-field fxLayout="column" fxLayoutGap="10px">
+                <input matInput placeholder="Email"
+                       type="email" formControlName="email" required/>
+                <mat-error *ngIf="loginForm.controls['email'].hasError('required')">Email is required.</mat-error>
+                <mat-error *ngIf="loginForm.controls['email'].hasError('pattern')">Email is invalid.</mat-error>
             </mat-form-field>
-            <mat-form-field> 
-                <input matInput placeholder="Password" type="password" [(ngModel)]="credentials.password" name="password"/>
+            <mat-form-field fxLayout="column" fxLayoutGap="10px">
+                <input matInput placeholder="Password"
+                       type="password" formControlName="password" required/>
+                <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+                    Password is required.
+                </mat-error>
+                <mat-error *ngIf="loginForm.controls['password'].hasError('minlength')">
+                    Password must have at least 4 characters.
+                </mat-error>
             </mat-form-field>
             <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end">
-                <button mat-raised-button (click)="login();" color="primary">Login</button>
-                <button mat-raised-button (click)="cancel();">Cancel</button>
+                <button mat-raised-button [disabled]="!loginForm.valid" type="submit" color="primary">Login</button>
+                <button mat-raised-button type="button" (click)="cancel(form);">Cancel</button>
             </div>
+            <mat-error *ngIf="showError">
+                <p>Email or password are incorrect.</p>
+            </mat-error>
         </form>
+        <mat-spinner *ngIf="loading"
+                     fxLayoutAlign="center center"
+                     [color]="primary"
+                     [mode]="indeterminate"></mat-spinner>
+    </mat-card-content>
+    <mat-card-content *ngIf="!loading" fxLayoutAlign="center center">
+        <p>No account yet? Register <a [routerLink]="['../register']">here</a>.</p>
     </mat-card-content>
 </mat-card>

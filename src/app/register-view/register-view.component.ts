@@ -14,9 +14,7 @@ import 'rxjs/add/operator/map';
 import {Response} from '@angular/http';
 import {Credentials} from '../models/credentials';
 import {TokenService} from '../server-api/token-service';
-
-const EMAIL_REGEX =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+import {Config} from '../config';
 
 @Component({
     selector: 'app-register-view',
@@ -54,9 +52,9 @@ export class RegisterViewComponent implements OnInit, OnDestroy {
         this.registerForm = new FormGroup({
             name: new FormControl('', [Validators.required]),
             email: new FormControl('', [Validators.required,
-                Validators.pattern(EMAIL_REGEX)]),
-            password: new FormControl('', [Validators.required, Validators.minLength(4)]),
-            repeatPassword: new FormControl('', [Validators.required, Validators.minLength(4)]),
+                Validators.pattern(Config.EMAIL_REGEX)]),
+            password: new FormControl('', [Validators.required, Validators.minLength(Config.PASSWORD_LENGTH)]),
+            repeatPassword: new FormControl('', [Validators.required, Validators.minLength(Config.PASSWORD_LENGTH)]),
             currencyId: new FormControl('', Validators.required)
         }, PasswordValidation.MatchPassword);
     }
@@ -102,7 +100,7 @@ export class RegisterViewComponent implements OnInit, OnDestroy {
                 .subscribe(() => {
                     this.loading = false;
                 }, (err) => this.fatalError(err));
-        }, 1000);
+        }, Config.API_CALL_TIMEOUT);
     }
 
     private userSaveFailed(err: Error) {
