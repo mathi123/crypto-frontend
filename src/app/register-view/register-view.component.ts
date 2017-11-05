@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Currency} from '../models/currency';
-import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {User} from '../models/user';
 import {UserService} from '../server-api/user.service';
@@ -10,8 +9,11 @@ import {Logger} from '../logger';
 import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {PasswordValidation} from './password-validation';
 import * as HttpStatus from 'http-status-codes';
-import {Observable} from 'rxjs/Rx';
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpErrorResponse} from '@angular/common/http';
+import 'rxjs/add/operator/map';
+import {Response} from '@angular/http';
+import {Credentials} from '../models/credentials';
+import {TokenService} from '../server-api/token-service';
 
 const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -24,17 +26,17 @@ const EMAIL_REGEX =
 export class RegisterViewComponent implements OnInit, OnDestroy {
     public user: User = new User();
     public currencies: Currency[] = [];
+    public loading = false;
+    public registerForm: FormGroup;
+    public showErrorMessage = false;
 
     private currencySubscription: Subscription;
-    private isValidating = false;
-    private isLoggingIn = false;
-    private showErrorMessage = false;
 
-    registerForm: FormGroup;
-
-    constructor(private router: Router, private location: Location,
+    constructor(private location: Location,
                 private currencyCacheService: CurrencyCacheService,
-                private userService: UserService, private logger: Logger) {
+                private tokenService: TokenService,
+                private userService: UserService,
+                private logger: Logger) {
     }
 
     ngOnInit() {
@@ -66,44 +68,50 @@ export class RegisterViewComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(form: NgForm) {
-        console.log(form.value);
+        this.loading = true;
         this.user = form.value;
         this.logger.verbose('saving user.', this.user);
         this.userService.create(this.user)
-            .subscribe(() => this.userSaveSuccess(),
-                (err) => this.userSaveFailed(err));
+            .subscribe((res: Response) => {
+                if (HttpStatus.CREATED === res.status) {
+                    this.userCreatedSuccess();
+                }
+            }, (err) => this.userSaveFailed(err));
     }
 
     onBlur(form: NgForm) {
         if (form.controls['email'].valid) {
             this.userService.validateEmail(form.controls['email'].value)
                 .subscribe(() => {
-                        /*nothing expected.*/
-                    },
-                    (error: HttpErrorResponse) => {
-                        // TODO : how to remove error message in console ? ( zone.js )
-                        if (HttpStatus.CONFLICT === error.status) {
-                            form.controls['email'].setErrors({conflict: true});
-                        }
-                    });
+                }, (error: HttpErrorResponse) => {
+                    // TODO : how to remove error message in console ? ( zone.js )
+                    if (HttpStatus.CONFLICT === error.status) {
+                        form.controls['email'].setErrors({conflict: true});
+                    }
+                });
         }
     }
 
-    private userSaveSuccess() {
-        this.logger.verbose('success');
+    private userCreatedSuccess() {
+        // One second time-out -> server is to fast :-)
+        setTimeout(() => {
+            const credentials = new Credentials();
+            credentials.email = this.user.email;
+            credentials.password = this.user.password;
+            this.tokenService.login(credentials)
+                .subscribe(() => {
+                    this.loading = false;
+                }, (err) => this.fatalError(err));
+        }, 1000);
     }
 
     private userSaveFailed(err: Error) {
-        this.logger.error('login failed', err);
+        console.log(err);
         this.showErrorMessage = true;
-        this.isLoggingIn = false;
     }
 
     private resetData() {
         this.user = new User();
-        this.isLoggingIn = false;
-        this.isValidating = false;
-        this.showErrorMessage = false;
     }
 
     private fatalError(err) {

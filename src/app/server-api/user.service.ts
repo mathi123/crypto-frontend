@@ -8,23 +8,29 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class UserService {
 
-    constructor(private httpClient: HttpClient, private config: ConfigurationService) {
+    constructor(private httpClient: HttpClient,
+                private config: ConfigurationService) {
     }
 
     create(user: User): Observable<object> {
-        return this.httpClient.post(`${this.config.getApiUrl()}/user`, user);
+        return this.httpClient.post(`${this.config.getApiUrl()}/user`, user, {
+            responseType: 'text', observe: 'response'
+        });
     }
 
     read() {
-      return this.httpClient.get<User[]>(`${this.config.getApiUrl()}/user`, this.config.getHttpOptions());
+        return this.httpClient.get<User[]>(`${this.config.getApiUrl()}/user`, this.config.getHttpOptions());
     }
 
     readById(id: string) {
-      return this.httpClient.get<User>(`${this.config.getApiUrl()}/user/${id}`, this.config.getHttpOptions());
+        return this.httpClient.get<User>(`${this.config.getApiUrl()}/user/${id}`, this.config.getHttpOptions());
     }
 
     validateEmail(email: string): Observable<object> {
         const httpParams = new HttpParams().set('email', email);
-        return this.httpClient.get(`${this.config.getApiUrl()}/user/validate`, {params: httpParams});
+        return this.httpClient.get(`${this.config.getApiUrl()}/user/validate`, {
+            observe: 'response',
+            params: httpParams
+        });
     }
 }

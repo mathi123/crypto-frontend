@@ -1,22 +1,25 @@
 <mat-card>
-    <mat-card-title>Register a new account</mat-card-title>
-    <mat-card-content class="container" fxLayout="column">
-        <form [formGroup]="registerForm" #form="ngForm" (ngSubmit)="onSubmit(form)"
+    <mat-card-title fxLayoutAlign="center center">Register a new account</mat-card-title>
+    <mat-card-content class="container" fxLayout="column" fxLayoutAlign="center center">
+        <form *ngIf="!loading" [formGroup]="registerForm" #form="ngForm" (ngSubmit)="onSubmit(form)"
               fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
-            <mat-form-field>
+            <mat-form-field fxLayout="column" fxLayoutGap="10px">
                 <input matInput type="text" formControlName="name"
                        placeholder="Your name" required/>
                 <mat-error *ngIf="registerForm.controls['name'].hasError('required')">Name is required.</mat-error>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field fxLayout="column" fxLayoutGap="10px">
                 <input matInput type="email" formControlName="email"
                        placeholder="Email" required
                        (blur)="onBlur(registerForm)"/>
-                <mat-error *ngIf="registerForm.controls['email'].hasError('required')">Email is required.</mat-error>
+                <mat-error *ngIf="registerForm.controls['email'].hasError('required')">Email is required.
+                </mat-error>
                 <mat-error *ngIf="registerForm.controls['email'].hasError('pattern')">Email is invalid.</mat-error>
-                <mat-error *ngIf="registerForm.controls['email'].hasError('conflict')">Email is already registered.</mat-error>
+                <mat-error *ngIf="registerForm.controls['email'].hasError('conflict')">Email is already
+                    registered.
+                </mat-error>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field fxLayout="column" fxLayoutGap="10px">
                 <input matInput type="password" formControlName="password"
                        placeholder="Password" required/>
                 <mat-error *ngIf="registerForm.controls['password'].hasError('required')">
@@ -26,7 +29,7 @@
                     Password must have at least 4 characters.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field fxLayout="column" fxLayoutGap="10px">
                 <input matInput type="password" formControlName="repeatPassword"
                        placeholder="Repeat Password" required/>
                 <mat-error *ngIf="registerForm.controls['repeatPassword'].hasError('required')">
@@ -40,7 +43,7 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field>
+            <mat-form-field fxLayout="column" fxLayoutGap="10px">
                 <mat-select placeholder="Home currency" formControlName="currencyId" required>
                     <mat-option *ngFor="let currency of currencies" [value]="currency.id">
                         {{currency.code}} {{currency.name}}
@@ -58,5 +61,9 @@
                 <button mat-raised-button (click)="cancel();">Cancel</button>
             </div>
         </form>
+        <mat-spinner *ngIf="loading"
+                     fxLayoutAlign="center center"
+                     [color]="primary"
+                     [mode]="indeterminate"></mat-spinner>
     </mat-card-content>
 </mat-card>
