@@ -4,6 +4,8 @@ import { MatDrawer } from '@angular/material';
 import { MenuItem } from './models/menu-item';
 import { Router } from '@angular/router';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
+import { MenuService } from './menu.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-root',
@@ -13,34 +15,28 @@ import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 export class AppComponent implements OnInit{
   loggedIn: boolean;
   menuOpen: boolean = false;
-  menuItems: MenuItem[] = [
-    new MenuItem("Register", "/register", false, true, "create"),
-    new MenuItem("Login", "/login", false, true, "account_circle"),
-    new MenuItem("Accounts", "/accounts", true, false, "list"),
-    new MenuItem("Dashboard", "/dashboard", true, false, "show_chart"),
-    new MenuItem("Admin", "/admin", true, false, "build"),
-    new MenuItem("About", "/about", false, false,"info_outline"),
-    new MenuItem('Logout', "/logout", true, false, "power_settings_new")
-  ];
+  menuItems: MenuItem[] = [];
+
+  private menuServiceSubscription: Subscription;
+
+  public state = '';
 
   @ViewChild('sideNavMenu') 
   public drawer: MatDrawer;
 
-  constructor(public media:ObservableMedia, private configurationService: ConfigurationService, private router: Router){
+  constructor(public media:ObservableMedia, private menuService: MenuService, private router: Router){
     media.asObservable()
     .subscribe((change:MediaChange) => {
       console.log(change ? `'${change.mqAlias}' = (${change.mediaQuery})` : "")
-
     });
   }
 
   ngOnInit(): void {
-    this.configurationService.LoggedInSubject.subscribe((v) => this.logginChanged(v));
+    this.menuServiceSubscription = this.menuService.menu.subscribe(menu => this.menuChanged(menu));
   }
-  public state = '';
 
-  logginChanged(isLoggedInd: boolean){
-    this.loggedIn = isLoggedInd;
+  menuChanged(menu: MenuItem[]){
+    this.menuItems = menu;
   }
 
   toggleMenu(){
@@ -51,7 +47,6 @@ export class AppComponent implements OnInit{
 
   closeMenu(){
     this.drawer.close();
-    //this.menuService.close();
   }
 
   navigateTo(menuItem: MenuItem){

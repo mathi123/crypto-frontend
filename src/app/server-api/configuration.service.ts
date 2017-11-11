@@ -6,6 +6,7 @@ import { Context } from "../models/context";
 import { HttpClient } from "@angular/common/http";
 import 'rxjs/add/operator/do';
 import { environment } from '../../environments/environment';
+import { Logger } from "../logger";
 
 @Injectable()
 export class ConfigurationService {
@@ -13,12 +14,11 @@ export class ConfigurationService {
   private _headers: HttpHeaders = new HttpHeaders();
   private token: string;
     
-  public TOKENHEADER = 'Authorization';
+  public TokenHeader = 'Authorization';
 
-  public LoggedInSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public UserContext: BehaviorSubject<Context> = new BehaviorSubject<Context>(new Context());
+  public UserContext: BehaviorSubject<Context> = new BehaviorSubject<Context>(null);
 
-  public constructor(private httpClient: HttpClient) {
+  public constructor(private httpClient: HttpClient, private logger: Logger) {
     this._headers.append('Content-Type', 'application/json');
   }
 
@@ -31,34 +31,33 @@ export class ConfigurationService {
   }
 
   public logOut(){
+    this.logger.verbose('logging out');
     this.token = null;
     this._headers = new HttpHeaders();
-    this.LoggedInSubject.next(false);
+    this.UserContext.next(null);
   }
 
   public setToken(token: string) {
+    this.logger.verbose('setting token');
     this.token = token;
     this.addTokenToHeaders();   
-
-    this.loadContext();
-    this.LoggedInSubject.next(true);
   }
 
   public getBearerToken(){
     return this.token.substr('Bearer '.length);
   }
 
-  private loadContext(){
-    console.log("loading context");
+  public loadContext(){
+    this.logger.verbose("loading context");
     this.httpClient.get<Context>(`${this.getApiUrl()}/context`, this.getHttpOptions())
-      .subscribe(c => this.UserContext.next(c));
+      .subscribe(context => this.UserContext.next(context));
   }
 
   private addTokenToHeaders() {
-    if (this._headers.has(this.TOKENHEADER)) {
-      this._headers = this._headers.delete(this.TOKENHEADER);
+    if (this._headers.has(this.TokenHeader)) {
+      this._headers = this._headers.delete(this.TokenHeader);
     }
-    this._headers = this._headers.set(this.TOKENHEADER, this.token);
+    this._headers = this._headers.set(this.TokenHeader, this.token);
     console.log(this._headers);
     console.log(this.token);
   }

@@ -3,8 +3,7 @@
       <mat-nav-list>
         <span mdHeader>Menu</span>
         <ng-container *ngFor="let menuItem of menuItems">
-            <mat-list-item 
-            *ngIf="!((menuItem.requiresLogin && !loggedIn) || (menuItem.hideAfterLogin && loggedIn))">
+            <mat-list-item>
               <mat-icon matListIcon>{{menuItem.icon}}</mat-icon>
               <a matLine (click)="navigateTo(menuItem)">{{ menuItem.name }}</a>
             </mat-list-item>
@@ -24,7 +23,6 @@
         <div *ngIf="!media.isActive('xs')">
           <ng-container *ngFor="let menuItem of menuItems" >
               <button mat-button (click)="navigateTo(menuItem)"
-                  *ngIf="!((menuItem.requiresLogin && !loggedIn) || (menuItem.hideAfterLogin && loggedIn))"
                   routerLinkActive="active">
                 <mat-icon>{{ menuItem.icon }}</mat-icon>{{ menuItem.name }}
               </button>
