@@ -60,6 +60,8 @@ import { UserViewComponent } from './user-view/user-view.component';
 import { FileService } from './server-api/file.service';
 import { AdminService } from './server-api/admin.service';
 import { MenuService } from './menu.service';
+import { AccountSummaryOverviewComponent } from './account-summary-overview/account-summary-overview.component';
+import { AccountSummaryService } from './server-api/account-summary.service';
 
 @NgModule({
     declarations: [
@@ -88,7 +90,8 @@ import { MenuService } from './menu.service';
         LogViewComponent,
         LogOverviewComponent,
         UserOverviewComponent,
-        UserViewComponent
+        UserViewComponent,
+        AccountSummaryOverviewComponent
     ],
     imports: [
         BrowserModule,
@@ -107,7 +110,7 @@ import { MenuService } from './menu.service';
         UserService, TokenService, TagService, TagCacheService, AccountService,
         AccountCacheService, CoinCacheService, CoinService, TransactionService,
         TransactionCacheService, SocketManagerService, Logger, LogService, JobService,
-        FileService, AdminService, MenuService],
+        FileService, AdminService, MenuService, AccountSummaryService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

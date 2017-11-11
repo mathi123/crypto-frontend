@@ -12,7 +12,7 @@ import { Logger } from "../logger";
 export class ConfigurationService {
   private _baseUrl = environment.url;
   private _headers: HttpHeaders = new HttpHeaders();
-  private token: string;
+  private token: string = null;
     
   public TokenHeader = 'Authorization';
 
