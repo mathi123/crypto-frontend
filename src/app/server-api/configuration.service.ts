@@ -43,6 +43,10 @@ export class ConfigurationService {
     this.addTokenToHeaders();   
   }
 
+  public hasToken(){
+    return this.token !== null;
+  }
+
   public getBearerToken(){
     return this.token.substr('Bearer '.length);
   }

@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
   }
 
   checkLogin(url: string): boolean {
-    if (this.configService.UserContext.value !== null) { return true; }
+    if (this.configService.hasToken()) { return true; }
 
     // Store the attempted URL for redirecting
     this.tokenService.setRedirectUrl(url);

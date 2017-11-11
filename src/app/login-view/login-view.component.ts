@@ -50,12 +50,6 @@ export class LoginViewComponent implements OnInit {
         }, Config.API_CALL_TIMEOUT);
     }
 
-    cancel(form: NgForm) {
-        this.logger.verbose('Cancel login');
-        form.resetForm();
-        this.location.back();
-    }
-
     private loginFailed(err: HttpErrorResponse) {
         if (HttpStatus.UNAUTHORIZED === err.status) {
             this.loading = false;

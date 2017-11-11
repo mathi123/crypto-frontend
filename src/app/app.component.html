@@ -1,35 +1,37 @@
 <mat-sidenav-container fxFlexFill>
-  <mat-sidenav mode="over" #sideNavMenu>     
+  <mat-sidenav mode="over" #sideNavMenu>
       <mat-nav-list>
         <span mdHeader>Menu</span>
         <ng-container *ngFor="let menuItem of menuItems">
-            <mat-list-item>
-              <mat-icon matListIcon>{{menuItem.icon}}</mat-icon>
-              <a matLine (click)="navigateTo(menuItem)">{{ menuItem.name }}</a>
-            </mat-list-item>
+              <mat-list-item *ngIf="!menuItem.isLabel">
+                <mat-icon matListIcon *ngIf="menuItem.icon">{{menuItem.icon}}</mat-icon>
+                <a matLine (click)="navigateTo(menuItem)">{{ menuItem.name }}</a>
+              </mat-list-item>
         </ng-container>
       </mat-nav-list>
   </mat-sidenav>
-  <div fxLayout="column"> 
-      <mat-toolbar>
+  <div fxLayout="column">
+      <mat-toolbar fxLayoutAlign="end center">
         <button mat-icon-button (click)="toggleMenu()" *ngIf="media.isActive('xs')">
           <mat-icon>menu</mat-icon>
-        </button>   
+        </button>
 
-        <span fxFlex>Crypto Portfolio<sub class="versionIndicator"><i>alpha</i></sub></span>  
-        
-        <span class="fill-space"></span>
+        <span fxFlex fxFill>Cryptofolio<sub class="versionIndicator"><i>alpha</i></sub></span>
+
+        <!-- <span class="fill-space"></span> -->
 
         <div *ngIf="!media.isActive('xs')">
           <ng-container *ngFor="let menuItem of menuItems" >
-              <button mat-button (click)="navigateTo(menuItem)"
+              <button mat-button (click)="navigateTo(menuItem)" *ngIf="!menuItem.isLabel"
                   routerLinkActive="active">
-                <mat-icon>{{ menuItem.icon }}</mat-icon>{{ menuItem.name }}
+                <mat-icon *ngIf="menuItem.icon">{{ menuItem.icon }}</mat-icon>
+                <span [class.underline]="menuItem.icon === null">{{ menuItem.name }}</span>
               </button>
+              <span><i *ngIf="menuItem.isLabel" class="versionIndicator">{{menuItem.name}}</i></span>
           </ng-container>
         </div>
       </mat-toolbar>
-    
+
       <div fxFlex>
           <router-outlet></router-outlet>
       </div>

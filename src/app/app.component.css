@@ -4,3 +4,7 @@
 .versionIndicator{
     color: #757575;
 }
+
+.underline{
+    border-bottom: 1px black solid;
+}
