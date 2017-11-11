@@ -1,5 +1,5 @@
 <mat-card>
-    <mat-card-title fxLayoutAlign="center center">Login</mat-card-title>
+    <mat-card-title fxLayoutAlign="center center">Sign In</mat-card-title>
     <mat-card-content class="container" fxLayout="column" fxLayoutAlign="center center">
         <form fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start"
                 [formGroup]="loginForm" #form="ngForm" (ngSubmit)="onSubmit(form)">
@@ -34,6 +34,6 @@
                 <p>Email or password are incorrect.</p>
             </mat-error>
         </form>
-        <p>No account yet? Register <a [routerLink]="['../register']">here</a>.</p>
+        <p>No account yet? <a [routerLink]="['../register']">Sign Up</a></p>
     </mat-card-content>
 </mat-card>

@@ -1,7 +1,7 @@
 <mat-card>
-    <mat-card-title *ngIf="!loading" fxLayoutAlign="center center">Register a new account</mat-card-title>
+    <mat-card-title fxLayoutAlign="center center">Sign up</mat-card-title>
     <mat-card-content class="container" fxLayout="column" fxLayoutAlign="center center">
-        <form *ngIf="!loading" [formGroup]="registerForm" #form="ngForm" (ngSubmit)="onSubmit(form)"
+        <form [formGroup]="registerForm" #form="ngForm" (ngSubmit)="onSubmit(form)"
               fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
             <mat-form-field fxLayout="column" fxLayoutGap="10px">
                 <input matInput type="text" formControlName="name"
@@ -54,16 +54,14 @@
                 </mat-error>
             </mat-form-field>
 
-            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start end">
-                <button mat-raised-button type="submit" color="primary"
-                        [disabled]="!registerForm.valid">Save
-                </button>
-                <button mat-raised-button (click)="cancel();">Cancel</button>
-            </div>
+            <button mat-raised-button type="submit" color="primary"
+                [disabled]="!registerForm.valid" fxFill>
+                <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+                    <span>Sign up</span>
+                    <mat-spinner *ngIf="loading"
+                    color="accent" [diameter]="25" strokeWidth="3"
+                    mode="indeterminate"></mat-spinner></div>
+            </button>
         </form>
-        <mat-spinner *ngIf="loading"
-                     fxLayoutAlign="center center"
-                     [color]="primary"
-                     [mode]="indeterminate"></mat-spinner>
     </mat-card-content>
 </mat-card>

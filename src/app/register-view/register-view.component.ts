@@ -59,12 +59,6 @@ export class RegisterViewComponent implements OnInit, OnDestroy {
         }, PasswordValidation.MatchPassword);
     }
 
-    cancel() {
-        this.logger.verbose('cancel register new user.');
-        this.resetData();
-        this.location.back();
-    }
-
     onSubmit(form: NgForm) {
         this.loading = true;
         this.user = form.value;

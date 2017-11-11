@@ -20,8 +20,8 @@ export class MenuService {
   private rebuildMenu(context: Context){
     let menu: MenuItem[] = [];
     if(context === null){
-      menu.push(new MenuItem("Register", "/register", "create"));
-      menu.push(new MenuItem("Login", "/login", "account_circle"));
+      menu.push(new MenuItem("Sign up", "/register", "create"));
+      menu.push(new MenuItem("Sign in", "/login", "account_circle"));
     } else {
       menu.push(new MenuItem("Accounts", "/accounts", "list"));
       menu.push(new MenuItem("Dashboard", "/dashboard", "show_chart"));
@@ -34,7 +34,7 @@ export class MenuService {
     menu.push(new MenuItem("About", "/about", "info_outline"));
 
     if(context !== null){
-      menu.push(new MenuItem('Logout', "/logout", "power_settings_new")); 
+      menu.push(new MenuItem('Sign out', "/logout", "power_settings_new")); 
     }
 
     this.menu.next(menu);
