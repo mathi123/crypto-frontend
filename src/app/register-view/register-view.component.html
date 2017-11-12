@@ -2,7 +2,7 @@
     <mat-card>
             <mat-card-title fxLayoutAlign="center center">Sign up</mat-card-title>
             <mat-card-content class="container" fxLayout="column" fxLayoutAlign="center center">
-                <form [formGroup]="registerForm" #form="ngForm" (ngSubmit)="onSubmit(form)"
+                <form [formGroup]="registerForm" #form="ngForm" (ngSubmit)="onSubmit(registerForm)"
                         fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
                     <mat-form-field fxLayout="column" fxLayoutGap="10px">
                         <input matInput type="text" formControlName="name"

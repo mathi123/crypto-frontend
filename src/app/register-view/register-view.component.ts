@@ -59,7 +59,7 @@ export class RegisterViewComponent implements OnInit, OnDestroy {
         }, PasswordValidation.MatchPassword);
     }
 
-    onSubmit(form: NgForm) {
+    onSubmit(form: FormGroup) {
         this.loading = true;
         this.user = form.value;
         this.logger.verbose('saving user.', this.user);
@@ -71,7 +71,7 @@ export class RegisterViewComponent implements OnInit, OnDestroy {
             }, (err) => this.userSaveFailed(err));
     }
 
-    onBlur(form: NgForm) {
+    onBlur(form: FormGroup) {
         if (form.controls['email'].valid) {
             this.userService.validateEmail(form.controls['email'].value)
                 .subscribe(() => {
