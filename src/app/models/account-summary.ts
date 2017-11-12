@@ -1,7 +1,10 @@
+import { Coin } from "./coin";
+
 export class AccountSummary{
     id: string;
-    coinId: string;
+    coin: Coin;
     description: string;
     color: number;
     address: number;
+    image: string;
 }

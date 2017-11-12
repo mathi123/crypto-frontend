@@ -62,6 +62,7 @@ import { AdminService } from './server-api/admin.service';
 import { MenuService } from './menu.service';
 import { AccountSummaryOverviewComponent } from './account-summary-overview/account-summary-overview.component';
 import { AccountSummaryService } from './server-api/account-summary.service';
+import { FileCacheService } from './server-api/file-cache.service';
 
 @NgModule({
     declarations: [
@@ -110,7 +111,7 @@ import { AccountSummaryService } from './server-api/account-summary.service';
         UserService, TokenService, TagService, TagCacheService, AccountService,
         AccountCacheService, CoinCacheService, CoinService, TransactionService,
         TransactionCacheService, SocketManagerService, Logger, LogService, JobService,
-        FileService, AdminService, MenuService, AccountSummaryService],
+        FileService, AdminService, MenuService, AccountSummaryService, FileCacheService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
