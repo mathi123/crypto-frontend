@@ -1,9 +1,9 @@
 ### STAGE 1: Build ###
 
 # We label our stage as 'builder'
-FROM node:7.7.3 as builder
+FROM node:9.0.0 as builder
 
-COPY package.json ./
+COPY package-lock.json ./
 
 # RUN npm set progress=false && npm config set depth 0 && npm cache clean --force
 
