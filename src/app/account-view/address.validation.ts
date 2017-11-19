@@ -35,8 +35,9 @@ export class AddressValidationDirective implements OnChanges {
                 setTimeout(() => {
                     this.accountService.validate(coinIdValue, addressValue)
                         .subscribe((jsonResponse) => {
+                            console.log(jsonResponse);
                             let response;
-                            if (!jsonResponse['valid']) {
+                            if (!jsonResponse['isValid']) {
                                 response = {invalidAddress: true};
                             }
                             this.validationEnd.emit(response);
