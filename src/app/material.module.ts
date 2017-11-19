@@ -1,8 +1,9 @@
-import { NgModule } from "@angular/core";
-import { MatTableModule, 
-    MatNativeDateModule, 
-    MatIconModule, 
-    MatSidenavModule, 
+import {NgModule} from '@angular/core';
+import {
+    MatTableModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatSidenavModule,
     MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,
@@ -19,15 +20,16 @@ import { MatTableModule,
     MatSelectModule,
     MatPaginatorModule,
     MatRadioModule,
-    MatSortModule } from '@angular/material';
-
+    MatSortModule,
+    MatTooltipModule
+} from '@angular/material';
 
 @NgModule({
     imports: [
-        MatTableModule, 
-        MatNativeDateModule, 
-        MatIconModule, 
-        MatSidenavModule, 
+        MatTableModule,
+        MatNativeDateModule,
+        MatIconModule,
+        MatSidenavModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
@@ -44,12 +46,14 @@ import { MatTableModule,
         MatPaginatorModule,
         MatSelectModule,
         MatRadioModule,
-        MatSortModule  ],
+        MatSortModule,
+        MatTooltipModule
+    ],
     exports: [
-        MatTableModule, 
-        MatNativeDateModule, 
-        MatIconModule, 
-        MatSidenavModule, 
+        MatTableModule,
+        MatNativeDateModule,
+        MatIconModule,
+        MatSidenavModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
@@ -66,7 +70,9 @@ import { MatTableModule,
         MatMenuModule,
         MatSelectModule,
         MatRadioModule,
-        MatSortModule  ]
-  })
-  export class MaterialModule { }
-  
+        MatSortModule,
+        MatTooltipModule
+    ]
+})
+export class MaterialModule {
+}

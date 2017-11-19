@@ -1,32 +1,113 @@
-<mat-card>
-    <mat-card-title>Add an account</mat-card-title>
-    <mat-card-content>
-        <form fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
-            <span>Enter a short name, and the <i>public</i> address of your account.</span>
-            <mat-select placeholder="Coin" [(ngModel)]="account.coinId" name="accountCoin">
-                <mat-option *ngFor="let coin of coins" [value]="coin.id">
-                {{coin.code}} {{coin.name}}
-                </mat-option>
-            </mat-select>
-            <mat-form-field> 
-                <input matInput placeholder="Description" [(ngModel)]="account.description" name="accountDescription"/>
-            </mat-form-field>
-            <mat-form-field> 
-                <input matInput placeholder="Address" [(ngModel)]="account.address" name="accountAddress"/>
-            </mat-form-field>
-            <mat-select placeholder="Color" [(ngModel)]="account.color" name="accountColor">
-                <mat-option *ngFor="let color of colors" [value]="color.hexValue">
-                    <button mat-mini-fab [style.background]="color.hexValue"></button>
-                {{color.name}}
-                </mat-option>
-            </mat-select>
-            <mat-select placeholder="Load transactions" [(ngModel)]="account.transactionType" name="accountTransactionType">
-                <mat-option *ngFor="let transactionType of transactionTypes" [value]="transactionType.code">{{transactionType.description}}</mat-option>
-            </mat-select>
-            <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end">
-                <button mat-raised-button (click)="save();" color="primary">Save</button>
-                <button mat-raised-button (click)="cancel();">Cancel</button>
-            </div>
-        </form>
-    </mat-card-content>
-</mat-card>
+<div fxLayout="column" fxLayoutAlign="center center">
+    <mat-card>
+        <mat-card-title>Add an account</mat-card-title>
+        <mat-card-content>
+            <form [formGroup]="accountForm" #form="ngForm" (ngSubmit)="onSubmit(form)"
+                  fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start" novalidate>
+                <!--<span>Enter a short name, and the <i>public</i> address of your account.</span>-->
+
+                <mat-form-field fxLayoutGap="15px">
+                    <input matInput placeholder="Coin" aria-label="Coin"
+                           [matAutocomplete]="auto" [formControl]="stateCtrl"
+                           [ngModel]="account.coinId"
+                           formControlName="coinId" required/>
+                    <mat-autocomplete #auto="matAutocomplete"
+                                      (optionSelected)="optionSelected()"
+                                      [displayWith]="displayFn.bind(this)">
+                        <mat-option *ngFor="let coin of coinObservable | async" [value]="coin.id">
+                            {{coin.description}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="accountForm.controls['coinId'].hasError('required')">Coin is required.</mat-error>
+                </mat-form-field>
+
+                <div fxLayout="row">
+                    <mat-form-field>
+                        <input matInput placeholder="Description"
+                               [ngModel]="account.description"
+                               formControlName="description" required/>
+                        <mat-error *ngIf="accountForm.controls['description'].hasError('required')">Description is required.</mat-error>
+                    </mat-form-field>
+                    <span style="margin-top: 23px; margin-left: 4px;"
+                          matTooltip="Enter a description of your account here." [matTooltipPosition]="'right'">
+                        <fa name="question-circle-o"></fa>
+                    </span>
+                </div>
+
+                <div fxLayout="row">
+                    <mat-form-field>
+                        <input matInput placeholder="Address"
+                               [ngModel]="account.address"
+                               addressValidation [validationFormGroup]="accountForm"
+                               [updatedDirective]="updateDirective"
+                               (validationStart)="validationStart()"
+                               (validationEnd)="validationEnd($event)"
+                               formControlName="address" required/>
+                        <mat-error *ngIf="accountForm.controls['address'].hasError('invalidAddress')">
+                            Invalid address
+                        </mat-error>
+                        <mat-error *ngIf="accountForm.controls['address'].hasError('coinIdRequired')">
+                            Please select a coin first.
+                        </mat-error>
+                        <mat-error *ngIf="accountForm.controls['address'].hasError('required')">Address is required.</mat-error>
+                    </mat-form-field>
+                    <span style="margin-top: 23px; margin-left: 4px;"
+                          matTooltip="Enter your public address here, never use your private address!"
+                          [matTooltipPosition]="'right'">
+                        <fa name="question-circle-o"></fa>
+                    </span>
+                    <span style="margin-top: 15px; margin-left: 4px;" *ngIf="loading">
+                        <mat-spinner color="accent" [diameter]="25" strokeWidth="3"
+                                     mode="indeterminate"></mat-spinner>
+                    </span>
+                </div>
+
+                <div fxLayout="row">
+                    <mat-form-field>
+                        <mat-select placeholder="Color" formControlName="color"
+                                    [ngModel]="account.color"
+                                    required>
+                            <mat-option *ngFor="let color of colors"
+                                        [value]="color.hexValue">
+                                <button mat-mini-fab [style.background]="color.hexValue"></button>
+                                {{color.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="accountForm.controls['color'].hasError('required')">Color is required.</mat-error>
+                    </mat-form-field>
+                    <span style="margin-top: 23px; margin-left: 4px;"
+                          matTooltip="Color will be used in the report of this account." [matTooltipPosition]="'right'">
+                        <fa name="question-circle-o"></fa>
+                    </span>
+                </div>
+
+                <div fxLayout="row">
+                    <mat-form-field>
+                        <mat-select placeholder="Load transactions"
+                                    [ngModel]="account.transactionType"
+                                    formControlName="transactionType"
+                                    required>
+                            <mat-option *ngFor="let transactionType of transactionTypes" [value]="transactionType.code">
+                                {{transactionType.description}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="accountForm.controls['transactionType'].hasError('required')">Transaction is required.</mat-error>
+                    </mat-form-field>
+                    <span style="margin-top: 23px; margin-left: 4px;"
+                          matTooltip="Here more info about the transaction types ( TODO Mathias )"
+                          [matTooltipPosition]="'right'">
+                        <fa name="question-circle-o"></fa>
+                    </span>
+                </div>
+
+
+                <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end">
+                    <button mat-raised-button [disabled]="!accountForm.valid"
+                            type="submit" color="primary">Save
+                    </button>
+                    <button mat-raised-button (click)="cancel();">Cancel</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

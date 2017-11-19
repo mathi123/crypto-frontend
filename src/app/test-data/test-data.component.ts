@@ -51,7 +51,7 @@ export class TestDataComponent implements OnInit {
 
     this.setColor(account);
 
-    this.accountCacheService.addAccount(account);
+    this.accountCacheService.save(account);
   }
 
   setColor(account: Account){

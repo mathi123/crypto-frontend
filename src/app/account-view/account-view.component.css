@@ -1,10 +1,21 @@
-.data-input{
+.data-input {
     max-width: 200px;
 }
-.btnCancel{
+
+.btnCancel {
     margin: 10px;
 }
 
-.btnSave{
+.btnSave {
     margin: 10px;
+}
+
+/*Override the height & width of the mat-mini-fab buttons*/
+.mat-mini-fab {
+    min-width: 0;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    flex-shrink: 0;
 }
