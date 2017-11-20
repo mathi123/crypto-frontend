@@ -1,32 +1,41 @@
-<mat-card>
-    <mat-card-title>Add an account</mat-card-title>
-    <mat-card-content>
-        <form fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
-            <span>Enter a short name, and the <i>public</i> address of your account.</span>
-            <mat-select placeholder="Coin" [(ngModel)]="account.coinId" name="accountCoin">
-                <mat-option *ngFor="let coin of coins" [value]="coin.id">
-                {{coin.code}} {{coin.name}}
-                </mat-option>
-            </mat-select>
-            <mat-form-field> 
-                <input matInput placeholder="Description" [(ngModel)]="account.description" name="accountDescription"/>
-            </mat-form-field>
-            <mat-form-field> 
-                <input matInput placeholder="Address" [(ngModel)]="account.address" name="accountAddress"/>
-            </mat-form-field>
-            <mat-select placeholder="Color" [(ngModel)]="account.color" name="accountColor">
-                <mat-option *ngFor="let color of colors" [value]="color.hexValue">
-                    <button mat-mini-fab [style.background]="color.hexValue"></button>
-                {{color.name}}
-                </mat-option>
-            </mat-select>
-            <mat-select placeholder="Load transactions" [(ngModel)]="account.transactionType" name="accountTransactionType">
-                <mat-option *ngFor="let transactionType of transactionTypes" [value]="transactionType.code">{{transactionType.description}}</mat-option>
-            </mat-select>
-            <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end">
-                <button mat-raised-button (click)="save();" color="primary">Save</button>
-                <button mat-raised-button (click)="cancel();">Cancel</button>
-            </div>
-        </form>
-    </mat-card-content>
-</mat-card>
+<div fxLayout="column" fxLayoutAlign="center center">
+    <mat-card>
+        <mat-card-title fxLayoutAlign="center center">Add an account</mat-card-title>
+        <mat-card-content class="container" fxLayout="column" fxLayoutAlign="center center">
+            <form fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
+                <span>Enter a short name, and the <i>public</i> address of your account.</span>
+                <mat-form-field> 
+                    <mat-select placeholder="Coin" [(ngModel)]="account.coinId" name="accountCoin">
+                        <mat-option *ngFor="let coin of coins" [value]="coin.id">
+                        {{coin.code}} {{coin.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field> 
+                    <input matInput placeholder="Description" [(ngModel)]="account.description" name="accountDescription"/>
+                </mat-form-field>
+                <mat-form-field> 
+                    <input matInput placeholder="Address" [(ngModel)]="account.address" name="accountAddress"/>
+                </mat-form-field>
+                <mat-form-field> 
+                    <mat-select placeholder="Color" [(ngModel)]="account.color" name="accountColor">
+                        <mat-option *ngFor="let color of colors" [value]="color.hexValue">
+                            <button mat-mini-fab [style.background]="color.hexValue"></button>
+                        {{color.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field> 
+                    <mat-select placeholder="Load transactions" [(ngModel)]="account.transactionType" name="accountTransactionType">
+                        <mat-option *ngFor="let transactionType of transactionTypes" [value]="transactionType.code">{{transactionType.description}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end">
+                    <button mat-raised-button (click)="save();" color="primary">Save</button>
+                    <button mat-raised-button (click)="cancel();">Cancel</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
