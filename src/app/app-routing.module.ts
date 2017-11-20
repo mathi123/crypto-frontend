@@ -85,14 +85,6 @@ const routes: Routes = [
         component: CoinViewComponent,
       },
       {
-        path: 'jobs',
-        component: JobOverviewComponent,
-      },
-      {
-        path: 'job/:id',
-        component: JobViewComponent,
-      },
-      {
         path: 'logs',
         component: LogOverviewComponent,
       },

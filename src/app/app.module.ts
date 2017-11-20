@@ -8,9 +8,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
-import {JobOverviewComponent} from './job-overview/job-overview.component';
-import {JobViewComponent} from './job-view/job-view.component';
 import {LogViewComponent} from './log-view/log-view.component';
 import {LogOverviewComponent} from './log-overview/log-overview.component';
 import {LogService} from './server-api/log.service';
@@ -54,7 +51,6 @@ import {CoinOverviewComponent} from './coin-overview/coin-overview.component';
 import {CoinViewComponent} from './coin-view/coin-view.component';
 import {AdminDashboardComponent} from './admin-dashboard/admin-dashboard.component';
 import {MaterialModule} from './material.module';
-import {JobService} from './server-api/job.service';
 import {UserOverviewComponent} from './user-overview/user-overview.component';
 import {UserViewComponent} from './user-view/user-view.component';
 import {FileService} from './server-api/file.service';
@@ -90,8 +86,6 @@ import {AddressValidationDirective} from './account-view/address.validation';
         CoinOverviewComponent,
         CoinViewComponent,
         AdminDashboardComponent,
-        JobOverviewComponent,
-        JobViewComponent,
         LogViewComponent,
         LogOverviewComponent,
         UserOverviewComponent,
@@ -116,7 +110,7 @@ import {AddressValidationDirective} from './account-view/address.validation';
     providers: [ConfigurationService, CurrencyService, CurrencyCacheService, AuthGuard,
         UserService, TokenService, TagService, TagCacheService, AccountService,
         AccountCacheService, CoinCacheService, CoinService, TransactionService,
-        TransactionCacheService, SocketManagerService, Logger, LogService, JobService,
+        TransactionCacheService, SocketManagerService, Logger, LogService,
         FileService, AdminService, MenuService, AccountSummaryService, FileCacheService],
     bootstrap: [AppComponent]
 })
