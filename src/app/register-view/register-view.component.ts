@@ -6,7 +6,7 @@ import {UserService} from '../server-api/user.service';
 import {CurrencyCacheService} from '../cache/currency-cache.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Logger} from '../logger';
-import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {PasswordValidation} from './password-validation';
 import * as HttpStatus from 'http-status-codes';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -51,8 +51,7 @@ export class RegisterViewComponent implements OnInit, OnDestroy {
     private initForm() {
         this.registerForm = new FormGroup({
             name: new FormControl('', [Validators.required]),
-            email: new FormControl('', [Validators.required,
-                Validators.pattern(Config.EMAIL_REGEX)]),
+            email: new FormControl('', [Validators.required, Validators.pattern(Config.EMAIL_REGEX)]),
             password: new FormControl('', [Validators.required, Validators.minLength(Config.PASSWORD_LENGTH)]),
             repeatPassword: new FormControl('', [Validators.required, Validators.minLength(Config.PASSWORD_LENGTH)]),
             currencyId: new FormControl('', Validators.required)
