@@ -25,4 +25,12 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README]
+
+(https://github.com/angular/angular-cli/blob/master/README.md).
+"Exodus Ether", "0x774674721019061a89fCD312e8040C0Fe67613ce"
+"Coinbase Ether", "0x8B2C6e59079D8F1B173b588Cd47E5e1676F31388"
+"Exodus Bitcoin", "145XocnJFL21YgnshbDx65KZDBXqTk6GyQ"
+"Bittrex BTC", "1J3PRZT5DcHG92zh4tBvAKo6iierEYTMMr"
+"Coinbase BTC", "1PZVMGDwaredL6dP8cbgEVAb5MDj7yhxru"
+"Exodus Litecoin", "LXFwxKpkpp4Y8au77CTUENemgmBzooo2Sh"

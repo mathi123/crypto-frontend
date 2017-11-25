@@ -4,7 +4,6 @@ import {Coin} from '../models/coin';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {Color} from '../models/color';
-import {AccountCacheService} from '../cache/account-cache.service';
 import {CoinCacheService} from '../cache/coin-cache.service';
 import {TransactionType} from '../models/transaction-type';
 import {Subscription} from 'rxjs/Subscription';
@@ -12,6 +11,7 @@ import {Observable} from 'rxjs/Observable';
 import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Logger} from '../logger';
 import {ArrayUtil} from '../common/array.util';
+import { AccountService } from '../server-api/account.service';
 
 @Component({
     selector: 'app-account-view',
@@ -36,7 +36,7 @@ export class AccountViewComponent implements OnInit {
 
     constructor(private location: Location,
                 private route: ActivatedRoute,
-                private accountCache: AccountCacheService,
+                private accountService: AccountService,
                 private coinCacheService: CoinCacheService,
                 private logger: Logger) {
     }
@@ -54,7 +54,7 @@ export class AccountViewComponent implements OnInit {
                 // Note: Timeout needed because otherwise the coins weren't loaded yet,
                 // this way the displayFn will not work properly.
                 setTimeout(() => {
-                    this.accountCache.getById(id)
+                    this.accountService.readById(id)
                         .subscribe(account => {
                             if (account) {
                                 this.account = account;
@@ -90,7 +90,7 @@ export class AccountViewComponent implements OnInit {
         this.account.color = form.value.color;
         this.account.transactionType = form.value.transactionType;
 
-        this.accountCache.save(this.account)
+        this.accountService.update(this.account)
             .subscribe((res) => {
                 console.log('Response save: ', res);
                 this.location.back();
@@ -159,7 +159,7 @@ export class AccountViewComponent implements OnInit {
     private loadColors(account?: Account) {
         // TODO : maybe generate colors instead of fixed values? --> More accounts than colors?
         this.colors = Color.getDefaults();
-        this.accountCache.getAccounts()
+        this.accountService.read()
             .subscribe((accounts) => {
                 if (account) {
                     accounts = accounts.filter(acc => acc.id !== account.id);

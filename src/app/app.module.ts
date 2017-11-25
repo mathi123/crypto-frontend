@@ -1,17 +1,13 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LogViewComponent} from './log-view/log-view.component';
 import {LogOverviewComponent} from './log-overview/log-overview.component';
 import {LogService} from './server-api/log.service';
-
 import {HomeComponent} from './home/home.component';
 import {AccountOverviewComponent} from './account-overview/account-overview.component';
 import {AccountViewComponent} from './account-view/account-view.component';
@@ -25,7 +21,6 @@ import {AccountListComponent} from './account-list/account-list.component';
 import {DashboardConfigurationComponent} from './dashboard-configuration/dashboard-configuration.component';
 import {DashboardSummaryComponent} from './dashboard-summary/dashboard-summary.component';
 import {DashboardContentComponent} from './dashboard-content/dashboard-content.component';
-import {TestDataComponent} from './test-data/test-data.component';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
 import {AboutComponent} from './about/about.component';
 import {RegisterViewComponent} from './register-view/register-view.component';
@@ -36,10 +31,8 @@ import {LoginViewComponent} from './login-view/login-view.component';
 import {TokenService} from './server-api/token-service';
 import {TagService} from './server-api/tag.service';
 import {AccountService} from './server-api/account.service';
-import {AccountCacheService} from './cache/account-cache.service';
 import {CoinCacheService} from './cache/coin-cache.service';
 import {TransactionService} from './server-api/transaction.service';
-import {TransactionCacheService} from './cache/transaction-cache.service';
 import {TagCacheService} from './cache/tag-cache-service';
 import {CurrencyCacheService} from './cache/currency-cache.service';
 import {CoinService} from './server-api/coin.service';
@@ -77,7 +70,6 @@ import {AddressValidationDirective} from './account-view/address.validation';
         DashboardConfigurationComponent,
         DashboardSummaryComponent,
         DashboardContentComponent,
-        TestDataComponent,
         AboutComponent,
         RegisterViewComponent,
         LoginViewComponent,
@@ -108,8 +100,8 @@ import {AddressValidationDirective} from './account-view/address.validation';
     entryComponents: [ConfirmDialogComponent],
     providers: [ConfigurationService, CurrencyService, CurrencyCacheService, AuthGuard,
         UserService, TokenService, TagService, TagCacheService, AccountService,
-        AccountCacheService, CoinCacheService, CoinService, TransactionService,
-        TransactionCacheService, Logger, LogService,
+        CoinCacheService, CoinService, TransactionService,
+        Logger, LogService,
         FileService, AdminService, MenuService, AccountSummaryService, FileCacheService],
     bootstrap: [AppComponent]
 })

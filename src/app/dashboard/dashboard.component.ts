@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AccountCacheService } from '../cache/account-cache.service';
 import { Subscription } from 'rxjs/Subscription';
+import { AccountService } from '../server-api/account.service';
+import { Account } from '../models/account';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,11 +12,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public accountsAvailable: boolean = false;
   private accountsSubscription: Subscription;
 
-  constructor(private accountCacheService: AccountCacheService) { }
+  constructor(private accountService: AccountService) { }
 
   ngOnInit() {
-    this.accountsSubscription = this.accountCacheService
-      .getAccounts()
+    this.accountsSubscription = this.accountService
+      .read()
       .subscribe(acc => this.accountsChanged(acc));
   }
 

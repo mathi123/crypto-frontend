@@ -11,9 +11,9 @@ import { MatDialog } from "@angular/material";
 import { SelectionModel } from "@angular/cdk/collections";
 import { Router } from "@angular/router";
 import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
-import { TransactionCacheService } from '../cache/transaction-cache.service';
-import { AccountCacheService } from '../cache/account-cache.service';
 import { Account } from '../models/account';
+import { TransactionService } from '../server-api/transaction.service';
+import { AccountService } from '../server-api/account.service';
 
 @Component({
   selector: 'app-transaction-overview',
@@ -24,13 +24,13 @@ export class TransactionOverviewComponent implements OnInit {
   @Input()
   public account: Account = null;
 
-  public transactions: BehaviorSubject<Transaction[]>;
+  public transactions: Transaction[];
   public displayedColumns = [];
   public dataSource: ExampleDataSource | null;
   public selection = new SelectionModel<string>(true, []);
 
-  constructor(private router: Router, private transactionCacheService: TransactionCacheService, private dialogService: MatDialog,
-    private accountCacheService: AccountCacheService) { }
+  constructor(private router: Router, private transactionService: TransactionService, private dialogService: MatDialog,
+    private accountService: AccountService) { }
 
   ngOnInit() {
     this.buildColumnList();
@@ -41,10 +41,14 @@ export class TransactionOverviewComponent implements OnInit {
     }
     else{
       // show some accounts!
-      this.transactions = this.transactionCacheService.getTransactions(this.account.id);
-      this.dataSource = new ExampleDataSource(this.transactions);
+      this.transactionService.read(this.account.id)
+        .subscribe(transactions => this.showTransactions(transactions));
     }
-    
+  }
+
+  private showTransactions(transactions){
+    this.transactions = transactions;
+    this.dataSource = new ExampleDataSource(this.transactions);
   }
 
   buildColumnList(){
@@ -62,7 +66,7 @@ export class TransactionOverviewComponent implements OnInit {
     //if (this.filter.nativeElement.value) {
     //  return this.selection.selected.length == this.dataSource.renderedData.length;
     //} else {
-      return this.selection.selected.length == this.transactions.value.length;
+      return this.selection.selected.length == this.transactions.length;
    // }
   }
 
@@ -76,7 +80,7 @@ export class TransactionOverviewComponent implements OnInit {
     } /*else if (this.filter.nativeElement.value) {
       this.dataSource.renderedData.forEach(data => this.selection.select(data.id));
     }*/ else {
-      this.transactions.value.forEach(data => this.selection.select(data.id));
+      this.transactions.forEach(data => this.selection.select(data.id));
     }
   }
 
@@ -86,7 +90,7 @@ export class TransactionOverviewComponent implements OnInit {
     if(this.selection.selected.length == 1){
       let id = this.selection.selected[0];
       console.log(id);
-      let transaction = this.transactions.value.filter(t => t.id == id)[0];
+      let transaction = this.transactions.filter(t => t.id == id)[0];
       console.log("transaction id: " + transaction.id);
 
       //this.router.navigateByUrl(`transaction/${transaction.account.name}/${id}/tag?tag=${TagTypes.BuyIn}`);
@@ -117,7 +121,7 @@ export class TransactionOverviewComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result === true){
-        this.accountCacheService.delete(this.account)
+        this.accountService.delete(this.account.id)
           .subscribe((success) => console.log("deleted"));
       }
     });
@@ -129,15 +133,12 @@ export class TransactionOverviewComponent implements OnInit {
 }
 
 export class ExampleDataSource extends DataSource<any> {
-  constructor(private transactionSource: BehaviorSubject<Transaction[]>) {
+  constructor(private transactions: Transaction[]) {
     super();
   }
 
-  /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<Transaction[]> {
-    console.log('connect called');
-
-    return this.transactionSource.asObservable();
+    return Observable.from(Observable.of(this.transactions));
   }
 
   disconnect() {}

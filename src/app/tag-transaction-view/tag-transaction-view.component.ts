@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
 import { Tag } from '../models/tag';
-import { AccountCacheService } from '../cache/account-cache.service';
 import { TagCacheService } from '../cache/tag-cache-service';
 import { Subscription } from 'rxjs/Subscription';
 import { Transaction } from '../models/transaction';
@@ -24,7 +23,7 @@ export class TagTransactionViewComponent implements OnInit {
   private queryParamsSubscription: any;
 
   constructor(private routeService: Router, private location: Location, private route: ActivatedRoute,
-    private accountCacheService: AccountCacheService, private tagCacheService: TagCacheService) { }
+      private tagCacheService: TagCacheService) { }
   
   ngOnInit() {
     this.routeParamsSubscription = this.route.params.subscribe(params => {

@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from "@angular/router";
-import { AccountCacheService } from '../cache/account-cache.service';
 import { Subscription } from 'rxjs/Subscription';
+import { AccountService } from '../server-api/account.service';
+import { Account } from '../models/account';
 
 @Component({
   selector: 'app-account-overview',
@@ -12,11 +13,11 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
   public accounts: Account[] = [];
   private accountsSubscription: Subscription;
   
-  constructor(private accountCacheService: AccountCacheService, private routeService: Router) { }
+  constructor(private accountService: AccountService, private routeService: Router) { }
 
   ngOnInit() {
-    this.accountsSubscription = this.accountCacheService
-      .getAccounts()
+    this.accountsSubscription = this.accountService
+      .read()
       .subscribe(acc => this.accountsChanged(acc));
   }
 

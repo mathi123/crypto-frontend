@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Account } from "../models/account";
-import { AccountCacheService } from '../cache/account-cache.service';
+import { AccountService } from '../server-api/account.service';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -12,11 +12,11 @@ export class AccountListComponent implements OnInit, OnDestroy {
   public accounts: Account[] = [];
   private accountsSubscription: Subscription;
 
-  constructor(private accountCacheService: AccountCacheService) { }
+  constructor(private accountService: AccountService) { }
 
   ngOnInit() {
-    this.accountsSubscription = this.accountCacheService
-      .getAccounts()
+    this.accountsSubscription = this.accountService
+      .read()
       .subscribe(acc => this.refresh(acc));
   }
 

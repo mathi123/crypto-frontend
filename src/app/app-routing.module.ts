@@ -5,7 +5,6 @@ import { AccountOverviewComponent } from "./account-overview/account-overview.co
 import { AccountViewComponent } from "./account-view/account-view.component";
 import { TagTransactionViewComponent } from "./tag-transaction-view/tag-transaction-view.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
-import { TestDataComponent } from './test-data/test-data.component';
 import { AboutComponent } from './about/about.component';
 import { RegisterViewComponent } from './register-view/register-view.component';
 import { LoginViewComponent } from './login-view/login-view.component';
@@ -40,10 +39,6 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
-  },
-  {
-    path: 'test',
-    component: TestDataComponent
   },
   {
     path: 'about',
