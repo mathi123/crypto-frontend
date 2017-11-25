@@ -44,7 +44,6 @@ import {TagCacheService} from './cache/tag-cache-service';
 import {CurrencyCacheService} from './cache/currency-cache.service';
 import {CoinService} from './server-api/coin.service';
 import {AuthGuard} from './auth-guard';
-import {SocketManagerService} from './server-socket/socket-manager.service';
 import {LogoutViewComponent} from './logout-view/logout-view.component';
 import {Logger} from './logger';
 import {CoinOverviewComponent} from './coin-overview/coin-overview.component';
@@ -110,7 +109,7 @@ import {AddressValidationDirective} from './account-view/address.validation';
     providers: [ConfigurationService, CurrencyService, CurrencyCacheService, AuthGuard,
         UserService, TokenService, TagService, TagCacheService, AccountService,
         AccountCacheService, CoinCacheService, CoinService, TransactionService,
-        TransactionCacheService, SocketManagerService, Logger, LogService,
+        TransactionCacheService, Logger, LogService,
         FileService, AdminService, MenuService, AccountSummaryService, FileCacheService],
     bootstrap: [AppComponent]
 })

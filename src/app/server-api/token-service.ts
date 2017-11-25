@@ -5,7 +5,6 @@ import {ConfigurationService} from './configuration.service';
 import {Credentials} from '../models/credentials';
 import 'rxjs/add/operator/do';
 import {Router} from '@angular/router';
-import {SocketManagerService} from '../server-socket/socket-manager.service';
 import { Logger } from '../logger';
 
 @Injectable()
@@ -13,14 +12,13 @@ export class TokenService {
     private redirectUrl = '/home';
 
     constructor(private httpClient: HttpClient, private config: ConfigurationService,
-                private router: Router, private feedback: SocketManagerService, private logger: Logger) {
+                private router: Router, private logger: Logger) {
     }
 
     public login(credentials: Credentials) {
         return this.httpClient.post(`${this.config.getApiUrl()}/token`, credentials, {observe: 'response'})
             .do(resp => this.setToken(resp))
             .do(resp => this.loadContext())
-            .do(resp => this.openSocket())
             .do(resp => this.navigateAfterLogin())
             .map(p => true);
     }
@@ -28,11 +26,6 @@ export class TokenService {
     public setRedirectUrl(url) {
         this.logger.info(`setting redirect url: ${url}`);
         this.redirectUrl = url;
-    }
-
-    private openSocket() {
-        this.logger.verbose('initializing socket');
-        this.feedback.init();
     }
 
     private setToken(resp) {

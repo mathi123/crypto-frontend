@@ -14,8 +14,6 @@ import { LogoutViewComponent } from './logout-view/logout-view.component';
 import { CoinOverviewComponent } from './coin-overview/coin-overview.component';
 import { CoinViewComponent } from './coin-view/coin-view.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { JobOverviewComponent } from './job-overview/job-overview.component';
-import { JobViewComponent } from './job-view/job-view.component';
 import { LogOverviewComponent } from './log-overview/log-overview.component';
 import { LogViewComponent } from './log-view/log-view.component';
 import { UserOverviewComponent } from './user-overview/user-overview.component';

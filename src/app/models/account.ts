@@ -7,4 +7,5 @@ export class Account {
     address: string;
     note: string;
     transactionType: string;
+    state: string;
 }

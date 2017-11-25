@@ -3,8 +3,8 @@ import { Router } from "@angular/router";
 import { Location } from '@angular/common';
 import { Credentials } from '../models/credentials';
 import { TokenService } from '../server-api/token-service';
-import { SocketManagerService } from '../server-socket/socket-manager.service';
 import { ConfigurationService } from '../server-api/configuration.service';
+import { Logger } from '../logger';
 
 @Component({
   selector: 'app-logout-view',
@@ -13,11 +13,10 @@ import { ConfigurationService } from '../server-api/configuration.service';
 export class LogoutViewComponent implements OnInit {
   public credentials: Credentials = new Credentials();
 
-  constructor(private socketManager: SocketManagerService, private configService: ConfigurationService) { }
+  constructor(private configService: ConfigurationService, private logger: Logger) { }
 
   ngOnInit() {
-    this.socketManager.close();
     this.configService.logOut();
-    console.log("logged out.");
+    this.logger.verbose("logged out.");
   }
 }
