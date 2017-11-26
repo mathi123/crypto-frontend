@@ -19,29 +19,29 @@ export class AccountSummaryOverviewComponent implements OnInit {
     this.reload();
   }
 
-  public reload(){
+  public reload() {
     this.accountSummaryService.read()
-      .subscribe(sum => this.refresh(sum), 
-                 err => this.handleError(err))
+      .subscribe(sum => this.refresh(sum),
+                 err => this.handleError(err));
   }
 
-  private refresh(summary: AccountSummary[]){
+  private refresh(summary: AccountSummary[]) {
     this.logger.verbose('Accounts loaded', summary);
     this.accounts = summary;
 
-    for(let account of summary){
+    for (const account of summary){
       this.loadImage(account);
     }
   }
 
-  private loadImage(account: AccountSummary){
-    if(account.coin.fileId){
+  private loadImage(account: AccountSummary) {
+    if (account.coin.fileId) {
       this.fileCacheService.read(account.coin.fileId)
         .subscribe(data => account.image = data);
     }
   }
 
-  private handleError(err: Error){
+  private handleError(err: Error) {
     this.logger.error('Could not load account summary', err);
   }
 }

@@ -16,7 +16,7 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe(stats => this.refresh(stats));
   }
 
-  private refresh(stats: AdminStatistics){
+  private refresh(stats: AdminStatistics) {
     this.statistics = stats;
   }
 }

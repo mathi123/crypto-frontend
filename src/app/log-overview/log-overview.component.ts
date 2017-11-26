@@ -22,10 +22,10 @@ export class LogOverviewComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   @Input()
-  public autoReload: boolean = true;
+  public autoReload = true;
 
   @Input()
-  public showTitle: boolean = true;
+  public showTitle = true;
 
   @Input()
   get jobId(): string{
@@ -106,8 +106,8 @@ export class CoinDataSource extends DataSource<any> {
     if(this.list === null)
       this.list = data;
 
-    let sortColumn = this.sort.active || 'createdAt';
+    const sortColumn = this.sort.active || 'createdAt';
 
-    return this.list.sort((a,b) => ((a[sortColumn] < b[sortColumn]) ? 1 : -1) * (this.sort.direction == 'asc' ? 1 : -1));
+    return this.list.sort((a,b) => ((a[sortColumn] < b[sortColumn]) ? 1 : -1) * (this.sort.direction === 'asc' ? 1 : -1));
   }
 }

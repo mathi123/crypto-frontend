@@ -33,7 +33,7 @@ export class TagCacheService implements hasCache {
                 (err) => this.handleError(err));
 
     }
-    
+
     clearCache() {
         this.cache.next([]);
         this.cache.isInitialized = false;

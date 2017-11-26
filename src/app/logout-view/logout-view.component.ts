@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Credentials } from '../models/credentials';
 import { TokenService } from '../server-api/token-service';
@@ -17,6 +17,6 @@ export class LogoutViewComponent implements OnInit {
 
   ngOnInit() {
     this.configService.logOut();
-    this.logger.verbose("logged out.");
+    this.logger.verbose('logged out.');
   }
 }

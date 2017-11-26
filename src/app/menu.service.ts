@@ -24,7 +24,7 @@ export class MenuService {
       menu.push(new MenuItem(true, "or", null, null));
       menu.push(new MenuItem(false, "Sign up", "/register", null));
     } else {
-      menu.push(new MenuItem(false, "Accounts", "/accounts", "list"));
+      menu.push(new MenuItem(false, "Accounts", "/accounts", 'list'));
       menu.push(new MenuItem(false, "Dashboard", "/dashboard", "show_chart"));
     }
     
@@ -32,10 +32,10 @@ export class MenuService {
       menu.push(new MenuItem(false, "Admin", "/admin", "build"));
     }
     
-    //menu.push(new MenuItem(false, "About", "/about", "info_outline"));
+    // menu.push(new MenuItem(false, "About", "/about", "info_outline"));
 
     if(context !== null){
-      menu.push(new MenuItem(false, 'Sign out', "/logout", "power_settings_new")); 
+      menu.push(new MenuItem(false, 'Sign out', "/logout", "power_settings_new"));
     }
 
     this.menu.next(menu);

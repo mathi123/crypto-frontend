@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { AccountService } from '../server-api/account.service';
 import { Account } from '../models/account';
@@ -12,7 +12,7 @@ import { Account } from '../models/account';
 export class AccountOverviewComponent implements OnInit, OnDestroy {
   public accounts: Account[] = [];
   private accountsSubscription: Subscription;
-  
+
   constructor(private accountService: AccountService, private routeService: Router) { }
 
   ngOnInit() {
@@ -21,15 +21,15 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
       .subscribe(acc => this.accountsChanged(acc));
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.accountsSubscription.unsubscribe();
   }
 
-  accountsChanged(accounts: Account[]){
+  accountsChanged(accounts: Account[]) {
     this.accounts = accounts;
   }
 
-  addAccount(){
+  addAccount() {
     this.routeService.navigate(['account', '0']);
   }
 }

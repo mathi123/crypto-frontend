@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Account } from "../models/account";
+import { Account } from '../models/account';
 import { AccountService } from '../server-api/account.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -20,11 +20,11 @@ export class AccountListComponent implements OnInit, OnDestroy {
       .subscribe(acc => this.refresh(acc));
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.accountsSubscription.unsubscribe();
   }
 
-  refresh(accounts: Account[]){
+  refresh(accounts: Account[]) {
     this.accounts = accounts;
   }
 

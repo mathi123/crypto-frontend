@@ -3,7 +3,7 @@ import { LogService } from '../server-api/log.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Logger } from '../logger';
 import { MatDialog } from '@angular/material';
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
 import { Log } from '../models/log';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -21,19 +21,19 @@ export class LogViewComponent implements OnInit {
 
   ngOnInit() {
     this.routeParamsSubscription = this.route.params.subscribe(params => {
-      let id = params['id'];
+      const id = params['id'];
 
-      if(id === undefined || id === null || id === '0'){
+      if (id === undefined || id === null || id === '0') {
         this.log = new Log();
-      }else{
+      }else {
         this.logService.readById(id)
           .subscribe(log => this.refresh(log));
       }
     });
   }
 
-  private refresh(log: Log){
-    this.logger.verbose("data loaded, showing log");
+  private refresh(log: Log) {
+    this.logger.verbose('data loaded, showing log');
     this.log = log;
   }
 }
