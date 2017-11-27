@@ -99,14 +99,11 @@
                         <fa name="question-circle-o"></fa>
                     </span>
                 </div>
-
-
-                <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="start end">
-                    <button mat-raised-button [disabled]="!accountForm.valid"
-                            type="submit" color="primary">Save
-                    </button>
-                    <button mat-raised-button (click)="cancel();">Cancel</button>
-                </div>
+                <button mat-raised-button [disabled]="!accountForm.valid" type="submit" color="primary" fxFill>
+                    <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+                        <span>Save</span>
+                    </div>
+                </button>
             </form>
         </mat-card-content>
     </mat-card>

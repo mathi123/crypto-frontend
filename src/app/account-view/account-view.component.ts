@@ -90,11 +90,23 @@ export class AccountViewComponent implements OnInit {
         this.account.color = form.value.color;
         this.account.transactionType = form.value.transactionType;
 
-        this.accountService.update(this.account)
-            .subscribe((res) => {
-                console.log('Response save: ', res);
-                this.location.back();
-            }, (err) => this.logger.error(err));
+        if (this.account.id === null || this.account.id === undefined) {
+            this.accountService.create(this.account)
+                .subscribe(res => this.afterUpdate(),
+                           err => this.handleError(err));
+        }else {
+            this.accountService.update(this.account)
+                .subscribe(res => this.afterUpdate(),
+                           err => this.handleError(err));
+        }
+    }
+
+    private handleError(err: Error) {
+        this.logger.error('error in updating/creating account', err);
+    }
+
+    private afterUpdate() {
+        this.location.back();
     }
 
     cancel() {

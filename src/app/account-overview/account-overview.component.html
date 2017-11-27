@@ -9,19 +9,11 @@
 <button mat-raised-button (click)="addAccount();" color="primary" fxLayoutGap="10px">
   <mat-icon>create</mat-icon> Add account
 </button>
-<mat-tab-group>
+<mat-tab-group (selectedIndexChange)="selectedIndexChange($event)">
   <mat-tab label="My Assets">
     <app-account-summary-overview></app-account-summary-overview>
   </mat-tab>
   <mat-tab *ngFor="let account of accounts" label="{{account.description}}">
-      <mat-card *ngIf="account.state === 'importing'">
-          <mat-card-title>Loading...</mat-card-title>
-          <mat-card-content>
-              <mat-spinner *ngIf="loading"
-              color="accent" [diameter]="25" strokeWidth="3"
-              mode="indeterminate"></mat-spinner>
-              Your transactions are loading from the blockchain...</mat-card-content>
-      </mat-card>
-      <app-transaction-overview *ngIf="account.state !== 'importing'" [account]="account"></app-transaction-overview>
+      <app-transaction-overview [account]="account" (deleted)="delete($event)" [isSelected]="selectedIndex === accounts.indexOf(account) + 1"></app-transaction-overview>
   </mat-tab>
 </mat-tab-group>

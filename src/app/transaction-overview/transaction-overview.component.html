@@ -1,53 +1,68 @@
-<button mat-raised-button (click)="tagBuyIn();" [disabled]="selection.selected.length !== 1" class="mtb-5">
+<!-- <button mat-raised-button (click)="tagBuyIn();" [disabled]="selection.selected.length !== 1" class="mtb-5">
   <mat-icon>flight_land</mat-icon>
   Buy-in
 </button>
 <button mat-raised-button (click)="tagBuyOut();" [disabled]="selection.selected.length !== 1" class="mtb-5">
     <mat-icon>flight_takeoff</mat-icon>
     Buy-out
+  </button> -->
+<mat-card *ngIf="account.state === 'importing'">
+  <mat-card-title>Loading</mat-card-title>
+  <mat-card-content>
+      <p>Your transactions are loading from the blockchain...</p>
+      <mat-spinner
+      color="accent" [diameter]="25" strokeWidth="3"
+      mode="indeterminate"></mat-spinner>
+    </mat-card-content>
+</mat-card>
+<div *ngIf="account.state !== 'importing'">
+  <button mat-raised-button (click)="reload();" class="mtb-5">
+    <mat-icon>refresh</mat-icon>
+    Reload
   </button>
-<mat-table #table [dataSource]="dataSource">
-  <!-- Checkbox Column -->
-  <ng-container matColumnDef="select">
-    <mat-header-cell *matHeaderCellDef>
-      <mat-checkbox (change)="$event ? masterToggle() : null"
-                    [checked]="isAllSelected()"
-                    [indeterminate]="selection.hasValue() && !isAllSelected()">
-      </mat-checkbox>
-    </mat-header-cell>
-    <mat-cell *matCellDef="let row">
-      <mat-checkbox (click)="$event.stopPropagation()"
-                    (change)="$event ? selection.toggle(row.id) : null"
-                    [checked]="selection.isSelected(row.id)">
-      </mat-checkbox>
-    </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="date">
-    <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
-    <mat-cell *matCellDef="let row"> {{row.ts | date:'mediumDate'}} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="amount">
-    <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
-    <mat-cell *matCellDef="let row" [class.positive]="row.amount > 0" [class.negative]="row.amount < 0"><span *ngIf="row.amount > 0">+</span>{{row.amount}} </mat-cell>
-  </ng-container>
-<!-- 
-  <ng-container matColumnDef="tag">
-      <mat-header-cell *matHeaderCellDef> Tag </mat-header-cell>
-      <mat-cell *matCellDef="let row"> <div *ngIf="row.tagType !== ''">{{row.tagType}} = {{row.tagAmount}} </div> </mat-cell>
-    </ng-container> -->
-
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"
-          [class.example-selected-row]="selection.isSelected(row.id)"
-          (click)="selection.toggle(row.id)"></mat-row>
-</mat-table>
-<button mat-button (click)="edit();" *ngIf="account !== null" class="mtb-5" color="primary">
-    <mat-icon>edit</mat-icon>
-    Edit account
-</button>  
-<button mat-button (click)="delete();" *ngIf="account !== null" class="mtb-5" color="warn">
-    <mat-icon>delete</mat-icon>
-    Delete account
-</button>  
+  <mat-table #table [dataSource]="dataSource">
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row.id) : null"
+                      [checked]="selection.isSelected(row.id)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.ts | date:'mediumDate'}} </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+      <mat-cell *matCellDef="let row" [class.positive]="row.amount > 0" [class.negative]="row.amount < 0"><span *ngIf="row.amount > 0">+</span>{{row.amount}} </mat-cell>
+    </ng-container>
+  <!-- 
+    <ng-container matColumnDef="tag">
+        <mat-header-cell *matHeaderCellDef> Tag </mat-header-cell>
+        <mat-cell *matCellDef="let row"> <div *ngIf="row.tagType !== ''">{{row.tagType}} = {{row.tagAmount}} </div> </mat-cell>
+      </ng-container> -->
+  
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+            [class.example-selected-row]="selection.isSelected(row.id)"
+            (click)="selection.toggle(row.id)"></mat-row>
+  </mat-table>
+  <button mat-button (click)="edit();" *ngIf="account !== null" class="mtb-5" color="primary">
+      <mat-icon>edit</mat-icon>
+      Edit account
+  </button>  
+  <button mat-button (click)="delete();" *ngIf="account !== null" class="mtb-5" color="warn">
+      <mat-icon>delete</mat-icon>
+      Delete account
+  </button>
+</div>

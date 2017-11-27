@@ -8,4 +8,5 @@ export class Account {
     note: string;
     transactionType: string;
     state: string;
+    updatedAt: Date;
 }
