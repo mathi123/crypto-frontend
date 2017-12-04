@@ -8,8 +8,8 @@ export class FileCacheService {
 
 
   constructor(private httpClient: HttpClient, private config: ConfigurationService) { }
-  
-  read(id: string) : Observable<string>{
+
+  read(id: string): Observable<string> {
     // Todo: cache result
     return this.httpClient.get<string>(`${this.config.getApiUrl()}/file/${id}`, this.config.getHttpOptions());
   }

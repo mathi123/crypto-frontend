@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
-import { Location } from "@angular/common";
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { Tag } from '../models/tag';
 import { TagCacheService } from '../cache/tag-cache-service';
 import { Subscription } from 'rxjs/Subscription';
 import { Transaction } from '../models/transaction';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-tag-transaction-view',
   templateUrl: './tag-transaction-view.component.html',
   styleUrls: ['./tag-transaction-view.component.css']
 })
-export class TagTransactionViewComponent implements OnInit {
+export class TagTransactionViewComponent implements OnInit, OnDestroy {
   public transaction: Transaction;
-  public tag:Tag;
+  public tag: Tag;
   public tags: Tag[] = [];
   public amount: 0;
   private predefinedTag: string = null;
@@ -24,19 +25,12 @@ export class TagTransactionViewComponent implements OnInit {
 
   constructor(private routeService: Router, private location: Location, private route: ActivatedRoute,
       private tagCacheService: TagCacheService) { }
-  
+
   ngOnInit() {
-    this.routeParamsSubscription = this.route.params.subscribe(params => {
-      let transactionId = params['id'];
+    this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
+      const predefinedTag = params['tag'];
 
-      //let account = this.accountCacheService.getById(accountId);
-      // this.transaction = this.transactionsService.getTransaction(account, transactionId);
-    });
-
-    this.queryParamsSubscription = this.route.queryParams.subscribe(params=> {
-      let predefinedTag = params['tag'];
-
-      if(predefinedTag !== undefined){
+      if (predefinedTag !== undefined) {
         this.predefinedTag = predefinedTag;
       }
     });
@@ -45,9 +39,9 @@ export class TagTransactionViewComponent implements OnInit {
       .subscribe(tags => this.reloadTags(tags));
   }
 
-  reloadTags(tags: Tag[]){
+  reloadTags(tags: Tag[]) {
     this.tags = tags;
-    if(this.predefinedTag !== null){
+    if (this.predefinedTag !== null) {
       this.tag = this.tags.filter(t => t.code === this.predefinedTag)[0];
     }
   }
@@ -58,13 +52,13 @@ export class TagTransactionViewComponent implements OnInit {
     this.routeParamsSubscription.unsubscribe();
   }
 
-  public save(){
+  public save() {
     // this.transaction.tagAmount = this.amount;
     // this.transaction.tagType = this.tag;
     this.location.back();
   }
 
-  public cancel(){
+  public cancel() {
     this.location.back();
   }
 }
