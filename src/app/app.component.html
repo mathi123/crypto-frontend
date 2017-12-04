@@ -16,9 +16,9 @@
           <mat-icon>menu</mat-icon>
         </button>
 
-        <span fxFlex fxFill><a routerLink="/home">Cryptofolio</a><sub class="versionIndicator"><i>alpha</i></sub></span>
-
-        <!-- <span class="fill-space"></span> -->
+        <span fxFlex fxFill>
+            <app-logo></app-logo>
+        </span>
 
         <div *ngIf="!media.isActive('xs')">
           <ng-container *ngFor="let menuItem of menuItems" >

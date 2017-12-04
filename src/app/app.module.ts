@@ -48,11 +48,10 @@ import {UserViewComponent} from './user-view/user-view.component';
 import {FileService} from './server-api/file.service';
 import {AdminService} from './server-api/admin.service';
 import {MenuService} from './menu.service';
-import {AccountSummaryOverviewComponent} from './account-summary-overview/account-summary-overview.component';
-import {AccountSummaryService} from './server-api/account-summary.service';
 import {FileCacheService} from './server-api/file-cache.service';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {AddressValidationDirective} from './account-view/address.validation';
+import { LogoComponent } from './logo/logo.component';
 
 // TODO: note -> it's a best practice that every component has a separate module.
 // @see: https://angular.io/guide/styleguide#application-structure-and-ngmodules
@@ -81,8 +80,8 @@ import {AddressValidationDirective} from './account-view/address.validation';
         LogOverviewComponent,
         UserOverviewComponent,
         UserViewComponent,
-        AccountSummaryOverviewComponent,
-        AddressValidationDirective
+        AddressValidationDirective,
+        LogoComponent
     ],
     imports: [
         BrowserModule,
@@ -102,7 +101,7 @@ import {AddressValidationDirective} from './account-view/address.validation';
         UserService, TokenService, TagService, TagCacheService, AccountService,
         CoinCacheService, CoinService, TransactionService,
         Logger, LogService,
-        FileService, AdminService, MenuService, AccountSummaryService, FileCacheService],
+        FileService, AdminService, MenuService, FileCacheService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

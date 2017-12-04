@@ -1,6 +1,11 @@
 <div fxLayout="column" fxLayoutAlign="center center">
     <mat-card>
-            <mat-card-title fxLayoutAlign="center center">Sign up</mat-card-title>
+            <mat-card-title fxLayoutAlign="center center">
+                    <app-logo [showVersion]="false"></app-logo>
+            </mat-card-title>
+            <mat-card-subtitle>
+                Sign up new account
+            </mat-card-subtitle>
             <mat-card-content class="container" fxLayout="column" fxLayoutAlign="center center">
                 <form [formGroup]="registerForm" #form="ngForm" (ngSubmit)="onSubmit(registerForm)"
                         fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">

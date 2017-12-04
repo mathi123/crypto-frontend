@@ -14,11 +14,13 @@ export class TransactionService {
   }
 
   readById(accountId: string, id: string) : Observable<Transaction>{
-    return this.httpClient.get<Transaction>(`${this.config.getApiUrl()}/account/${accountId}/transaction/${id}`, this.config.getHttpOptions());
+    return this.httpClient.get<Transaction>(`${this.config.getApiUrl()}/account/${accountId}/transaction/${id}`,
+      this.config.getHttpOptions());
   }
 
   delete(record: Transaction){
-    return this.httpClient.delete(`${this.config.getApiUrl()}/account/${record.accountId}/transaction/${record.id}`, this.config.getHttpOptions());
+    return this.httpClient.delete(`${this.config.getApiUrl()}/account/${record.accountId}/transaction/${record.id}`,
+      this.config.getHttpOptions());
   }
 
   update(record: Transaction){
@@ -29,7 +31,7 @@ export class TransactionService {
   create(record: Transaction):Observable<string>{
     return this.httpClient.post(`${this.config.getApiUrl()}/account/${record.accountId}`, record, {
       headers: this.config.getHeaders(),
-      observe: "response"
-    }).map((resp:any) => resp.headers.get('Location'));
+      observe: 'response'
+    }).map((resp: any) => resp.headers.get('Location'));
   }
 }

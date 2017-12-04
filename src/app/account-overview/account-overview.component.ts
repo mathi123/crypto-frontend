@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { AccountService } from '../server-api/account.service';
 import { Account } from '../models/account';
 import { Logger } from '../logger';
+import { FileCacheService } from '../server-api/file-cache.service';
 
 @Component({
   selector: 'app-account-overview',
@@ -16,7 +17,8 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
 
   private accountsSubscription: Subscription;
 
-  constructor(private accountService: AccountService, private routeService: Router, private logger: Logger) { }
+  constructor(private accountService: AccountService, private routeService: Router,
+    private logger: Logger, private fileCacheService: FileCacheService) { }
 
   ngOnInit() {
     this.accountsSubscription = this.accountService
@@ -30,6 +32,21 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
 
   accountsChanged(accounts: Account[]) {
     this.accounts = accounts;
+
+    for (const account of accounts){
+      this.loadImage(account);
+    }
+  }
+
+  private loadImage(account: Account) {
+    if (account.fileId) {
+      this.fileCacheService.read(account.fileId)
+        .subscribe(data => account.image = data);
+    }
+  }
+
+  private handleError(err: Error) {
+    this.logger.error('Could not load account summary', err);
   }
 
   addAccount() {
@@ -42,10 +59,5 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
     if (index >= 0){
       this.accounts.splice(index, 1);
     }
-  }
-
-  selectedIndexChange(nr){
-    this.logger.info(`Selected tab index: ${nr}`);
-    this.selectedIndex = nr;
   }
 }

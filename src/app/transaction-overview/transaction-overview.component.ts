@@ -18,6 +18,7 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { Subscription } from 'rxjs/Subscription';
 import { Logger } from '../logger';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-transaction-overview',
@@ -27,26 +28,34 @@ import { Logger } from '../logger';
 export class TransactionOverviewComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   private hasData = false;
+  private accountId: string = null;
+
   @Input()
   public isSelected = false;
 
   @Input()
   public account: Account = null;
 
-  @Output()
-  public deleted: EventEmitter<Account> = new EventEmitter<Account>();
-
   public transactions: Transaction[];
   public displayedColumns = [];
   public dataSource: ExampleDataSource | null;
   public selection = new SelectionModel<string>(true, []);
 
-  constructor(private router: Router, private transactionService: TransactionService, private dialogService: MatDialog,
+  private routeParamsSubscription: Subscription;
+
+  constructor(private router: Router, private route: ActivatedRoute, private transactionService: TransactionService,
+    private dialogService: MatDialog,
     private accountService: AccountService, private logger: Logger) { }
 
   ngOnInit() {
     this.buildColumnList();
-    this.reload();
+    this.routeParamsSubscription = this.route.params.subscribe(params => {
+                  const id = params['accountId'];
+                  if (id !== undefined && id !== null && id !== '0') {
+                      this.accountId = id;
+                      this.reload();
+                  }
+              });
     this.subscription = IntervalObservable.create(5000)
       .subscribe((val) => this.reload());
   }
@@ -55,15 +64,21 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
   }
 
   private reload() {
-    if (this.account !== null && (this.isSelected  || !this.hasData)) {
+    if (this.accountId !== null && (this.isSelected  || !this.hasData)) {
       this.logger.verbose(`reloading data for account with id ${this.account.id}`);
 
-      this.accountService.readById(this.account.id)
+      this.accountService.readById(this.accountId)
         .subscribe((account) => this.accountRead(account));
     }
   }
   private accountRead(account){
-    if(this.account.updatedAt !== account.updatedAt || !this.hasData){
+    if (this.account === null){
+      this.account = account;
+      this.transactionService.read(this.account.id)
+        .subscribe(transactions => this.showTransactions(transactions));
+    }
+
+    if (this.account.updatedAt !== account.updatedAt || !this.hasData){
       this.hasData = true;
       this.account.state = account.state;
       this.account.updatedAt = account.updatedAt;
@@ -115,7 +130,7 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  tagBuyOut(){
+  tagBuyOut() {
     console.log('tag buy out');
 
         if (this.selection.selected.length === 1){
@@ -123,7 +138,7 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
         }
   }
 
-  delete(){
+  delete() {
     const options = {
       data: {
         title: 'Confirm',
@@ -135,7 +150,7 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true){
         this.accountService.delete(this.account.id)
-          .subscribe((success) => this.deleted.emit(this.account));
+          .subscribe((success) => this.router.navigate(['accounts']));
       }
     });
   }

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from "./home/home.component";
-import { AccountOverviewComponent } from "./account-overview/account-overview.component";
-import { AccountViewComponent } from "./account-view/account-view.component";
-import { TagTransactionViewComponent } from "./tag-transaction-view/tag-transaction-view.component";
-import { DashboardComponent } from "./dashboard/dashboard.component";
+import { HomeComponent } from './home/home.component';
+import { AccountOverviewComponent } from './account-overview/account-overview.component';
+import { AccountViewComponent } from './account-view/account-view.component';
+import { TagTransactionViewComponent } from './tag-transaction-view/tag-transaction-view.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { AboutComponent } from './about/about.component';
 import { RegisterViewComponent } from './register-view/register-view.component';
 import { LoginViewComponent } from './login-view/login-view.component';
@@ -17,9 +17,10 @@ import { LogOverviewComponent } from './log-overview/log-overview.component';
 import { LogViewComponent } from './log-view/log-view.component';
 import { UserOverviewComponent } from './user-overview/user-overview.component';
 import { UserViewComponent } from './user-view/user-view.component';
+import { TransactionOverviewComponent } from './transaction-overview/transaction-overview.component';
 
 const routes: Routes = [
-  
+
   {
     path: 'accounts',
     component: AccountOverviewComponent,
@@ -28,6 +29,11 @@ const routes: Routes = [
   {
     path: 'account/:id',
     component: AccountViewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'account/:accountId/transactions',
+    component: TransactionOverviewComponent,
     canActivate: [AuthGuard],
   },
   {
@@ -45,7 +51,7 @@ const routes: Routes = [
     component: AboutComponent
   },
   {
-    path:'register',
+    path: 'register',
     component: RegisterViewComponent
   },
   {

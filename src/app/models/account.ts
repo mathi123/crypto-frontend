@@ -9,4 +9,6 @@ export class Account {
     transactionType: string;
     state: string;
     updatedAt: Date;
+    fileId: string;
+    image: string;
 }

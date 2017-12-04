@@ -9,7 +9,7 @@ import { Logger } from '../logger';
 
 @Injectable()
 export class TokenService {
-    private redirectUrl = '/home';
+    private redirectUrl = '/accounts';
 
     constructor(private httpClient: HttpClient, private config: ConfigurationService,
                 private router: Router, private logger: Logger) {

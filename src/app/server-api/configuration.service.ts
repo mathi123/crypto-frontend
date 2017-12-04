@@ -1,19 +1,19 @@
-import { Injectable } from "@angular/core";
-import { HttpHeaders } from "@angular/common/http";
-import { Subject } from "rxjs/Subject";
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { Context } from "../models/context";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
+import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Context } from '../models/context';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/do';
 import { environment } from '../../environments/environment';
-import { Logger } from "../logger";
+import { Logger } from '../logger';
 
 @Injectable()
 export class ConfigurationService {
   private _baseUrl = environment.url;
   private _headers: HttpHeaders = new HttpHeaders();
   private token: string = null;
-    
+
   public TokenHeader = 'Authorization';
 
   public UserContext: BehaviorSubject<Context> = new BehaviorSubject<Context>(null);
@@ -52,7 +52,7 @@ export class ConfigurationService {
   }
 
   public loadContext(){
-    this.logger.verbose("loading context");
+    this.logger.verbose('loading context');
     this.httpClient.get<Context>(`${this.getApiUrl()}/context`, this.getHttpOptions())
       .subscribe(context => this.UserContext.next(context));
   }
@@ -69,7 +69,7 @@ export class ConfigurationService {
   public getHeaders(){
     return this._headers;
   }
-  
+
   public getHttpOptions(){
     return {
       headers: this._headers
