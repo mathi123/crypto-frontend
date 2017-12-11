@@ -9,6 +9,11 @@ export class Account {
     transactionType: string;
     state: string;
     updatedAt: Date;
-    fileId: string;
+    coinFileId: string;
+    coinCode: string;
+    coinDescription: string;
     image: string;
+    moreInfo = false;
+    balance: number;
+    priceNow: number;
 }

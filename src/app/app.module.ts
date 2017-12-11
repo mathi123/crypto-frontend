@@ -52,6 +52,7 @@ import {FileCacheService} from './server-api/file-cache.service';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {AddressValidationDirective} from './account-view/address.validation';
 import { LogoComponent } from './logo/logo.component';
+import { PrettifyPipe } from './prettify';
 
 // TODO: note -> it's a best practice that every component has a separate module.
 // @see: https://angular.io/guide/styleguide#application-structure-and-ngmodules
@@ -81,7 +82,8 @@ import { LogoComponent } from './logo/logo.component';
         UserOverviewComponent,
         UserViewComponent,
         AddressValidationDirective,
-        LogoComponent
+        LogoComponent,
+        PrettifyPipe
     ],
     imports: [
         BrowserModule,

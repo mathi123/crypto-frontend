@@ -1,24 +1,83 @@
-<mat-card *ngIf="accounts.length === 0">
-  <mat-card-header>
-    <div mat-card-avatar><mat-icon class="size-40">info_outline</mat-icon> </div>
-    <mat-card-title>Step 1</mat-card-title>
-    <mat-card-subtitle>Click 'Add account' to add your first crypto account.</mat-card-subtitle>
-  </mat-card-header>
-</mat-card>
-
-<button mat-raised-button (click)="addAccount();" color="primary" fxLayoutGap="10px">
-  <mat-icon>create</mat-icon> Add account
-</button>
 <div *ngIf="accounts.length > 0">
-  <h3>Accounts</h3>
-  <mat-card *ngFor="let account of accounts">
-    <mat-card-content>
-        <img mat-card-sm-image *ngIf="account.image" 
-          class="account-summary-image"
-          [src]="account.image" />
-        <span>
-            {{account.description}} 
-        </span>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title><h3 class="mat-headline">Your Portfolio</h3></mat-card-title>
+      <mat-card-subtitle>
+        <p>Total value: {{ total | prettify  }} {{ currencySymbol }}</p>
+      </mat-card-subtitle>
+      <!-- <img mat-card-avatar src="assets/logo.png" /> -->
+    </mat-card-header>
+    <mat-card-content *ngIf="accounts.length === 0">
+        Click 'Add account' to add your first crypto account.
     </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="addAccount();" color="primary">
+          <mat-icon>create</mat-icon> Add account
+        </button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card *ngFor="let account of accounts">
+    <mat-card-header (click)="toggleMoreInfo(account)">
+        <mat-card-title><h3 class="mat-headline">{{account.description}}<mat-icon class="trending-icon" *ngIf="account.priceNow > account.priceOneHour">trending_up</mat-icon><mat-icon class="trending-icon" *ngIf="account.priceNow <= account.priceOneHour">trending_down</mat-icon></h3></mat-card-title>
+        <mat-card-subtitle>
+          <p>{{account.balance | prettify}} {{account.coinCode}} @ {{account.priceNow  | prettify }} {{ currencySymbol }}</p>
+        </mat-card-subtitle>
+        <img *ngIf="account.image" mat-card-avatar [src]="account.image" />
+    </mat-card-header>
+    <mat-card-content *ngIf="account.moreInfo && account.state !== 'importing'">
+        <mat-toolbar fxLayoutAlign="end center">
+          <span fxFlex fxFill>&nbsp;</span>
+          <button mat-button (click)="toggleMoreInfo(account)">
+              <mat-icon>close</mat-icon>
+          </button>
+        </mat-toolbar>
+        <mat-grid-list cols="4" rowHeight="35px" gutterSize="1">
+          <mat-grid-tile>&nbsp;</mat-grid-tile>
+          <mat-grid-tile><span class="mat-body-2">balance</span></mat-grid-tile>
+          <mat-grid-tile><span class="mat-body-2">price</span></mat-grid-tile>
+          <mat-grid-tile><span class="mat-body-2">total</span></mat-grid-tile>
+          <mat-grid-tile><span class="mat-body-2">Now</span></mat-grid-tile>
+          <mat-grid-tile>{{account.balance | prettify}} {{account.coinCode}}</mat-grid-tile>
+          <mat-grid-tile>{{account.priceNow  | prettify }} {{ currencySymbol }}</mat-grid-tile>
+          <mat-grid-tile>{{account.priceNow * account.balance | prettify }} {{ currencySymbol }}</mat-grid-tile>
+          <mat-grid-tile>1h</mat-grid-tile>
+          <mat-grid-tile>{{account.balanceOneHourAgo | prettify}} {{account.coinCode}}</mat-grid-tile>
+          <mat-grid-tile>{{account.priceOneHour  | prettify }} {{ currencySymbol }}</mat-grid-tile>
+          <mat-grid-tile>{{account.priceOneHour * account.balanceOneHourAgo | prettify }} {{ currencySymbol }}</mat-grid-tile>
+          <mat-grid-tile>24h</mat-grid-tile>
+          <mat-grid-tile>{{account.balanceOneDayAgo | prettify}} {{account.coinCode}}</mat-grid-tile>
+          <mat-grid-tile>{{account.priceOneDay  | prettify }} {{ currencySymbol }}</mat-grid-tile>
+          <mat-grid-tile>{{account.priceOneDay * account.balanceOneDayAgo | prettify }} {{ currencySymbol }}</mat-grid-tile>
+          <mat-grid-tile>1 week</mat-grid-tile>
+          <mat-grid-tile>{{account.balanceOneWeekAgo | prettify}} {{account.coinCode}}</mat-grid-tile>
+          <mat-grid-tile>{{account.priceLastWeek  | prettify }} {{ currencySymbol }}</mat-grid-tile>
+          <mat-grid-tile>{{account.priceLastWeek * account.balanceOneWeekAgo | prettify }} {{ currencySymbol }}</mat-grid-tile>
+          <mat-grid-tile>1 month</mat-grid-tile>
+          <mat-grid-tile>{{account.balanceOneMonthAgo | prettify}} {{account.coinCode}}</mat-grid-tile>
+          <mat-grid-tile>{{account.priceLastMonth  | prettify }} {{ currencySymbol }}</mat-grid-tile>
+          <mat-grid-tile>{{account.priceLastMonth * account.balanceOneMonthAgo | prettify }} {{ currencySymbol }}</mat-grid-tile>
+        </mat-grid-list>
+    </mat-card-content>
+    <mat-card-content *ngIf="account.moreInfo && account.state === 'importing'">
+        <mat-toolbar fxLayoutAlign="end center">
+          <span fxFlex fxFill>Your transactions are loading from the blockchain...</span>
+          <button mat-button (click)="toggleMoreInfo(account)">
+              <mat-icon>close</mat-icon>
+          </button>
+        </mat-toolbar>
+        <mat-spinner
+        color="accent" [diameter]="25" strokeWidth="3"
+        mode="indeterminate"></mat-spinner>
+    </mat-card-content>
+    <mat-card-content *ngIf="!account.moreInfo">
+        <mat-chip-list>
+            <mat-chip *ngIf="account.state !== 'importing'">{{account.priceNow * account.balance | prettify}} {{ currencySymbol }}</mat-chip>
+            <mat-chip (click)="open(account)" *ngIf="account.state !== 'importing'">{{account.txnCount}} transactions</mat-chip>
+            <mat-chip *ngIf="account.state === 'importing'">Loading...</mat-chip>
+          </mat-chip-list>
+    </mat-card-content>
+    <md-card-actions *ngIf="account.moreInfo && account.state !== 'importing'">
+      <button mat-raised-button (click)="open(account)">See transactions</button>
+    </md-card-actions>
   </mat-card>
 </div>

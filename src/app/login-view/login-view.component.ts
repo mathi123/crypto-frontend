@@ -35,6 +35,7 @@ export class LoginViewComponent implements OnInit {
                 this.showError = false;
             }
         });
+        this.login({ email: 'colpaert.mathias@gmail.com', password: 'test'});
     }
 
     onSubmit(form: NgForm) {
@@ -42,12 +43,16 @@ export class LoginViewComponent implements OnInit {
         const credentials: Credentials = form.value;
         this.logger.verbose('Logging in');
         setTimeout(() => {
-            this.tokenService.login(credentials)
-                .subscribe(() => {
-                    this.loading = false;
-                    this.logger.verbose(credentials.email + ' logged in');
-                }, (err) => this.loginFailed(err));
+            this.login(credentials);
         }, Config.API_CALL_TIMEOUT);
+    }
+
+    private login(credentials: Credentials) {
+        this.tokenService.login(credentials)
+        .subscribe(() => {
+            this.loading = false;
+            this.logger.verbose(credentials.email + ' logged in');
+        }, (err) => this.loginFailed(err));
     }
 
     private loginFailed(err: HttpErrorResponse) {
