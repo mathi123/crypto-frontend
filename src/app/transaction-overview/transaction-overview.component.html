@@ -6,7 +6,7 @@
     <mat-icon>flight_takeoff</mat-icon>
     Buy-out
   </button> -->
-<h3>{{account.description}}</h3>
+<h3 class="mat-title">{{account.description}}</h3>
 <mat-card *ngIf="account.state === 'importing'">
   <mat-card-title>Loading</mat-card-title>
   <mat-card-content>
@@ -17,10 +17,6 @@
     </mat-card-content>
 </mat-card>
 <div *ngIf="account.state !== 'importing'">
-  <button mat-raised-button (click)="reload();" class="mtb-5">
-    <mat-icon>refresh</mat-icon>
-    Reload
-  </button>
   <mat-table #table [dataSource]="dataSource">
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
@@ -45,7 +41,7 @@
   
     <ng-container matColumnDef="amount">
       <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
-      <mat-cell *matCellDef="let row" [class.positive]="row.amount > 0" [class.negative]="row.amount < 0"><span *ngIf="row.amount > 0">+</span>{{row.amount}} </mat-cell>
+      <mat-cell *matCellDef="let row" [class.positive]="row.amount > 0" [class.negative]="row.amount < 0"><span *ngIf="row.amount > 0">+</span>{{row.amount | prettify}} </mat-cell>
     </ng-container>
   <!-- 
     <ng-container matColumnDef="tag">
@@ -58,6 +54,10 @@
             [class.example-selected-row]="selection.isSelected(row.id)"
             (click)="selection.toggle(row.id)"></mat-row>
   </mat-table>
+  <button mat-button (click)="reload();" class="mtb-5">
+      <mat-icon>refresh</mat-icon>
+      Reload
+    </button>
   <button mat-button (click)="edit();" *ngIf="account !== null" class="mtb-5" color="primary">
       <mat-icon>edit</mat-icon>
       Edit account

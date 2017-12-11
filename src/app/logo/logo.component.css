@@ -1,5 +1,14 @@
 .logo{
-    width: 20px;
+    width: 30px;
     margin-left: 5px;
     margin-right: 5px;
+}
+.logo-container{
+    padding: 3px;
+}
+.logo-title{
+    margin-top: 15px;
+}
+.logo-sub{
+    margin-top: 15px;
 }

@@ -6,6 +6,9 @@ import { Account } from '../models/account';
 import { Logger } from '../logger';
 import { FileCacheService } from '../server-api/file-cache.service';
 import { ConfigurationService } from '../server-api/configuration.service';
+import {Observable} from 'rxjs/Rx';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-account-overview',
@@ -17,16 +20,16 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
   public selectedIndex: number;
   public total = 0;
   public currencySymbol = '';
+  public isReloading = false;
 
   private accountsSubscription: Subscription;
 
-  constructor(private accountService: AccountService, private routeService: Router,
+  constructor(private accountService: AccountService, private routeService: Router, private dialogService: MatDialog,
     private logger: Logger, private fileCacheService: FileCacheService, private configService: ConfigurationService) { }
 
   ngOnInit() {
-    this.accountsSubscription = this.accountService
-      .read()
-      .subscribe(acc => this.accountsChanged(acc));
+    this.accountsSubscription = Observable.timer(0, 5000)
+      .subscribe(() => this.reload());
     this.configService.UserContext.subscribe(
       ctx => { if (ctx !== null) { this.currencySymbol = ctx.currencySymbol; } }
     );
@@ -37,12 +40,29 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
   }
 
   accountsChanged(accounts: Account[]) {
+    this.isReloading = false;
+    const selected = this.accounts.filter(acc => acc.moreInfo)[0];
+    if (selected !== null && selected !== undefined) {
+      const newAccountToSelect = accounts.filter(acc => acc.id === selected.id)[0];
+
+      if (newAccountToSelect !== null && newAccountToSelect !== undefined) {
+        newAccountToSelect.moreInfo = selected.moreInfo;
+      }
+    }
+
     this.accounts = accounts;
     this.total = accounts.reduce((curr, acc) => curr + (acc.balance * acc.priceNow), 0);
 
     for (const account of accounts){
       this.loadImage(account);
     }
+  }
+
+  private reload() {
+    this.isReloading = true;
+    this.accountService
+      .read()
+      .subscribe(acc => this.accountsChanged(acc));
   }
 
   private loadImage(account: Account) {
@@ -60,21 +80,35 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
     this.routeService.navigate(['account', '0']);
   }
 
+
   public delete(account) {
-    this.logger.info('delete called');
-    const index = this.accounts.indexOf(account);
-    if (index >= 0) {
-      this.accounts.splice(index, 1);
-    }
+    const options = {
+      data: {
+        title: 'Confirm',
+        message: 'Are you sure you want to delete this account?'
+      }
+    };
+    const dialogRef = this.dialogService.open(ConfirmDialogComponent, options);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.reload();
+      }
+    });
+  }
+
+  public edit(account) {
+    this.routeService.navigate(['account', account.id]);
   }
 
   public open(account: Account) {
-    this.logger.info('opening account');
+    this.logger.verbose('opening transactions');
+    this.routeService.navigate(['account', account.id, 'transactions']);
   }
 
   public toggleMoreInfo(account: Account) {
     for (const acc of this.accounts) {
-      if(acc !== account){
+      if (acc !== account) {
         acc.moreInfo = false;
       }
     }

@@ -1,3 +1,5 @@
-<h3>
-  <img src="assets/logo.png" *ngIf="showLogo" routerLink="/home" class="logo"/>Cryptofolio<sub class="versionIndicator" *ngIf="showVersion"><i>alpha</i></sub>
-</h3>
+<div fxLayoutAlign="start center" fxContainer class="logo-container">
+    <img src="assets/logo30x35.png" *ngIf="showLogo" routerLink="/home" class="logo"/>
+    <span class="mat-title logo-title">Cryptofolio</span>
+    <sub class="logo-sub" *ngIf="showVersion"><i>alpha</i></sub>
+</div>

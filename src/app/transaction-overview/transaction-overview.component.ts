@@ -34,7 +34,7 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
   public isSelected = false;
 
   @Input()
-  public account: Account = null;
+  public account: Account = new Account();
 
   public transactions: Transaction[];
   public displayedColumns = [];
@@ -49,39 +49,42 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.buildColumnList();
-    this.routeParamsSubscription = this.route.params.subscribe(params => {
-                  const id = params['accountId'];
-                  if (id !== undefined && id !== null && id !== '0') {
-                      this.accountId = id;
-                      this.reload();
-                  }
-              });
-    this.subscription = IntervalObservable.create(5000)
-      .subscribe((val) => this.reload());
+    this.routeParamsSubscription = this.route.params.subscribe(params => this.handleRouteParams(params));
+    /*this.subscription = IntervalObservable.create(5000)
+      .subscribe((val) => this.reload());*/
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.routeParamsSubscription.unsubscribe();
+  }
+
+  private handleRouteParams(params) {
+    const id = params['accountId'];
+    if (id !== undefined && id !== null && id !== '0') {
+      this.logger.info(id);
+      this.accountId = id;
+      this.reload();
+    } else {
+      this.logger.error('no accountId found');
+    }
   }
 
   private reload() {
     if (this.accountId !== null && (this.isSelected  || !this.hasData)) {
-      this.logger.verbose(`reloading data for account with id ${this.account.id}`);
+      this.logger.verbose(`reloading data for account with id ${this.accountId}`);
 
       this.accountService.readById(this.accountId)
         .subscribe((account) => this.accountRead(account));
     }
   }
-  private accountRead(account){
-    if (this.account === null){
-      this.account = account;
-      this.transactionService.read(this.account.id)
-        .subscribe(transactions => this.showTransactions(transactions));
-    }
+  private accountRead(account) {
+    const previousAccount = this.account;
 
-    if (this.account.updatedAt !== account.updatedAt || !this.hasData){
+    this.account = account;
+
+    if (previousAccount.updatedAt !== account.updatedAt || !this.hasData) {
       this.hasData = true;
-      this.account.state = account.state;
-      this.account.updatedAt = account.updatedAt;
+      previousAccount.state = account.state;
+      previousAccount.updatedAt = account.updatedAt;
       this.transactionService.read(this.account.id)
         .subscribe(transactions => this.showTransactions(transactions));
     }
