@@ -20,8 +20,7 @@
       "prefix": "app",
       "styles": [
         "../node_modules/@material/typography/dist/mdc.typography.min.css",
-        "styles.css",
-        "../node_modules/font-awesome/css/font-awesome.css"
+        "styles.css"
       ],
       "scripts": [
         "../node_modules/hammerjs/hammer.min.js"

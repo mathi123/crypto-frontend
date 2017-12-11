@@ -49,7 +49,6 @@ import {FileService} from './server-api/file.service';
 import {AdminService} from './server-api/admin.service';
 import {MenuService} from './menu.service';
 import {FileCacheService} from './server-api/file-cache.service';
-import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {AddressValidationDirective} from './account-view/address.validation';
 import { LogoComponent } from './logo/logo.component';
 import { PrettifyPipe } from './prettify';
@@ -95,8 +94,7 @@ import { PrettifyPipe } from './prettify';
         BrowserAnimationsModule,
         FlexLayoutModule,
         ChartsModule,
-        MaterialModule,
-        AngularFontAwesomeModule
+        MaterialModule
     ],
     entryComponents: [ConfirmDialogComponent],
     providers: [ConfigurationService, CurrencyService, CurrencyCacheService, AuthGuard,

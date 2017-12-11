@@ -28,9 +28,9 @@
                                formControlName="description" required/>
                         <mat-error *ngIf="accountForm.controls['description'].hasError('required')">Description is required.</mat-error>
                     </mat-form-field>
-                    <span style="margin-top: 23px; margin-left: 4px;"
+                    <span class="info-icon"
                           matTooltip="Enter a description of your account here." [matTooltipPosition]="'right'">
-                        <fa name="question-circle-o"></fa>
+                        <mat-icon class="info-icon-img">info_outline</mat-icon>
                     </span>
                 </div>
 
@@ -51,12 +51,12 @@
                         </mat-error>
                         <mat-error *ngIf="accountForm.controls['address'].hasError('required')">Address is required.</mat-error>
                     </mat-form-field>
-                    <span style="margin-top: 23px; margin-left: 4px;"
+                    <span class="info-icon"
                           matTooltip="Enter your public address here, never use your private address!"
                           [matTooltipPosition]="'right'">
-                        <fa name="question-circle-o"></fa>
+                        <mat-icon class="info-icon-img">info_outline</mat-icon>
                     </span>
-                    <span style="margin-top: 15px; margin-left: 4px;" *ngIf="loading">
+                    <span class="info-icon" *ngIf="loading">
                         <mat-spinner color="accent" [diameter]="25" strokeWidth="3"
                                      mode="indeterminate"></mat-spinner>
                     </span>
@@ -75,9 +75,9 @@
                         </mat-select>
                         <mat-error *ngIf="accountForm.controls['color'].hasError('required')">Color is required.</mat-error>
                     </mat-form-field>
-                    <span style="margin-top: 23px; margin-left: 4px;"
+                    <span class="info-icon"
                           matTooltip="Color will be used in the report of this account." [matTooltipPosition]="'right'">
-                        <fa name="question-circle-o"></fa>
+                        <mat-icon class="info-icon-img">info_outline</mat-icon>
                     </span>
                 </div>
 
@@ -93,10 +93,10 @@
                         </mat-select>
                         <mat-error *ngIf="accountForm.controls['transactionType'].hasError('required')">Transaction is required.</mat-error>
                     </mat-form-field>
-                    <span style="margin-top: 23px; margin-left: 4px;"
+                    <span class="info-icon"
                           matTooltip="Here more info about the transaction types ( TODO Mathias )"
                           [matTooltipPosition]="'right'">
-                        <fa name="question-circle-o"></fa>
+                        <mat-icon class="info-icon-img">info_outline</mat-icon>
                     </span>
                 </div>
                 <button mat-raised-button [disabled]="!accountForm.valid" type="submit" color="primary" fxFill>
