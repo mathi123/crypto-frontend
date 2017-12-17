@@ -50,8 +50,9 @@ import {AdminService} from './server-api/admin.service';
 import {MenuService} from './menu.service';
 import {FileCacheService} from './server-api/file-cache.service';
 import {AddressValidationDirective} from './account-view/address.validation';
-import { LogoComponent } from './logo/logo.component';
-import { PrettifyPipe } from './prettify';
+import {LogoComponent} from './logo/logo.component';
+import {PrettifyPipe} from './prettify';
+import {ProfileComponent} from './profile/profile.component';
 
 // TODO: note -> it's a best practice that every component has a separate module.
 // @see: https://angular.io/guide/styleguide#application-structure-and-ngmodules
@@ -82,7 +83,8 @@ import { PrettifyPipe } from './prettify';
         UserViewComponent,
         AddressValidationDirective,
         LogoComponent,
-        PrettifyPipe
+        PrettifyPipe,
+        ProfileComponent
     ],
     imports: [
         BrowserModule,

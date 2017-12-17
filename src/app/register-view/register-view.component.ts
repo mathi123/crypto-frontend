@@ -7,7 +7,7 @@ import {CurrencyCacheService} from '../cache/currency-cache.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Logger} from '../logger';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {PasswordValidation} from './password-validation';
+import {PasswordValidation} from '../common/password-validation';
 import * as HttpStatus from 'http-status-codes';
 import {HttpErrorResponse} from '@angular/common/http';
 import 'rxjs/add/operator/map';

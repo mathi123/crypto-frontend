@@ -26,6 +26,10 @@ export class UserService {
         return this.httpClient.get<User>(`${this.config.getApiUrl()}/user/${id}`, this.config.getHttpOptions());
     }
 
+    update(user: User) {
+        return this.httpClient.put<User>(`${this.config.getApiUrl()}/user/${user.id}`, user, this.config.getHttpOptions());
+    }
+
     validateEmail(email: string): Observable<object> {
         const httpParams = new HttpParams().set('email', email);
         return this.httpClient.get(`${this.config.getApiUrl()}/user/validate`, {

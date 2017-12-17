@@ -1,4 +1,4 @@
-export class Currency{
+export class Currency {
     id: string;
     code: string;
     symbol: string;

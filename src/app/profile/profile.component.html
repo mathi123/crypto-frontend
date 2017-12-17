@@ -1,0 +1,77 @@
+<div fxLayoutAlign="center">
+    <mat-card class="mat-card-80">
+        <mat-card-header>
+            <mat-card-title fxLayoutAlign="start center">
+                <h3 class="mat-headline">My Profile</h3>
+                <mat-spinner *ngIf="!loading" class="title-spinner" color="accent" [diameter]="25" strokeWidth="3"
+                             mode="indeterminate"></mat-spinner>
+            </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="container" fxLayout="column">
+            <form *ngIf="loading" #form="ngForm" [formGroup]="profileFormGroup"
+                  (ngSubmit)="onSubmit()"
+                  fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start">
+
+                <mat-form-field fxLayout="column" fxLayoutGap="10px">
+                    <input matInput type="text" formControlName="name"
+                           placeholder="Name" required/>
+                    <mat-error *ngIf="profileFormGroup.controls['name'].hasError('required')">Name is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxLayout="column" fxLayoutGap="10px">
+                    <input matInput type="text" formControlName="email"
+                           placeholder="Email" required/>
+                    <mat-error *ngIf="profileFormGroup.controls['email'].hasError('required')">Email is required.
+                    </mat-error>
+                    <mat-error *ngIf="profileFormGroup.controls['email'].hasError('pattern')">Email is invalid.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxLayout="column" fxLayoutGap="10px">
+                    <mat-select placeholder="Home currency" formControlName="currencyId" required>
+                        <mat-option *ngFor="let currency of currencies" [value]="currency.id">
+                            {{currency.code}} {{currency.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="profileFormGroup.controls['currencyId'].hasError('required')">
+                        Home currency is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxLayout="column" fxLayoutGap="10px">
+                    <input matInput type="password" formControlName="password"
+                           placeholder="Reset password"/>
+                    <mat-error
+                            *ngIf="profileFormGroup.controls['password'] && profileFormGroup.controls['password'].hasError('minlength')">
+                        Password must have at least 4 characters.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="showRepeatPassword" fxLayout="column" fxLayoutGap="10px">
+                    <input matInput type="password" formControlName="repeatPassword"
+                           placeholder="Repeat password"/>
+                    <mat-error *ngIf="profileFormGroup.controls['repeatPassword'].hasError('minlength')">
+                        Password must have at least 4 characters.
+                    </mat-error>
+                    <mat-error *ngIf="profileFormGroup.controls['repeatPassword'].hasError('matchPassword')">
+                        Password must be equal.
+                    </mat-error>
+                </mat-form-field>
+
+                <div fxLayout="row" fxLayoutGap="15px">
+                    <button mat-raised-button (click)="onCancel()" color="secondary">Cancel</button>
+                    <button mat-raised-button type="submit"
+                            [disabled]="!profileFormGroup.valid"
+                            color="primary">Save
+                    </button>
+                </div>
+
+                <div *ngIf="showUpdateMessage" fxLayout="row">
+                    <span style="color: darkgreen; margin-top: 10px;">Profile has been updated.</span>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

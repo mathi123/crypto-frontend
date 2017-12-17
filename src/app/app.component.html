@@ -1,39 +1,58 @@
 <mat-sidenav-container fxFlexFill>
-  <mat-sidenav mode="over" #sideNavMenu>
-      <mat-nav-list>
-        <span mdHeader>Menu</span>
-        <ng-container *ngFor="let menuItem of menuItems">
-              <mat-list-item *ngIf="!menuItem.isLabel">
-                <mat-icon matListIcon *ngIf="menuItem.icon">{{menuItem.icon}}</mat-icon>
-                <a matLine (click)="navigateTo(menuItem)">{{ menuItem.name }}</a>
-              </mat-list-item>
-        </ng-container>
-      </mat-nav-list>
-  </mat-sidenav>
-  <div fxLayout="column">
-      <mat-toolbar fxLayoutAlign="end center">
-        <button mat-icon-button (click)="toggleMenu()" *ngIf="media.isActive('xs')">
-          <mat-icon>menu</mat-icon>
-        </button>
+    <mat-sidenav mode="over" #sideNavMenu>
+        <mat-nav-list>
+            <span mdHeader>Menu</span>
+            <ng-container *ngFor="let menuItem of menuItems">
+                <mat-list-item *ngIf="!menuItem.isLabel">
+                    <mat-icon matListIcon *ngIf="menuItem.icon">{{menuItem.icon}}</mat-icon>
+                    <a matLine (click)="navigateTo(menuItem)">{{ menuItem.name }}</a>
+                </mat-list-item>
+            </ng-container>
+        </mat-nav-list>
+    </mat-sidenav>
+    <div fxLayout="column">
+        <mat-toolbar fxLayoutAlign="end center">
+            <button mat-icon-button (click)="toggleMenu()" *ngIf="media.isActive('xs')">
+                <mat-icon>menu</mat-icon>
+            </button>
 
-        <span fxFlex fxFill>
+            <span fxFlex fxFill>
             <app-logo></app-logo>
         </span>
 
-        <div *ngIf="!media.isActive('xs')">
-          <ng-container *ngFor="let menuItem of menuItems" >
-              <button mat-button (click)="navigateTo(menuItem)" *ngIf="!menuItem.isLabel"
-                  routerLinkActive="active">
-                <mat-icon *ngIf="menuItem.icon">{{ menuItem.icon }}</mat-icon>
-                <span [class.underline]="menuItem.icon === null">{{ menuItem.name }}</span>
-              </button>
-              <span><i *ngIf="menuItem.isLabel" class="versionIndicator">{{menuItem.name}}</i></span>
-          </ng-container>
-        </div>
-      </mat-toolbar>
+            <div *ngIf="!media.isActive('xs')">
+                <ng-container *ngFor="let menuItem of menuItems">
+                    <!-- Normal menu item button -->
+                    <button mat-button (click)="navigateTo(menuItem)"
+                            *ngIf="!menuItem.isLabel && !menuItem.hasSubItems()"
+                            routerLinkActive="active">
+                        <mat-icon *ngIf="menuItem.icon">{{ menuItem.icon }}</mat-icon>
+                        <span [class.underline]="menuItem.icon === null">{{ menuItem.name }}</span>
+                    </button>
 
-      <div fxFlex>
-          <router-outlet></router-outlet>
-      </div>
+                    <!-- Menu item button with sub items -->
+                    <button mat-button *ngIf="!menuItem.isLabel && menuItem.hasSubItems()"
+                            [matMenuTriggerFor]="menu">
+                        <mat-icon *ngIf="menuItem.icon">{{ menuItem.icon }}</mat-icon>
+                        <span [class.underline]="menuItem.icon === null">{{ menuItem.name }}</span>
+                    </button>
+
+                    <mat-menu #menu="matMenu">
+                        <ng-container *ngFor="let subItem of menuItem.subItems">
+                            <button mat-menu-item (click)="navigateTo(subItem)">
+                                <mat-icon *ngIf="menuItem.icon">{{ subItem.icon }}</mat-icon>
+                                <span [class.underline]="menuItem.icon === null">{{ subItem.name }}</span>
+                            </button>
+                        </ng-container>
+                    </mat-menu>
+
+                    <span><i *ngIf="menuItem.isLabel" class="versionIndicator">{{menuItem.name}}</i></span>
+                </ng-container>
+            </div>
+        </mat-toolbar>
+
+        <div fxFlex>
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </mat-sidenav-container>
