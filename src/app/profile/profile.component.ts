@@ -95,6 +95,7 @@ export class ProfileComponent implements OnInit {
                     this.profileFormGroup.controls[ProfileComponent.REPEAT_PASSWORD].clearValidators();
                     this.profileFormGroup.clearValidators();
                     this.profileFormGroup.controls[ProfileComponent.PASSWORD].reset();
+                    this.profileFormGroup.controls[ProfileComponent.REPEAT_PASSWORD].reset();
                 }
             });
     }
