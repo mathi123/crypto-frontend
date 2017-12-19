@@ -3,6 +3,7 @@ import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {ConfigurationService} from './configuration.service';
 import {Account} from '../models/account';
 import {Observable} from 'rxjs/Observable';
+import { Color } from '../models/color';
 
 @Injectable()
 export class AccountService {
@@ -12,6 +13,10 @@ export class AccountService {
 
     read(): Observable<Account[]> {
         return this.httpClient.get<Account[]>(`${this.config.getApiUrl()}/account`, this.config.getHttpOptions());
+    }
+
+    readColors(): Observable<Color[]> {
+        return this.httpClient.get<Color[]>(`${this.config.getApiUrl()}/account-color`, this.config.getHttpOptions());
     }
 
     readById(id: string): Observable<Account> {

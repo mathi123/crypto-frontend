@@ -92,7 +92,8 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.reload();
+        this.accountService.delete(account.id)
+          .subscribe(r => this.reload());
       }
     });
   }

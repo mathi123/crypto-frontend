@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="center center">
     <mat-card>
-        <mat-card-title>Add an account</mat-card-title>
+        <mat-card-title>Account details</mat-card-title>
         <mat-card-content>
             <form [formGroup]="accountForm" #form="ngForm" (ngSubmit)="onSubmit(form)"
                   fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center start" novalidate>
@@ -62,14 +62,14 @@
                     </span>
                 </div>
 
-                <div fxLayout="row">
+                <div fxLayout="row" *ngIf="account.id !== undefined">
                     <mat-form-field>
                         <mat-select placeholder="Color" formControlName="color"
                                     [ngModel]="account.color"
                                     required>
                             <mat-option *ngFor="let color of colors"
-                                        [value]="color.hexValue">
-                                <button mat-mini-fab [style.background]="color.hexValue"></button>
+                                        [value]="color.code">
+                                <button mat-mini-fab [style.background]="color.code"></button>
                                 {{color.name}}
                             </mat-option>
                         </mat-select>
@@ -81,7 +81,7 @@
                     </span>
                 </div>
 
-                <div fxLayout="row">
+                <!-- <div fxLayout="row">
                     <mat-form-field>
                         <mat-select placeholder="Load transactions"
                                     [ngModel]="account.transactionType"
@@ -98,7 +98,7 @@
                           [matTooltipPosition]="'right'">
                         <mat-icon class="info-icon-img">info_outline</mat-icon>
                     </span>
-                </div>
+                </div> -->
                 <button mat-raised-button [disabled]="!accountForm.valid" type="submit" color="primary" fxFill>
                     <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
                         <span>Save</span>

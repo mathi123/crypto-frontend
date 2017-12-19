@@ -40,6 +40,7 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
   public displayedColumns = [];
   public dataSource: ExampleDataSource | null;
   public selection = new SelectionModel<string>(true, []);
+  public isLoading = true;
 
   private routeParamsSubscription: Subscription;
 
@@ -50,8 +51,6 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.buildColumnList();
     this.routeParamsSubscription = this.route.params.subscribe(params => this.handleRouteParams(params));
-    /*this.subscription = IntervalObservable.create(5000)
-      .subscribe((val) => this.reload());*/
   }
   ngOnDestroy() {
     this.routeParamsSubscription.unsubscribe();
@@ -68,10 +67,10 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  private reload() {
+  public reload() {
     if (this.accountId !== null && (this.isSelected  || !this.hasData)) {
       this.logger.verbose(`reloading data for account with id ${this.accountId}`);
-
+      this.isLoading = true;
       this.accountService.readById(this.accountId)
         .subscribe((account) => this.accountRead(account));
     }
@@ -93,9 +92,10 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
   private showTransactions(transactions){
     this.transactions = transactions;
     this.dataSource = new ExampleDataSource(this.transactions);
+    this.isLoading = false;
   }
 
-  buildColumnList(){
+  buildColumnList() {
     this.displayedColumns = ['select'];
     this.displayedColumns.push('date', 'amount');
   }

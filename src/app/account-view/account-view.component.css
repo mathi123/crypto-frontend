@@ -28,3 +28,7 @@
     height: 20px;
     width: 20px;
 }
+
+.row-transactions{
+    display: none;
+}

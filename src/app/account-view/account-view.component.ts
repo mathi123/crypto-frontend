@@ -43,27 +43,10 @@ export class AccountViewComponent implements OnInit {
 
     ngOnInit() {
         this.buildFormGroup();
-        this.loadCoins();
-        this.routeParamsSubscription = this.route.params.subscribe(params => {
-
-            const id = params['id'];
-            if (id === undefined || id === null || id === '0') {
-                this.account = new Account();
-                this.loadColors();
-            } else {
-                // Note: Timeout needed because otherwise the coins weren't loaded yet,
-                // this way the displayFn will not work properly.
-                setTimeout(() => {
-                    this.accountService.readById(id)
-                        .subscribe(account => {
-                            if (account) {
-                                this.account = account;
-                                this.loadColors(account);
-                            }
-                        });
-                }, 100);
-            }
-        });
+        this.coinCacheService.getCoins()
+            .subscribe(list => this.showCoinsAndLoadAccount(list));
+        this.accountService.readColors()
+            .subscribe(colors => this.showColors(colors));
     }
 
     optionSelected() {
@@ -88,7 +71,7 @@ export class AccountViewComponent implements OnInit {
         this.account.description = form.value.description;
         this.account.address = form.value.address;
         this.account.color = form.value.color;
-        this.account.transactionType = form.value.transactionType;
+        // this.account.transactionType = form.value.transactionType;
 
         if (this.account.id === null || this.account.id === undefined) {
             this.accountService.create(this.account)
@@ -120,7 +103,7 @@ export class AccountViewComponent implements OnInit {
      * @returns {string}
      */
     displayFn(coinId: string): string {
-        const coin: Coin = this.coins.find(c => c.id === coinId);
+        const coin = this.coins.find(c => c.id === coinId);
         return !coin ? '' : coinId ? coin.description : '';
     }
 
@@ -144,42 +127,42 @@ export class AccountViewComponent implements OnInit {
             coinId: this.stateCtrl,
             description: new FormControl('', Validators.required),
             address: new FormControl('', Validators.required),
-            color: new FormControl('', Validators.required),
-            transactionType: new FormControl('', Validators.required)
+            color: new FormControl(''),
+            // transactionType: new FormControl('', Validators.required)
         });
     }
 
-    /**
-     * Load the coins.
-     */
-    private loadCoins() {
-        this.coinCacheService.getCoins()
-            .subscribe(list => {
-                this.coins = list;
-                this.coinObservable = this.stateCtrl.valueChanges
-                    .startWith(null)
-                    .map(coin => coin && typeof coin === 'object' ? coin.description : coin)
-                    .map(description => description ? this.filter(description) : this.coins.slice());
-            });
+    private showColors(colors: Color[]) {
+        this.colors = colors;
     }
 
-    /**
-     * Load the colors, use the defaults colors.
-     * Note: List of colors will be filtered, existing colors that
-     * already are selected by another account will not be shown.
-     */
-    private loadColors(account?: Account) {
-        // TODO : maybe generate colors instead of fixed values? --> More accounts than colors?
-        this.colors = Color.getDefaults();
-        this.accountService.read()
-            .subscribe((accounts) => {
-                if (account) {
-                    accounts = accounts.filter(acc => acc.id !== account.id);
-                }
-                accounts.forEach(acc => {
-                    ArrayUtil.removeByProperty(this.colors, 'hexValue', acc.color);
-                });
-            });
+    private showCoinsAndLoadAccount(coins: Coin[]) {
+        this.showCoins(coins);
+        this.routeParamsSubscription = this.route.params.subscribe(params => this.routeChanged(params));
+    }
+
+    private routeChanged(params: {[key: string]: any}) {
+        const id = params['id'];
+        if (id === undefined || id === null || id === '0') {
+            this.account = new Account();
+            this.account.transactionType = 'auto';
+        } else {
+            this.accountService
+                .readById(id)
+                .subscribe(account => this.showAccount(account));
+        }
+    }
+
+    private showAccount(account: Account) {
+        this.account = account;
+    }
+
+    private showCoins(list: Coin[]) {
+        this.coins = list.filter(c => c.isActive);
+        this.coinObservable = this.stateCtrl.valueChanges
+            .startWith(null)
+            .map(coin => coin && typeof coin === 'object' ? coin.description : coin)
+            .map(description => description ? this.filter(description) : this.coins.slice());
     }
 }
 
