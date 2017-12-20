@@ -26,6 +26,7 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
   public columns = 4;
 
   private accountsSubscription: Subscription;
+  private menuIsOpen = false;
 
   constructor(private accountService: AccountService,
     private routeService: Router, private dialogService: MatDialog,
@@ -73,11 +74,13 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
   accountsChanged(accounts: Account[]) {
     this.isReloading = false;
 
-    this.accounts = accounts;
-    this.total = accounts.reduce((curr, acc) => curr + (acc.balance * acc.priceNow), 0);
+    if (!this.menuIsOpen) {
+      this.accounts = accounts;
+      this.total = accounts.reduce((curr, acc) => curr + (acc.balance * acc.priceNow), 0);
 
-    for (const account of accounts){
-      this.loadImage(account);
+      for (const account of accounts){
+        this.loadImage(account);
+      }
     }
   }
 
@@ -141,5 +144,13 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       this.logger.verbose('detail closed');
     });
+  }
+  public menuOpened(event: any) {
+    this.logger.verbose('menu open');
+    this.menuIsOpen = true;
+  }
+  public menuClosed(event: any) {
+    this.logger.verbose('menu closed');
+    this.menuIsOpen = false;
   }
 }
