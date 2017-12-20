@@ -27,3 +27,6 @@ html, body {
 ml-5{
   margin-left: 5px;
 }
+.mat-accent {
+  color: #ff4081;
+}

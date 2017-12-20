@@ -12,6 +12,7 @@ import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Logger} from '../logger';
 import {ArrayUtil} from '../common/array.util';
 import { AccountService } from '../server-api/account.service';
+import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 
 @Component({
     selector: 'app-account-view',

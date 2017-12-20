@@ -53,6 +53,8 @@ import {AddressValidationDirective} from './account-view/address.validation';
 import {LogoComponent} from './logo/logo.component';
 import {PrettifyPipe} from './prettify';
 import {ProfileComponent} from './profile/profile.component';
+import { AccountPriceDetailComponent } from './account-price-detail/account-price-detail.component';
+import { FooterComponent } from './footer/footer.component';
 
 // TODO: note -> it's a best practice that every component has a separate module.
 // @see: https://angular.io/guide/styleguide#application-structure-and-ngmodules
@@ -84,7 +86,9 @@ import {ProfileComponent} from './profile/profile.component';
         AddressValidationDirective,
         LogoComponent,
         PrettifyPipe,
-        ProfileComponent
+        ProfileComponent,
+        AccountPriceDetailComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule,
@@ -98,7 +102,7 @@ import {ProfileComponent} from './profile/profile.component';
         ChartsModule,
         MaterialModule
     ],
-    entryComponents: [ConfirmDialogComponent],
+    entryComponents: [ConfirmDialogComponent, AccountPriceDetailComponent],
     providers: [ConfigurationService, CurrencyService, CurrencyCacheService, AuthGuard,
         UserService, TokenService, TagService, TagCacheService, AccountService,
         CoinCacheService, CoinService, TransactionService,

@@ -8,3 +8,9 @@
 .underline{
     border-bottom: 1px black solid;
 }
+.menuLabel{
+    color: white;
+}
+.main-content{
+    margin-top: 5px;
+}

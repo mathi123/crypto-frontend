@@ -8,6 +8,7 @@ import {Logger} from '../logger';
 import {HttpErrorResponse} from '@angular/common/http';
 import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Config} from '../config';
+import * as environment from '../../environments/environment';
 
 @Component({
     selector: 'app-login-view',
@@ -35,7 +36,9 @@ export class LoginViewComponent implements OnInit {
                 this.showError = false;
             }
         });
-        this.login({ email: 'colpaert.mathias@gmail.com', password: 'test'});
+        if (!environment.environment.production) {
+            this.login({ email: 'colpaert.mathias@gmail.com', password: 'test'});
+        }
     }
 
     onSubmit(form: NgForm) {

@@ -13,7 +13,8 @@ export class Account {
     coinCode: string;
     coinDescription: string;
     image: string;
-    moreInfo = false;
     balance: number;
     priceNow: number;
+    priceOneDay: number;
+    priceDiff: number;
 }

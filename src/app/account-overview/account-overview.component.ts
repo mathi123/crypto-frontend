@@ -9,6 +9,8 @@ import { ConfigurationService } from '../server-api/configuration.service';
 import {Observable} from 'rxjs/Rx';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { ObservableMedia, MediaChange } from '@angular/flex-layout';
+import { AccountPriceDetailComponent } from '../account-price-detail/account-price-detail.component';
 
 @Component({
   selector: 'app-account-overview',
@@ -21,11 +23,14 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
   public total = 0;
   public currencySymbol = '';
   public isReloading = false;
+  public columns = 4;
 
   private accountsSubscription: Subscription;
 
-  constructor(private accountService: AccountService, private routeService: Router, private dialogService: MatDialog,
-    private logger: Logger, private fileCacheService: FileCacheService, private configService: ConfigurationService) { }
+  constructor(private accountService: AccountService,
+    private routeService: Router, private dialogService: MatDialog,
+    private logger: Logger, private fileCacheService: FileCacheService, private configService: ConfigurationService,
+    private media: ObservableMedia) { }
 
   ngOnInit() {
     this.accountsSubscription = Observable.timer(0, 5000)
@@ -33,6 +38,32 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
     this.configService.UserContext.subscribe(
       ctx => { if (ctx !== null) { this.currencySymbol = ctx.currencySymbol; } }
     );
+    this.media.subscribe(media => this.mediaChanged(media));
+    this.applyMediaQuery();
+  }
+
+  private mediaChanged(media: MediaChange) {
+    switch (media.mqAlias) {
+      case 'xs': this.columns = 1; break;
+      case 'sm': this.columns = 2; break;
+      case 'md': this.columns = 3; break;
+      case 'lg': this.columns = 4; break;
+    }
+  }
+
+  private applyMediaQuery() {
+    if (this.media.isActive('xs')) {
+      this.columns = 1;
+    }
+    if (this.media.isActive('sm')) {
+      this.columns = 2;
+    }
+    if (this.media.isActive('md')) {
+      this.columns = 3;
+    }
+    if (this.media.isActive('lg')) {
+      this.columns = 4;
+    }
   }
 
   ngOnDestroy() {
@@ -41,14 +72,6 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
 
   accountsChanged(accounts: Account[]) {
     this.isReloading = false;
-    const selected = this.accounts.filter(acc => acc.moreInfo)[0];
-    if (selected !== null && selected !== undefined) {
-      const newAccountToSelect = accounts.filter(acc => acc.id === selected.id)[0];
-
-      if (newAccountToSelect !== null && newAccountToSelect !== undefined) {
-        newAccountToSelect.moreInfo = selected.moreInfo;
-      }
-    }
 
     this.accounts = accounts;
     this.total = accounts.reduce((curr, acc) => curr + (acc.balance * acc.priceNow), 0);
@@ -108,11 +131,15 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
   }
 
   public toggleMoreInfo(account: Account) {
-    for (const acc of this.accounts) {
-      if (acc !== account) {
-        acc.moreInfo = false;
+    const options = {
+      data: {
+        account
       }
-    }
-    account.moreInfo = !account.moreInfo;
+    };
+    const dialogRef = this.dialogService.open(AccountPriceDetailComponent, options);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.logger.verbose('detail closed');
+    });
   }
 }
