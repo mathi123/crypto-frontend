@@ -25,7 +25,7 @@ export class MenuService {
             menu.push(new MenuItem(false, 'Sign up', '/register', null));
         } else {
             menu.push(new MenuItem(false, 'Accounts', '/accounts', 'list'));
-            menu.push(new MenuItem(false, 'Dashboard', '/dashboard', 'show_chart'));
+            //menu.push(new MenuItem(false, 'Dashboard', '/dashboard', 'show_chart'));
         }
 
         if (context !== null && context.isAdmin) {

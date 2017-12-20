@@ -19,6 +19,7 @@ import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { Subscription } from 'rxjs/Subscription';
 import { Logger } from '../logger';
 import {ActivatedRoute} from '@angular/router';
+import { FileCacheService } from '../server-api/file-cache.service';
 
 @Component({
   selector: 'app-transaction-overview',
@@ -41,11 +42,12 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
   public dataSource: ExampleDataSource | null;
   public selection = new SelectionModel<string>(true, []);
   public isLoading = true;
+  public total: number;
 
   private routeParamsSubscription: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute, private transactionService: TransactionService,
-    private dialogService: MatDialog,
+    private dialogService: MatDialog, private fileCacheService: FileCacheService,
     private accountService: AccountService, private logger: Logger) { }
 
   ngOnInit() {
@@ -87,12 +89,15 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
       this.transactionService.read(this.account.id)
         .subscribe(transactions => this.showTransactions(transactions));
     }
+
+    this.loadImage(account);
   }
 
-  private showTransactions(transactions){
+  private showTransactions(transactions: Transaction[]) {
     this.transactions = transactions;
     this.dataSource = new ExampleDataSource(this.transactions);
     this.isLoading = false;
+    this.total = transactions.reduce((curr, txn) => curr + parseFloat(txn.amount), 0);
   }
 
   buildColumnList() {
@@ -160,6 +165,13 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
 
   edit(){
     this.router.navigate(['account', this.account.id]);
+  }
+
+  private loadImage(account: Account) {
+    if (account.coinFileId) {
+      this.fileCacheService.read(account.coinFileId)
+        .subscribe(data => account.image = data);
+    }
   }
 }
 
