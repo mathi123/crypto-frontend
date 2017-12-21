@@ -12,58 +12,14 @@
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile *ngFor="let account of accounts">
-        <mat-card class="tile collapsed-tile">
-            <mat-card-header>
-                <mat-card-title>
-                  <h3 class="mat-headline">{{account.description}}
-                    <mat-icon class="trending-icon" *ngIf="account.priceNow > account.priceOneDay">trending_up</mat-icon>
-                    <mat-icon class="trending-icon" *ngIf="account.priceNow <= account.priceOneDay">trending_down</mat-icon>
-                    <span fxFill fxFlex>&nbsp;</span>
-                    <button mat-icon-button [matMenuTriggerFor]="menu">
-                        <mat-icon>more_vert</mat-icon>
-                        </button>
-                  </h3>
-                  <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="open(account);">
-                        <mat-icon>import_export</mat-icon>
-                        <span>View Transactions</span>
-                    </button>
-                    <button mat-menu-item (click)="edit(account);">
-                        <mat-icon>edit</mat-icon>
-                        <span>Edit</span>
-                    </button>
-                    <button mat-menu-item (click)="delete(account);">
-                        <mat-icon>delete</mat-icon>
-                        <span>Delete</span>
-                    </button>
-                  </mat-menu>
-                </mat-card-title>
-                <mat-card-subtitle>
-                  <p>{{account.balance | prettify}} {{account.coinCode}} @ {{account.priceNow  | prettify }} {{ currencySymbol }}</p>
-                </mat-card-subtitle>
-                <img *ngIf="account.image" mat-card-avatar [src]="account.image" />
-            </mat-card-header>
-            <mat-card-content>
-                <mat-chip-list>
-                    <mat-chip  (click)="toggleMoreInfo(account)" class="positive-chip" *ngIf="account.priceNow > account.priceOneDay">{{ account.priceDiff }} %</mat-chip>
-                    <mat-chip  (click)="toggleMoreInfo(account)" class="negative-chip" *ngIf="account.priceNow <= account.priceOneDay">{{ account.priceDiff }} %</mat-chip>
-                    <mat-chip *ngIf="account.state !== 'importing'">{{account.priceNow * account.balance | prettify}} {{ currencySymbol }}</mat-chip>
-                    <mat-chip (click)="open(account)" *ngIf="account.state !== 'importing'">{{account.txnCount}} transactions</mat-chip>
-                    <mat-chip *ngIf="account.state === 'importing'">Loading...</mat-chip>
-                  </mat-chip-list>
-            </mat-card-content>
-          </mat-card>
+        <app-account-card [account]="account" (deleted)="delete(account)" (menuOpened)="menuOpened($event)" (menuClosed)="menuClosed($event)"></app-account-card>
     </mat-grid-tile>
     <mat-grid-tile>
         <mat-card class="tile sm-collapsed-tile">
-            <mat-card-header (click)="addAccount();">
-                <mat-card-title>
-                  <h3 class="mat-headline">Add more...</h3>
-                </mat-card-title>
+            <mat-card-header>
                 <mat-card-subtitle>
-                  <p>Click to add a new account</p>
+                  <p><button (click)="addAccount();" mat-mini-fab class="icon-24" color="primary">+</button> Click to add a new account</p>
                 </mat-card-subtitle>
-                <mat-icon mat-card-avatar>add_circle_outline</mat-icon>
             </mat-card-header>
       </mat-card>
     </mat-grid-tile>

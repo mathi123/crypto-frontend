@@ -84,11 +84,40 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  private reload() {
+  public menuOpened() {
+    this.logger.verbose('some menu opened');
+    this.menuIsOpen = true;
+  }
+
+  public menuClosed() {
+    this.logger.verbose('some menu closed');
+    this.menuIsOpen = false;
+  }
+
+  public reload() {
+    this.logger.verbose('reloading...');
     this.isReloading = true;
     this.accountService
       .read()
       .subscribe(acc => this.accountsChanged(acc));
+  }
+
+  public delete(account: Account) {
+    const options = {
+      data: {
+        title: 'Confirm',
+        message: 'Are you sure you want to delete this account?'
+      }
+    };
+
+    const dialogRef = this.dialogService.open(ConfirmDialogComponent, options);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.accountService.delete(account.id)
+          .subscribe(r => this.reload());
+      }
+    });
   }
 
   private loadImage(account: Account) {
@@ -104,53 +133,5 @@ export class AccountOverviewComponent implements OnInit, OnDestroy {
 
   public addAccount() {
     this.routeService.navigate(['account', '0']);
-  }
-
-
-  public delete(account) {
-    const options = {
-      data: {
-        title: 'Confirm',
-        message: 'Are you sure you want to delete this account?'
-      }
-    };
-    const dialogRef = this.dialogService.open(ConfirmDialogComponent, options);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.accountService.delete(account.id)
-          .subscribe(r => this.reload());
-      }
-    });
-  }
-
-  public edit(account) {
-    this.routeService.navigate(['account', account.id]);
-  }
-
-  public open(account: Account) {
-    this.logger.verbose('opening transactions');
-    this.routeService.navigate(['account', account.id, 'transactions']);
-  }
-
-  public toggleMoreInfo(account: Account) {
-    const options = {
-      data: {
-        account
-      }
-    };
-    const dialogRef = this.dialogService.open(AccountPriceDetailComponent, options);
-
-    dialogRef.afterClosed().subscribe(result => {
-      this.logger.verbose('detail closed');
-    });
-  }
-  public menuOpened(event: any) {
-    this.logger.verbose('menu open');
-    this.menuIsOpen = true;
-  }
-  public menuClosed(event: any) {
-    this.logger.verbose('menu closed');
-    this.menuIsOpen = false;
   }
 }

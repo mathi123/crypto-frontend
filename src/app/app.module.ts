@@ -55,6 +55,7 @@ import {PrettifyPipe} from './prettify';
 import {ProfileComponent} from './profile/profile.component';
 import { AccountPriceDetailComponent } from './account-price-detail/account-price-detail.component';
 import { FooterComponent } from './footer/footer.component';
+import { AccountCardComponent } from './account-card/account-card.component';
 
 // TODO: note -> it's a best practice that every component has a separate module.
 // @see: https://angular.io/guide/styleguide#application-structure-and-ngmodules
@@ -88,7 +89,8 @@ import { FooterComponent } from './footer/footer.component';
         PrettifyPipe,
         ProfileComponent,
         AccountPriceDetailComponent,
-        FooterComponent
+        FooterComponent,
+        AccountCardComponent
     ],
     imports: [
         BrowserModule,
