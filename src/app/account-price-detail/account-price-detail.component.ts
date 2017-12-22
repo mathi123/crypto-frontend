@@ -5,6 +5,7 @@ import { Logger } from '../logger';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { AccountService } from '../server-api/account.service';
+import { ConfigurationService } from '../server-api/configuration.service';
 
 @Component({
   selector: 'app-account-price-detail',
@@ -15,18 +16,20 @@ export class AccountPriceDetailComponent implements OnInit {
   @Input()
   public account: Account;
 
+  public currencySymbol = '';
+
   constructor(public dialogRef: MatDialogRef<AccountPriceDetailComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any, private logger: Logger,
     private accountService: AccountService,
-    private routeService: Router, private dialogService: MatDialog) { }
+    private routeService: Router, private dialogService: MatDialog, private configService: ConfigurationService) { }
 
   ngOnInit() {
     if (this.data !== null && this.data !== undefined) {
-      this.logger.info('data found', this.data);
       this.account = this.data.account;
-    }else {
-      this.logger.info('no data found');
     }
+    this.configService.UserContext.subscribe(
+      ctx => { if (ctx !== null) { this.currencySymbol = ctx.currencySymbol; } }
+    );
   }
 
   public delete(account) {

@@ -38,10 +38,7 @@
                     <mat-form-field>
                         <input matInput placeholder="Address"
                                [ngModel]="account.address"
-                               addressValidation [validationFormGroup]="accountForm"
-                               [updatedDirective]="updateDirective"
-                               (validationStart)="validationStart()"
-                               (validationEnd)="validationEnd($event)"
+                               (input)="addressChanged($event)"
                                formControlName="address" required/>
                         <mat-error *ngIf="accountForm.controls['address'].hasError('invalidAddress')">
                             Invalid address
@@ -99,7 +96,7 @@
                         <mat-icon class="info-icon-img">info_outline</mat-icon>
                     </span>
                 </div> -->
-                <button mat-raised-button [disabled]="!accountForm.valid" type="submit" color="primary" fxFill>
+                <button mat-raised-button [disabled]="!accountForm.valid || isValidatingAddress" type="submit" color="primary" fxFill>
                     <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
                         <span>Save</span>
                     </div>

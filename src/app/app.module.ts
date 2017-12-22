@@ -49,7 +49,6 @@ import {FileService} from './server-api/file.service';
 import {AdminService} from './server-api/admin.service';
 import {MenuService} from './menu.service';
 import {FileCacheService} from './server-api/file-cache.service';
-import {AddressValidationDirective} from './account-view/address.validation';
 import {LogoComponent} from './logo/logo.component';
 import {PrettifyPipe} from './prettify';
 import {ProfileComponent} from './profile/profile.component';
@@ -84,7 +83,6 @@ import { AccountCardComponent } from './account-card/account-card.component';
         LogOverviewComponent,
         UserOverviewComponent,
         UserViewComponent,
-        AddressValidationDirective,
         LogoComponent,
         PrettifyPipe,
         ProfileComponent,

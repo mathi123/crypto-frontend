@@ -31,6 +31,7 @@ export class AccountViewComponent implements OnInit {
     ];
     loading = false;
     updateDirective = false;
+    isValidatingAddress = false;
 
     private routeParamsSubscription: Subscription;
     private coins: Coin[] = [];
@@ -164,6 +165,27 @@ export class AccountViewComponent implements OnInit {
             .startWith(null)
             .map(coin => coin && typeof coin === 'object' ? coin.description : coin)
             .map(description => description ? this.filter(description) : this.coins.slice());
+    }
+    private addressChanged($event) {
+        this.logger.verbose('address chagned');
+        const addressValue = this.accountForm.value.address;
+        const coinIdValue = this.accountForm.value.coinId;
+
+        if (addressValue) {
+            if (coinIdValue) {
+                this.isValidatingAddress = true;
+                this.accountService.validate(coinIdValue, addressValue)
+                    .subscribe((jsonResponse) => {
+
+                    if (!jsonResponse['isValid']) {
+                        this.accountForm.controls['address'].setErrors({invalidAddress: true});
+                    }
+                    this.isValidatingAddress = false;
+                });
+            } else {
+                this.accountForm.controls['address'].setErrors({coinIdRequired: true});
+            }
+        }
     }
 }
 
