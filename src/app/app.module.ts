@@ -55,6 +55,7 @@ import {ProfileComponent} from './profile/profile.component';
 import { AccountPriceDetailComponent } from './account-price-detail/account-price-detail.component';
 import { FooterComponent } from './footer/footer.component';
 import { AccountCardComponent } from './account-card/account-card.component';
+import { TrimZerosPipe } from './trimZeros';
 
 // TODO: note -> it's a best practice that every component has a separate module.
 // @see: https://angular.io/guide/styleguide#application-structure-and-ngmodules
@@ -85,6 +86,7 @@ import { AccountCardComponent } from './account-card/account-card.component';
         UserViewComponent,
         LogoComponent,
         PrettifyPipe,
+        TrimZerosPipe,
         ProfileComponent,
         AccountPriceDetailComponent,
         FooterComponent,

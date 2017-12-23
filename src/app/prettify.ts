@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: 'prettify'})
 export class PrettifyPipe implements PipeTransform {
-  transform(value: number): number {
+  transform(strValue: string): number {
+    const value = parseFloat(strValue);
     if (value < 0) {
         return Math.round(value * 10000) / 10000;
     }else {

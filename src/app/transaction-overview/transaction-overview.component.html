@@ -56,7 +56,7 @@
         
           <ng-container matColumnDef="amount">
             <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
-            <mat-cell *matCellDef="let row" [class.positive]="row.amount > 0" [class.negative]="row.amount < 0"><span *ngIf="row.amount > 0">+</span>{{row.amount | prettify}} {{account.coinCode}}  </mat-cell>
+            <mat-cell *matCellDef="let row" [class.positive]="row.amount > 0" [class.negative]="row.amount < 0"><span *ngIf="row.amount > 0">+</span>{{row.amount | trimZeros }} {{account.coinCode}}  </mat-cell>
           </ng-container>
         <!-- 
           <ng-container matColumnDef="tag">
