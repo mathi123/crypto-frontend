@@ -166,7 +166,7 @@ export class AccountViewComponent implements OnInit {
             .map(coin => coin && typeof coin === 'object' ? coin.description : coin)
             .map(description => description ? this.filter(description) : this.coins.slice());
     }
-    private addressChanged($event) {
+    public addressChanged($event) {
         this.logger.verbose('address chagned');
         const addressValue = this.accountForm.value.address;
         const coinIdValue = this.accountForm.value.coinId;
