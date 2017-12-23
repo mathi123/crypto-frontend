@@ -7,7 +7,7 @@ import { MatDialog, MatMenuPanel, MatMenuTrigger } from '@angular/material';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { AccountPriceDetailComponent } from '../account-price-detail/account-price-detail.component';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 import { ConfigurationService } from '../server-api/configuration.service';
 
 @Component({
@@ -57,7 +57,7 @@ export class AccountCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  public edit(account) {
+  public edit(account: Account) {
     this.routeService.navigate(['account', account.id]);
   }
 
@@ -77,7 +77,7 @@ export class AccountCardComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed()
       .subscribe(s => this.logger.verbose('dialog closed'));
   }
-  public delete() {
+  public delete(account: Account) {
     this.deleted.next();
   }
 
