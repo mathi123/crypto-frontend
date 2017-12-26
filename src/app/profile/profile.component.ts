@@ -4,7 +4,7 @@ import {UserService} from '../server-api/user.service';
 import {Location} from '@angular/common';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Config} from '../config';
-import {PasswordValidation} from '../common/password-validation';
+import {PasswordValidation} from '../utilities/password-validation';
 import {User} from '../models/user';
 import {CurrencyCacheService} from '../cache/currency-cache.service';
 import {Currency} from '../models/currency';

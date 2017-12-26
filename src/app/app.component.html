@@ -1,62 +1,20 @@
-<mat-sidenav-container fxFill>
-    <mat-sidenav mode="over" #sideNavMenu>
-        <mat-nav-list>
-            <span mdHeader>Menu</span>
-            <ng-container *ngFor="let menuItem of menuItems">
-                <mat-list-item *ngIf="!menuItem.isLabel">
-                    <mat-icon matListIcon *ngIf="menuItem.icon">{{menuItem.icon}}</mat-icon>
-                    <a matLine (click)="navigateTo(menuItem)">{{ menuItem.name }}</a>
-                </mat-list-item>
-            </ng-container>
-        </mat-nav-list>
-    </mat-sidenav>
-    <div fxLayout="column" fxFill>
-        <mat-toolbar color="primary">
+<!--<div fxLayout="column" fxFlexFill>
+    <app-header></app-header>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+</div>-->
 
-            <button mat-icon-button (click)="toggleMenu()" *ngIf="media.isActive('xs')">
-                <mat-icon>menu</mat-icon>
-            </button>
-        
-            <span fxFlex fxFill>
-                <app-logo [showLogo]="false"></app-logo>
-            </span>
-        
-            <ng-container *ngIf="!media.isActive('xs')">
-                <ng-container *ngFor="let menuItem of menuItems">
-                    <!-- Normal menu item button -->
-                    <button mat-button (click)="navigateTo(menuItem)"
-                            *ngIf="!menuItem.isLabel && !menuItem.hasSubItems()"
-                            routerLinkActive="active">
-                        <mat-icon *ngIf="menuItem.icon">{{ menuItem.icon }}</mat-icon>
-                        <span>{{ menuItem.name }}</span>
-                    </button>
+<mat-sidenav-container fxFlexFill>
 
-                    <!-- Menu item button with sub items -->
-                    <button mat-button *ngIf="!menuItem.isLabel && menuItem.hasSubItems()"
-                            [matMenuTriggerFor]="menu">
-                        <mat-icon *ngIf="menuItem.icon">{{ menuItem.icon }}</mat-icon>
-                        <span>{{ menuItem.name }}</span>
-                    </button>
-
-                    <mat-menu #menu="matMenu">
-                        <ng-container *ngFor="let subItem of menuItem.subItems">
-                            <button mat-menu-item (click)="navigateTo(subItem)">
-                                <mat-icon *ngIf="menuItem.icon">{{ subItem.icon }}</mat-icon>
-                                <span>{{ subItem.name }}</span>
-                            </button>
-                        </ng-container>
-                    </mat-menu>
-
-                    <span><i *ngIf="menuItem.isLabel" class="menuLabel">{{menuItem.name}}</i></span>
-                </ng-container>
-            </ng-container>
-        </mat-toolbar>
-
-        <div fxFlex class="main-content">
-            <router-outlet></router-outlet>                
-        </div>
-
-        <app-footer>
-        </app-footer>
+    <div fxLayoutGap="10px">
+        <app-header></app-header>
     </div>
+
+
+    <div fxFlex>
+       <router-outlet></router-outlet>
+    </div>
+
+    <app-footer></app-footer>
+
 </mat-sidenav-container>

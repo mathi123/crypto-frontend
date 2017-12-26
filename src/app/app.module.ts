@@ -49,13 +49,13 @@ import {FileService} from './server-api/file.service';
 import {AdminService} from './server-api/admin.service';
 import {MenuService} from './menu.service';
 import {FileCacheService} from './server-api/file-cache.service';
-import {LogoComponent} from './logo/logo.component';
 import {PrettifyPipe} from './prettify';
 import {ProfileComponent} from './profile/profile.component';
-import { AccountPriceDetailComponent } from './account-price-detail/account-price-detail.component';
-import { FooterComponent } from './footer/footer.component';
-import { AccountCardComponent } from './account-card/account-card.component';
-import { TrimZerosPipe } from './trimZeros';
+import {CryptoCommonModule} from './common/crypto-common.module';
+import {AccountPriceDetailComponent} from './account-price-detail/account-price-detail.component';
+import {FooterComponent} from './footer/footer.component';
+import {AccountCardComponent} from './account-card/account-card.component';
+import {TrimZerosPipe} from './trimZeros';
 
 // TODO: note -> it's a best practice that every component has a separate module.
 // @see: https://angular.io/guide/styleguide#application-structure-and-ngmodules
@@ -84,12 +84,11 @@ import { TrimZerosPipe } from './trimZeros';
         LogOverviewComponent,
         UserOverviewComponent,
         UserViewComponent,
-        LogoComponent,
         PrettifyPipe,
         TrimZerosPipe,
         ProfileComponent,
         AccountPriceDetailComponent,
-        FooterComponent,
+       // FooterComponent,
         AccountCardComponent
     ],
     imports: [
@@ -102,7 +101,8 @@ import { TrimZerosPipe } from './trimZeros';
         BrowserAnimationsModule,
         FlexLayoutModule,
         ChartsModule,
-        MaterialModule
+        MaterialModule,
+        CryptoCommonModule
     ],
     entryComponents: [ConfirmDialogComponent, AccountPriceDetailComponent],
     providers: [ConfigurationService, CurrencyService, CurrencyCacheService, AuthGuard,

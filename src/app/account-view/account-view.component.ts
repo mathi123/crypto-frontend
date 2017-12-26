@@ -10,7 +10,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
 import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {Logger} from '../logger';
-import {ArrayUtil} from '../common/array.util';
+import {ArrayUtil} from '../utilities/array.util';
 import { AccountService } from '../server-api/account.service';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 

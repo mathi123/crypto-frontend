@@ -1,13 +1,7 @@
 .fill-space {
     flex: 1 1 auto;
 }
-.versionIndicator{
-    color: #757575;
-}
 
-.underline{
-    border-bottom: 1px black solid;
-}
 .menuLabel{
     color: white;
 }

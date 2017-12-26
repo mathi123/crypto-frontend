@@ -1,0 +1,12 @@
+.versionIndicator{
+    color: #757575;
+}
+
+.underline{
+    border-bottom: 1px black solid;
+}
+
+.crypto-header {
+    background-color: #5c80bc;
+    color: #f1bb44;
+}
