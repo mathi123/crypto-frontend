@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: 'http://api.cryptoshizzle.com:3000',
+  url: 'https://api.cryptofolio.net:3000',
 };
